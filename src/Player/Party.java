@@ -32,6 +32,10 @@ public class Party implements Positionable {
 
     }
 
+    public Hero getHeroFromParty(int slot){
+        return player_party.get(slot -1);
+    }
+
 
     public void getPartyInfo() {
         System.out.println("===== PARTY INFORMATION =====");
