@@ -24,31 +24,6 @@ public class Warrior extends Hero{
         this.gold = gold;
     }
 
-    // used to check if hero can level up
-    @Override
-    public int getExperiencePoints() {
-        return this.experience;
-    }
-     // used for after a battle
-    @Override
-    public void addExperiencePoints(int experience_points) {
-        this.experience += experience_points;
-        System.out.println(name + " earned " + experience + " points");
-    }
-    // used after a battle and experience point have hit the threshold from can level up method
-    @Override
-    public void levelUp() {
-        if(canLevelUp(this.experience)) {
-        super.getLevelObj().increaseLevel();
-            System.out.println(this.name + " leveled up to " + level.getCurrentLevel());
-        }
-
-    }
-
-    @Override
-    public boolean canLevelUp(int experience_points) {
-        return this.experience >= level.getXPForNextLevel();
-    }
 
     @Override
     public String toString() {

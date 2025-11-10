@@ -18,7 +18,7 @@ public class Main {
 
 
         player_party.getPartyInfo();
-        player_party.getHeroFromParty(1).addExperiencePoints(10);
+        player_party.getHeroFromParty(1).addExperiencePoints(50);
         if(player_party.getHeroFromParty(1).canLevelUp(player_party.getHeroFromParty(1).getExperiencePoints())) {
         player_party.getHeroFromParty(1).levelUp();
 
