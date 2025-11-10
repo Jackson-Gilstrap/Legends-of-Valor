@@ -1,12 +1,14 @@
 package World;
 
+import Interfaces.Positionable;
+
 public abstract class Tile implements Positionable {
 
     /*
     Every tile is going to have a row and col position on the tilemap.
     a symbol to represent what kind of tile it is
-    a name to give name to tile same a as symbol
-    ]
+    a name to give name to tile same as it's symbol
+
 
     There are three types of tiles
     Common Tile - no action or battles can occur
@@ -16,7 +18,7 @@ public abstract class Tile implements Positionable {
      */
     private final int xPosition;
     private final int yPosition;
-    private String name;
+    private final String name;
 
     public Tile(String name, int xPosition, int yPosition) {
         this.name = name;
@@ -37,7 +39,7 @@ public abstract class Tile implements Positionable {
 
     @Override
     public String toString() {
-        return "This is a " + name + " tile and its x position is " + xPosition + " and y position is " + yPosition;
+        return "This is an " + name + " tile and its x position is " + xPosition + " and y position is " + yPosition;
     }
 
     abstract public char symbolRepresentation();
