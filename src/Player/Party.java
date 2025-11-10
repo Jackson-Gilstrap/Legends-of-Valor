@@ -1,23 +1,22 @@
 package Player;
 
+import Entities.Hero;
 import World.Positionable;
 
 import java.util.ArrayList;
 
 public class Party implements Positionable {
 
-    private final ArrayList<String> player_party;
+    private final ArrayList<Hero> player_party;
     private int xPosition;
     private int yPosition;
 
     public Party(int xPosition, int yPosition) {
         this.xPosition = xPosition;
         this.yPosition = yPosition;
-        player_party = new ArrayList<>();
+        player_party = new ArrayList<Hero>();
 
-        player_party.add("Paladin");
-        player_party.add("Knight");
-        player_party.add("Mage");
+
     }
     @Override
     public int getXPosition( ){
@@ -28,12 +27,24 @@ public class Party implements Positionable {
         return yPosition;
     }
 
+    public void addHeroToParty(Hero hero){
+        player_party.add(hero);
 
-    public void getPartyInfo () {
-        int i = 0;
-        for(String character: player_party) {
-            System.out.println("Party slot " + i + ": " + character);
-            i++;
-        }
     }
+
+
+    public void getPartyInfo() {
+        System.out.println("===== PARTY INFORMATION =====");
+
+        int index = 1;
+        for (Hero character : player_party) {
+            System.out.printf("Party Slot %d:%n", index);
+            System.out.println(character); // relies on Hero/Warrior’s toString()
+            System.out.println("-----------------------------");
+            index++;
+        }
+
+        System.out.println("===== END OF PARTY =====");
+    }
+
 }
