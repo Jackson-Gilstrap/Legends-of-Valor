@@ -34,11 +34,13 @@ public class HeroBuilder {
         this.gold = gold;
         return this;
     }
-    public HeroBuilder setExperience(int experience) {
-        this.experience = experience;
-        return this;
-    }
 
 
-    public Warrior buildWarrior() {return new Warrior(name, health, mana, strength, dexterity, agility, gold, experience);}
+
+    public Warrior buildWarrior() {return new Warrior(name, health, mana, strength, dexterity, agility, gold);}
+    public Sorcerer buildSorcerer() {return new Sorcerer(name, health, mana, strength, dexterity, agility, gold);}
+    public Paladin buildPaladin() {return new Paladin(name, health, mana, strength, dexterity, agility, gold);}
+
+
+
 }

@@ -1,4 +1,4 @@
-package World;
+package Interfaces;
 
 public interface Positionable {
     int getXPosition();

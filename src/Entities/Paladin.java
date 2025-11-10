@@ -1,20 +1,19 @@
 package Entities;
 
+public class Paladin extends Hero{
 
-public class Warrior extends Hero{
-    private int health, mana, strength, dexterity, agility, gold, experience;
+    private int health,mana,strength,agility,dexterity, gold;
 
-    public Warrior (String name, int health, int mana, int strength, int dexterity, int agility, int gold) {
+    public Paladin(String name, int health, int mana, int strength, int agility, int dexterity, int gold) {
         super(name);
         this.health = health;
         this.mana = mana;
         this.strength = strength;
-        this.dexterity = dexterity;
         this.agility = agility;
+        this.dexterity = dexterity;
         this.gold = gold;
     }
 
-    // these two methods used when hero is in the merket
     public int getGold() {
         return gold;
     }
@@ -23,7 +22,6 @@ public class Warrior extends Hero{
         this.gold = gold;
     }
 
-
     @Override
     public String toString() {
         return String.format(
@@ -31,6 +29,5 @@ public class Warrior extends Hero{
                 name, level.getCurrentLevel(), health, mana, strength, agility, dexterity, getExperiencePoints() , gold
         );
     }
-
 
 }

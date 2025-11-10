@@ -1,7 +1,7 @@
 package Player;
 
 import Entities.Hero;
-import World.Positionable;
+import Interfaces.Positionable;
 
 import java.util.ArrayList;
 

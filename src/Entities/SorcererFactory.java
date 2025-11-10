@@ -1,6 +1,6 @@
 package Entities;
 
-public class WarriorFactory implements HeroFactory{
+public class SorcererFactory implements HeroFactory {
 
     @Override
     public Hero createEntity(String[] args) {
@@ -11,6 +11,6 @@ public class WarriorFactory implements HeroFactory{
                 .setDexterity(Integer.parseInt(args[4]))
                 .setAgility(Integer.parseInt(args[5]))
                 .setGold(Integer.parseInt(args[6]))
-                .buildWarrior();
+                .buildSorcerer();
     }
 }

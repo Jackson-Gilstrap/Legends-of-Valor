@@ -1,6 +1,6 @@
 package Entities;
 
-public class WarriorFactory implements HeroFactory{
+public class PaladinFactory implements HeroFactory{
 
     @Override
     public Hero createEntity(String[] args) {
