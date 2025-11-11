@@ -1,6 +1,10 @@
-package Entities;
+package Factories;
 
-public class PaladinFactory implements HeroFactory{
+import Entities.Hero;
+import Builders.HeroBuilder;
+import Interfaces.HeroFactory;
+
+public class SorcererFactory implements HeroFactory {
 
     @Override
     public Hero createEntity(String[] args) {
@@ -11,6 +15,6 @@ public class PaladinFactory implements HeroFactory{
                 .setDexterity(Integer.parseInt(args[4]))
                 .setAgility(Integer.parseInt(args[5]))
                 .setGold(Integer.parseInt(args[6]))
-                .buildWarrior();
+                .buildSorcerer();
     }
 }

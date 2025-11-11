@@ -1,6 +1,10 @@
-package Entities;
+package Factories;
 
-public class ExoskeletonFactory implements MonsterFactory{
+import Entities.Monster;
+import Builders.MonsterBuilder;
+import Interfaces.MonsterFactory;
+
+public class ExoskeletonFactory implements MonsterFactory {
 
     @Override
     public Monster createEntity(String[] args) {

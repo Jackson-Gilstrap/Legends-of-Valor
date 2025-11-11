@@ -1,6 +1,10 @@
-package Entities;
+package Factories;
 
-public class WarriorFactory implements HeroFactory{
+import Entities.Hero;
+import Builders.HeroBuilder;
+import Interfaces.HeroFactory;
+
+public class WarriorFactory implements HeroFactory {
 
     @Override
     public Hero createEntity(String[] args) {

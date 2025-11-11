@@ -1,6 +1,6 @@
 import Entities.*;
+import Factories.*;
 import Player.Party;
-import World.*;
 
 public class Main {
 

@@ -1,6 +1,10 @@
-package Entities;
+package Factories;
 
-public class DragonFactory implements MonsterFactory{
+import Entities.Monster;
+import Builders.MonsterBuilder;
+import Interfaces.MonsterFactory;
+
+public class DragonFactory implements MonsterFactory {
 
     @Override
     public Monster createEntity(String[] args) {

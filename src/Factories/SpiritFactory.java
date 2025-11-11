@@ -1,4 +1,8 @@
-package Entities;
+package Factories;
+
+import Entities.Monster;
+import Builders.MonsterBuilder;
+import Interfaces.MonsterFactory;
 
 public class SpiritFactory implements MonsterFactory {
 

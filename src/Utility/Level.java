@@ -1,4 +1,4 @@
-package Entities;
+package Utility;
 
 public class Level {
 

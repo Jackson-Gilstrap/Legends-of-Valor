@@ -1,4 +1,8 @@
-package Entities;
+package Builders;
+
+import Entities.Dragon;
+import Entities.Exoskeleton;
+import Entities.Spirit;
 
 public class MonsterBuilder {
     private String name;

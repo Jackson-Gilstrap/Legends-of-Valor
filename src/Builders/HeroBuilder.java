@@ -1,4 +1,8 @@
-package Entities;
+package Builders;
+
+import Entities.Paladin;
+import Entities.Sorcerer;
+import Entities.Warrior;
 
 public class HeroBuilder {
 
