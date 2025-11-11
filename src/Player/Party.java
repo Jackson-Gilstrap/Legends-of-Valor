@@ -27,6 +27,14 @@ public class Party implements Positionable {
         return yPosition;
     }
 
+    public void setXPosition(int xPosition) {
+        this.xPosition = xPosition;
+    }
+
+    public void setYPosition(int yPosition) {
+        this.yPosition = yPosition;
+    }
+
     public void addHeroToParty(Hero hero){
         player_party.add(hero);
 
