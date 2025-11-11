@@ -3,7 +3,7 @@ package Entities;
 public class HeroBuilder {
 
     private String name;
-    private int health , mana, strength, dexterity, agility, gold, experience;
+    private int health , mana, strength, dexterity, agility, gold;
 
     public HeroBuilder setName(String name) {
         this.name = name;

@@ -41,5 +41,21 @@ public class Main {
 
         // need to work on scaling stats on a level up
         player_party.getPartyInfo();
+
+
+        System.out.println("Test Monsters\n============================ ");
+        //test Monster creation
+        DragonFactory dragon_factory = new DragonFactory();
+        Monster test_dragon = dragon_factory.createEntity(new String[] {"Blue Eyes White Dragon", "300" , "150", "100", "0.20"});
+        System.out.println(test_dragon.toString());
+
+        SpiritFactory spirit_factory = new SpiritFactory();
+        Monster test_spirit = spirit_factory.createEntity(new String[] {"Gengar", "300" , "150", "100", "0.30"});
+        System.out.println(test_spirit.toString());
+
+        ExoskeletonFactory exoskeleton_factory = new ExoskeletonFactory();
+        Monster test_exoskeleton = exoskeleton_factory.createEntity(new String[] {"Wither Skeleton", "300" , "150", "100", "0.10"});
+        System.out.println(test_exoskeleton.toString());
+
     }
 }
