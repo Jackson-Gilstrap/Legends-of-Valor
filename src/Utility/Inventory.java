@@ -16,7 +16,7 @@ Each hero will have an inventory on creation
  */
 public class Inventory {
 
-    private final ArrayList<Item> inventory;// Will be of type Item but String placeholder
+    private final ArrayList<Item> inventory;//
 
     public Inventory() {
         inventory = new ArrayList<>();

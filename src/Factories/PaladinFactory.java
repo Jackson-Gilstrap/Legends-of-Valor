@@ -15,6 +15,6 @@ public class PaladinFactory implements HeroFactory {
                 .setDexterity(Integer.parseInt(args[4]))
                 .setAgility(Integer.parseInt(args[5]))
                 .setGold(Integer.parseInt(args[6]))
-                .buildWarrior();
+                .buildPaladin();
     }
 }
