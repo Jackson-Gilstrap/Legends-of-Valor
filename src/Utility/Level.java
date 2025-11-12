@@ -11,6 +11,10 @@ public class Level {
         this.currentLevel = 1;
     }
 
+    public Level(int level) {
+        this.currentLevel = level;
+    }
+
     public int getCurrentLevel() {
         return currentLevel;
     }

@@ -10,7 +10,7 @@ public class Main {
 
 
 //        Party player_party = new Party(0,0);
-//
+////
 //        WarriorFactory warrior_factory = new WarriorFactory();
 //        Hero testWarrior = warrior_factory.createEntity(new String[] {"Clyde Jenkins", "200",  "100", "5", "10", "40", "100", "50"} );
 //        player_party.addHeroToParty(testWarrior);
