@@ -1,10 +1,11 @@
 package Entities;
 
 import Interfaces.Levelable;
+import Utility.Inventory;
 
 public abstract class Hero extends Entity implements Levelable {
     private int health,mana,strength,agility,dexterity, gold, experience_points;
-
+    private final Inventory inventory;
 
     protected Hero(String name, int health, int mana, int strength, int agility, int dexterity, int gold){
         super(name);
@@ -15,6 +16,7 @@ public abstract class Hero extends Entity implements Levelable {
         this.dexterity = dexterity;
         this.gold = gold;
         this.experience_points = 0;
+        this.inventory = new Inventory();
 //
     }
     public int getHealth() {
@@ -62,6 +64,10 @@ public abstract class Hero extends Entity implements Levelable {
 
     public void setGold(int gold) {
         this.gold = gold;
+    }
+
+    public Inventory getInventory() {
+        return inventory;
     }
 
     // used to check if hero can level up

@@ -1,7 +1,11 @@
 import Entities.*;
 import Factories.*;
+import Items.Spell;
+import Items.Weapons.Melee;
 import Player.Party;
+import Utility.Level;
 import World.TileMap;
+
 
 public class Main {
 
@@ -9,12 +13,12 @@ public class Main {
         // Will run test code here as I build up the game before abstracting into classes
 
 
-//        Party player_party = new Party(0,0);
-////
-//        WarriorFactory warrior_factory = new WarriorFactory();
-//        Hero testWarrior = warrior_factory.createEntity(new String[] {"Clyde Jenkins", "200",  "100", "5", "10", "40", "100", "50"} );
-//        player_party.addHeroToParty(testWarrior);
-//        player_party.getPartyInfo();
+        Party player_party = new Party(0,0);
+//
+        WarriorFactory warrior_factory = new WarriorFactory();
+        Hero testWarrior = warrior_factory.createEntity(new String[] {"Clyde Jenkins", "200",  "100", "5", "10", "40", "100", "50"} );
+        player_party.addHeroToParty(testWarrior);
+        player_party.getPartyInfo();
 //
 //        PaladinFactory paladin_factory = new PaladinFactory();
 //        Hero testPaladin = paladin_factory.createEntity(new String[] {"Simon Bakerson", "200",  "100", "5", "10", "40", "100", "50"} );
@@ -62,6 +66,23 @@ public class Main {
         TileMap world_map = new TileMap(5,5,"Home World");
         System.out.println((world_map.render()));
         System.out.println(world_map.getPartyPosition());
+
+        Spell testSpell = new Spell("Fire spell", 10, new Level(2), 50, 200, Spell.Type.FIRE);
+
+        System.out.println(testSpell.isConsumed());
+        testSpell.consume();
+        System.out.println(testSpell.getDurability());
+        testSpell.consume();
+        testSpell.consume();
+        testSpell.consume();
+        System.out.println(testSpell.isConsumed());
+        testSpell.consume();
+        System.out.println(testSpell.getType());
+        System.out.println(testSpell.getType().debuffMultiplier(testSpell.getLevel()));
+        Melee sword = new Melee("One handed Sword", 50, 100, 1,new Level(2));
+        testWarrior.getInventory().addItem(testSpell);
+        testWarrior.getInventory().addItem(sword);
+        testWarrior.getInventory().viewInventory();
 
     }
 }

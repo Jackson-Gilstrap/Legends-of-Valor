@@ -1,0 +1,22 @@
+package Items.Potions;
+
+import Items.Potion;
+import Utility.Level;
+
+public class HealthPotion extends Potion {
+
+    public HealthPotion(String name, int price, Level level, String type) {
+        super(name,price,level,type);
+    }
+
+    @Override
+    public int setStatbuff() {
+        String type = getType();
+        if(type.equals("HP")){
+            return getStatBuff() + 100;
+        }
+        return getStatBuff();
+    }
+
+
+}

@@ -2,7 +2,9 @@ package Items;
 
 import Interfaces.Equipable;
 import Utility.Level;
-
+/*
+Need to think about base values of starting equipment
+ */
 public abstract class Weapon extends Item implements Equipable {
     private final int damage;
     private final int number_of_hands;
@@ -14,6 +16,13 @@ public abstract class Weapon extends Item implements Equipable {
         this.number_of_hands = number_of_hands;
         this.equipped = false;
 
+    }
+
+    public Weapon(String name, int number_of_hands) {
+        super(name);
+        this.number_of_hands = number_of_hands;
+        this.damage = 100; //some base number idk yet
+        this.equipped = false;
     }
     public String getName() {
         return super.getName();

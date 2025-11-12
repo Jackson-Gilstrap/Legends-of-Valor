@@ -15,7 +15,7 @@ public abstract class Item {
         this.level = level;
         this.price = price;
     }
-    //Starting weapon
+    //Starting Item in shop
     public Item(String name) {
         this.durability = 100;
         this.name = name;
