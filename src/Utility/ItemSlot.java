@@ -9,6 +9,8 @@ public abstract class ItemSlot<T extends Item> {
     abstract public T unequipFromSlot();
     abstract public int getBuffFromSlot(T item);
 
+
+
     public ItemSlot () {
         this.item = null;
     }

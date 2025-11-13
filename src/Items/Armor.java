@@ -6,11 +6,13 @@ import Utility.Level;
 
 public class Armor extends Item implements Equipable {
     private final int defence;
+//    private final int agility;
     private boolean equipped;
 
-    public Armor(String name, Level level, int price, int defence) {
+    public Armor(String name, Level level, int price, int defence ) {
         super(name, level, price);
         this.defence = defence;
+//        this.agility =  agility;
         this.equipped = false;
     }
 

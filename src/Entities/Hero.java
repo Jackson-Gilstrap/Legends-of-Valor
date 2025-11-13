@@ -2,73 +2,47 @@ package Entities;
 
 import Interfaces.Levelable;
 import Utility.Inventory;
+import Utility.Stats;
 
 public abstract class Hero extends Entity implements Levelable {
-    private int health,mana,strength,agility,dexterity, gold, experience_points;
+    private int gold, experience_points;
     private final Inventory inventory;
-
-    protected Hero(String name, int health, int mana, int strength, int agility, int dexterity, int gold){
+    private final Stats stats;
+    /*
+    Think about maybe encapsulating stats into its own class so that stat modifications
+    Behavior can be pull out of the hero and into the stat manager class for example
+    each hero and monster and item has a Stats that represent some amount of stats
+     */
+    protected Hero(String name, int health, int mana, int attack, int dexterity, double agility, double damage_reduction, int gold){
         super(name);
-        this.health = health;
-        this.mana = mana;
-        this.strength = strength;
-        this.agility = agility;
-        this.dexterity = dexterity;
-        this.gold = gold;
-        this.experience_points = 0;
+        this.stats = new Stats.StatsBuilder()
+                .health(health)
+                .mana(mana)
+                .attack(attack)
+                .dexterity(dexterity)
+                .agility(agility)
+                .damage_reduction(damage_reduction)
+                .buildStats();
         this.inventory = new Inventory();
-//
-    }
-    public int getHealth() {
-        return health;
-    }
-    public void setHealth(int health) {
-        this.health = health;
-    }
-
-    public int getMana() {
-        return mana;
-    }
-
-    public void setMana(int mana) {
-        this.mana = mana;
-    }
-
-    public int getStrength() {
-        return strength;
-    }
-
-    public void setStrength(int strength) {
-        this.strength = strength;
-    }
-
-    public int getAgility() {
-        return agility;
-    }
-
-    public void setAgility(int agility) {
-        this.agility = agility;
-    }
-
-    public int getDexterity() {
-        return dexterity;
-    }
-
-    public void setDexterity(int dexterity) {
-        this.dexterity = dexterity;
-    }
-    // these two methods used when hero is in the merket
-    public int getGold() {
-        return gold;
-    }
-
-    public void setGold(int gold) {
+        this.experience_points = 0;
         this.gold = gold;
+
     }
 
     public Inventory getInventory() {
         return inventory;
     }
+    public Stats getStats() {
+        return stats;
+    }
+    // these two methods used when hero is in the market
+    public int getGold() {
+        return gold;
+    }
+    public void setGold(int gold) {
+        this.gold = gold;
+    }
+
 
     // used to check if hero can level up
     @Override

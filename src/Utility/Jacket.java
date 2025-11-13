@@ -15,7 +15,8 @@ public class Jacket {
     Can check for two handed or one handed by a disabled flag on weapon slots
      */
 
-    private int baseHealth, baseMana, baseStrength, baseDexterity, baseAgility;
+    private int baseStrength, baseDexterity, baseAgility;
+    private float baseDefense;
 
 
     public Jacket() {
@@ -28,20 +29,15 @@ public class Jacket {
         SpellSlot spellSlot = new SpellSlot();
         PotionSlot potionSlot = new PotionSlot();
 
-        this.baseHealth = helmet.getBuffFromSlot(helmet.getItem()) + chestplate.getBuffFromSlot(chestplate.getItem()) + legging.getBuffFromSlot(legging.getItem());
-        this.baseMana = 0;
         this.baseStrength = 0;
         this.baseDexterity = 0;
         this.baseAgility = 0;
+        this.baseDefense = 0.0f;
 
     }
 
-    public int getBaseHealth() {
-        return baseHealth;
-    }
-
-    public int getBaseMana() {
-        return baseMana;
+    public float getBaseDefense() {
+        return baseDefense;
     }
 
     public int getBaseStrength() {

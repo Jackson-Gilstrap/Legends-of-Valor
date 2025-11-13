@@ -5,17 +5,17 @@ Need to set up the favored attributes at a later time for all hero classes once 
  */
 public class Warrior extends Hero{
 
-    public Warrior (String name, int health, int mana, int strength, int dexterity, int agility, int gold) {
-        super(name, health, mana, strength, dexterity, agility, gold);
+    public Warrior (String name, int health, int mana, int attack, int dexterity, double agility, double damage_reduction, int gold) {
+        super(name, health, mana, attack, dexterity, agility, damage_reduction, gold);
     }
 
     @Override
     public String toString() {
         return String.format(
-                "%s (Lvl %d) | HP:%d MP:%d | STR:%d AGI:%d DEX:%d | XP:%d Gold:%d",
+                "%s (Lvl %d) | HP:%d MP:%d | ATK:%d AGI:%.2f DEX:%d DR:%.2f | XP:%d Gold:%d",
                 name, level.getCurrentLevel(),
-                super.getHealth(), super.getMana(),
-                super.getStrength(), super.getAgility(), super.getDexterity(),
+                super.getStats().getHealth(), super.getStats().getMana(),
+                super.getStats().getAttack(), super.getStats().getAgility(), super.getStats().getDexterity(), super.getStats().getDamage_reduction(),
                 getExperiencePoints() , super.getGold()
         );
     }

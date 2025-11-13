@@ -3,17 +3,18 @@ package Factories;
 import Entities.Monster;
 import Builders.MonsterBuilder;
 import Interfaces.MonsterFactory;
+import Utility.Stats;
 
 public class ExoskeletonFactory implements MonsterFactory {
 
     @Override
-    public Monster createEntity(String[] args) {
+    public Monster createEntity(String name, Stats stats) {
         return new MonsterBuilder()
-                .setName(args[0])
-                .setHealth(Integer.parseInt(args[1]))
-                .setDamage(Integer.parseInt(args[2]))
-                .setDefence(Integer.parseInt(args[3]))
-                .setDodge_chance(Float.parseFloat(args[4]) * 100)
+                .setName(name)
+                .setHealth(stats.getHealth())
+                .setAttack(stats.getAttack())
+                .setAgility(stats.getAgility())
+                .setDamageReduction(stats.getDamage_reduction())
                 .buildExoskeleton();
     }
 }
