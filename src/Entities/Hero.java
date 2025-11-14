@@ -2,12 +2,14 @@ package Entities;
 
 import Interfaces.Levelable;
 import Utility.Inventory;
+import Utility.Jacket;
 import Utility.Stats;
 
 public abstract class Hero extends Entity implements Levelable {
     private int gold, experience_points;
     private final Inventory inventory;
     private final Stats stats;
+    private final Jacket jacket;
     /*
     Think about maybe encapsulating stats into its own class so that stat modifications
     Behavior can be pull out of the hero and into the stat manager class for example
@@ -24,6 +26,7 @@ public abstract class Hero extends Entity implements Levelable {
                 .damage_reduction(damage_reduction)
                 .buildStats();
         this.inventory = new Inventory();
+        this.jacket = new Jacket();
         this.experience_points = 0;
         this.gold = gold;
 
@@ -35,6 +38,11 @@ public abstract class Hero extends Entity implements Levelable {
     public Stats getStats() {
         return stats;
     }
+
+    public Jacket getJacket() {
+        return jacket;
+    }
+
     // these two methods used when hero is in the market
     public int getGold() {
         return gold;

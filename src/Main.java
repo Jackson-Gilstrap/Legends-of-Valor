@@ -1,8 +1,11 @@
 import Entities.*;
 import Factories.*;
+import Items.Item;
 import Items.Spell;
+import Items.Weapon;
 import Items.Weapons.Melee;
 import Player.Party;
+import Utility.Jacket;
 import Utility.Level;
 import Utility.Stats;
 import World.TileMap;
@@ -24,7 +27,7 @@ public class Main {
                 .dexterity(30)
                 .agility(0.15)
                 .damage_reduction(0.0)
-                .buildStats()); // fix the create entity
+                .buildStats());
         player_party.addHeroToParty(testWarrior);
         player_party.getPartyInfo();
 
@@ -37,26 +40,37 @@ public class Main {
                 .buildStats());
         System.out.println(dragon.toString());
 
-        TileMap world_map = new TileMap(5,5,"Home World");
-        System.out.println((world_map.render()));
-        System.out.println(world_map.getPartyPosition());
+//        TileMap world_map = new TileMap(5,5,"Home World");
+//        System.out.println((world_map.render()));
+//        System.out.println(world_map.getPartyPosition());
 
         Spell testSpell = new Spell("Fire spell", 10, new Level(2), 50, 200, Spell.Type.FIRE);
 
-        System.out.println(testSpell.isConsumed());
-        testSpell.consume();
-        System.out.println(testSpell.getDurability());
-        testSpell.consume();
-        testSpell.consume();
-        testSpell.consume();
-        System.out.println(testSpell.isConsumed());
-        testSpell.consume();
-        System.out.println(testSpell.getType());
-        System.out.println(testSpell.getType().debuffMultiplier(testSpell.getLevel()));
-        Melee sword = new Melee("One handed Sword", 50, 100, 1,new Level(2));
+
+        Melee sword = new Melee("Sword", 50, 100, 1,new Level(2));
+        Melee heavy_sword = new Melee("Heavy Sword", 80, 150, 2,new Level(3));
+
+
+        // Tested adding items to inventory
 //        testWarrior.getInventory().addItem(testSpell);
-//        testWarrior.getInventory().addItem(sword);
-//        testWarrior.getInventory().viewInventory();
+        testWarrior.getInventory().addItem(sword);
+        testWarrior.getInventory().addItem(heavy_sword);
+        testWarrior.getInventory().viewInventory();
+
+        // Tested equipping item to slot, equipping items to full slot rejected, unequipping item from slot
+        testWarrior.getJacket().equipWeapon(sword);
+        testWarrior.getInventory().removeItem(sword);
+        testWarrior.getJacket().equipWeapon(heavy_sword);
+        testWarrior.getInventory().viewInventory();
+        testWarrior.getJacket().viewJacket();
+        Item item = testWarrior.getJacket().unequip(testWarrior.getJacket().getMain());
+        testWarrior.getInventory().addItem(item);
+        testWarrior.getJacket().equipWeapon(heavy_sword);
+        testWarrior.getInventory().removeItem(heavy_sword);
+        testWarrior.getJacket().viewJacket();
+
+        testWarrior.getInventory().viewInventory();
+        // don't forget to test removing from inventory add to jacket then remove from jacket back into inventory
 
     }
 }

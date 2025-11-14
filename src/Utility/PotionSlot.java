@@ -8,11 +8,8 @@ public class PotionSlot extends ItemSlot<Potion>{
     }
     @Override
     public void equipToSlot(Potion Potion) {
-        if(getItem() != null){
+        if(getItem() == null){
             this.item = Potion;
-            System.out.println(item.getName() + " equipped into the Potion slot.");
-        }else {
-            System.out.println("The Potion slot is full please unequip current item + " + item.getName() + "first");
         }
 
     }
@@ -22,7 +19,6 @@ public class PotionSlot extends ItemSlot<Potion>{
         // set the slot to null
         Potion Potion = getItem();
         this.item = null;
-        System.out.println(Potion.getName() + " unequipped from the Potion slot.");
         return Potion;
         //return the item
     }

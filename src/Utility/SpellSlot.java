@@ -10,13 +10,9 @@ public class SpellSlot extends ItemSlot<Spell> {
 
     @Override
     public void equipToSlot(Spell spell) {
-        if(getItem() != null){
+        if(getItem() == null){
             this.item = spell;
-            System.out.println(item.getName() + " equipped into the spell slot.");
-        }else {
-            System.out.println("The Spell slot is full please unequip current item + " + item.getName() + "first");
         }
-
     }
 
     @Override
@@ -24,7 +20,6 @@ public class SpellSlot extends ItemSlot<Spell> {
         // set the slot to null
         Spell spell = getItem();
         this.item = null;
-        System.out.println(spell.getName() + " unequipped from the spell slot.");
         return spell;
         //return the item
     }

@@ -25,10 +25,14 @@ public class Inventory {
     public void addItem(Item item){
         inventory.add(item);
     }
-
-    public void removeItem(Item item){
+    // used to send to the jacket and to sell to market will need to flesh out more to get price
+    public Item removeItem(Item item){
         inventory.remove(item);
+        return item;
     }
+
+
+
 
     public void viewInventory() {
         System.out.println("Inventory: ");

@@ -4,18 +4,29 @@ package Utility;
 import Items.Weapon;
 
 public class WeaponSlot extends ItemSlot<Weapon> {
+    private boolean disabled = false;
 
     public WeaponSlot() {
         super();
     }
 
+    public void disableSlot() {
+        this.disabled = true;
+        this.item = null;
+    }
+
+    public void enableSlot() {
+        this.disabled = false;
+    }
+
+    public boolean isDisabled() {
+        return disabled;
+    }
+
     @Override
     public void equipToSlot(Weapon weapon) {
-        if(getItem() != null){
+        if(getItem() == null){
             this.item = weapon;
-            System.out.println(item.getName() + " equipped into the weapon slot.");
-        }else {
-            System.out.println("The Weapon slot is full please unequip current item + " + item.getName() + "first");
         }
 
     }
@@ -25,7 +36,6 @@ public class WeaponSlot extends ItemSlot<Weapon> {
         // set the slot to null
         Weapon weapon = getItem();
         this.item = null;
-        System.out.println(weapon.getName() + " unequipped from the weapon slot.");
         return weapon;
         //return the item
     }
@@ -33,7 +43,6 @@ public class WeaponSlot extends ItemSlot<Weapon> {
     @Override
     public int getBuffFromSlot(Weapon weapon) {
         if(getItem() != null){
-
             return weapon.getDamage();
         }
         return 0;
