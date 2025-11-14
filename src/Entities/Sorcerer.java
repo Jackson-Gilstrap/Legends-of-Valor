@@ -1,32 +1,19 @@
 package Entities;
 
 public class Sorcerer extends Hero{
-    private int health, mana, strength, dexterity, agility, gold, experience;
 
-    public Sorcerer (String name, int health, int mana, int strength, int dexterity, int agility, int gold) {
-        super(name);
-        this.health = health;
-        this.mana = mana;
-        this.strength = strength;
-        this.dexterity = dexterity;
-        this.agility = agility;
-        this.gold = gold;
-
-    }
-
-    public int getGold() {
-        return gold;
-    }
-
-    public void setGold(int gold) {
-        this.gold = gold;
+    public Sorcerer (String name, int health, int mana, int attack, int dexterity, double agility, double damage_reduction, int gold) {
+        super(name, health, mana, attack, dexterity, agility, damage_reduction, gold);
     }
 
     @Override
     public String toString() {
         return String.format(
-                "%s (Lvl %d) | HP:%d MP:%d | STR:%d AGI:%d DEX:%d | XP:%d Gold:%d",
-                name, level.getCurrentLevel(), health, mana, strength, agility, dexterity, getExperiencePoints() , gold
+                "%s (Lvl %d) | HP:%d MP:%d | ATK:%d AGI:%f DEX:%d DR:%f | XP:%d Gold:%d",
+                name, level.getCurrentLevel(),
+                super.getStats().getHealth(), super.getStats().getMana(),
+                super.getStats().getAttack(), super.getStats().getAgility(), super.getStats().getDexterity(), super.getStats().getDamage_reduction(),
+                getExperiencePoints() , super.getGold()
         );
     }
 }

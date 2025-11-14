@@ -1,5 +1,7 @@
 package Entities;
 
+import Utility.Level;
+
 public abstract class Entity {
     protected String name;
     protected Level level;

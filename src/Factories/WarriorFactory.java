@@ -1,0 +1,21 @@
+package Factories;
+
+import Entities.Hero;
+import Builders.HeroBuilder;
+import Interfaces.HeroFactory;
+import Utility.Stats;
+
+public class WarriorFactory implements HeroFactory {
+
+    @Override
+    public Hero createEntity(String name, Stats stats) {
+        return new HeroBuilder().setName(name)
+                .setHealth(stats.getHealth())
+                .setMana(stats.getMana())
+                .setAttack(stats.getAttack())
+                .setDexterity(stats.getDexterity())
+                .setAgility(stats.getAgility())
+                .setDamageReduction(stats.getDamage_reduction())
+                .buildWarrior();
+    }
+}

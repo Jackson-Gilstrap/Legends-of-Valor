@@ -1,0 +1,50 @@
+package Items;
+
+import Utility.Level;
+
+public abstract class Item {
+    private int durability;
+    private final String name;
+    private final Level level;
+    private final int price;
+
+    // Regular Item from shop
+    public Item(String name,Level level, int price ) {
+        this.durability = 100;
+        this.name = name;
+        this.level = level;
+        this.price = price;
+    }
+    //Starting Item in shop
+    public Item(String name) {
+        this.durability = 100;
+        this.name = name;
+        this.level = new Level();
+        this.price = 0;
+    }
+
+    public int getDurability() {
+        return durability;
+    }
+
+    public Level getLevel() {
+        return level;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public void setDurability(int durability) {
+        if (durability > 100) {
+            this.durability = 100;
+        }
+        this.durability = durability;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+
+}

@@ -1,4 +1,4 @@
-package Entities;
+package Utility;
 
 public class Level {
 
@@ -9,6 +9,10 @@ public class Level {
 
     public Level() {
         this.currentLevel = 1;
+    }
+
+    public Level(int level) {
+        this.currentLevel = level;
     }
 
     public int getCurrentLevel() {
