@@ -32,9 +32,12 @@ public abstract class Hero extends Entity implements Levelable {
 
     }
 
+
+
     public Inventory getInventory() {
         return inventory;
     }
+
     public Stats getStats() {
         return stats;
     }
@@ -49,6 +52,23 @@ public abstract class Hero extends Entity implements Levelable {
     }
     public void setGold(int gold) {
         this.gold = gold;
+    }
+
+    public void viewStats(){
+        ;
+        System.out.println(("=== Hero Stats ==="));
+        System.out.println(("Health: " + getStats().getHealth()));
+        System.out.println(("Mana: " + getStats().getMana()));
+        System.out.println(("Attack: " +getStats().getAttack()));
+        System.out.println(("Dexterity: " + getStats().getDexterity()));
+        System.out.println(("Agility: " + getStats().getAgility()));
+        System.out.println(("Damage_reduction: " + getStats().getDamage_reduction()));
+        System.out.println("======================");
+
+        jacket.viewJacket();
+
+
+
     }
 
 

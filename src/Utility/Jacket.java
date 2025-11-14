@@ -1,13 +1,10 @@
 package Utility;
 
-import Interfaces.Equipable;
 import Items.*;
 import Items.Armors.ChestPiece;
 import Items.Armors.Helmet;
 import Items.Armors.Leggings;
-import com.sun.org.apache.xpath.internal.WhitespaceStrippingElementMatcher;
 
-import javax.swing.*;
 
 public class Jacket {
     /*
@@ -21,7 +18,7 @@ public class Jacket {
     Can check if item can be inserted into by checking typeof item == typeof slot
     Can check for two handed or one handed by a disabled flag on weapon slots
      */
-    private Stats baseStats;
+    private Stats buffStats;
 
     private ArmorSlot helmet;
     private ArmorSlot chestplate;
@@ -42,7 +39,12 @@ public class Jacket {
         this.offhand = new WeaponSlot();
         this.spells = new SpellSlot();
         this.potions = new PotionSlot();
-        this.baseStats = new Stats.StatsBuilder().attack(0).dexterity(0).damage_reduction(0).buildStats();
+
+        this.buffStats = new Stats.StatsBuilder()
+                .attack(0)
+                .dexterity(0)
+                .damage_reduction(0)
+                .buildStats();
     }
 
 
@@ -122,7 +124,6 @@ public class Jacket {
 
 
     }
-
     public boolean equipSpell (Spell spell) {
         if(isEmpty(spells)) {
             spells.equipToSlot(spell);
@@ -131,7 +132,6 @@ public class Jacket {
         System.out.println("Spell slot is full: " + spells.getItem().getName());
         return false;
     }
-
     public boolean equipPotion(Potion potion) {
         if(isEmpty(potions)) {
             potions.equipToSlot(potion);
@@ -140,8 +140,6 @@ public class Jacket {
         System.out.println("Potion slot is full: " + potions.getItem().getName());
         return false;
     }
-
-
     public Item unequip(ItemSlot<?> slot) {
         if(isOccupied(slot)) {
             System.out.println("Unequipped weapon: " + slot.getItem().getName());
@@ -151,25 +149,22 @@ public class Jacket {
     }
 
 
-    private Stats getBaseStats() {
-        return baseStats;
+    public Stats getBuffStats() {
+        return buffStats;
     }
 
-    public Stats updateStats() {
-       return new Stats.StatsBuilder()
-                .attack(getBaseStats().getAttack() + addAttack())
-                .dexterity(getBaseStats().getDexterity() + addDexterity())
-                .damage_reduction(getBaseStats().getDamage_reduction() + addDR())
+    public Stats updateBuffStats() {
+       this.buffStats = new Stats.StatsBuilder()
+                .attack(addAttack())
+                .dexterity(addDexterity())
+                .damage_reduction(addDR())
                 .buildStats();
+
+       return this.buffStats;
     }
 
-    public boolean isOccupied(ItemSlot<?> slot) {
-        return slot.getItem() != null;
-    }
 
-    public boolean isEmpty(ItemSlot<?> slot) {
-        return slot.getItem() == null;
-    }
+
 
     private double addDR () {
         double drBuff = 0;
@@ -194,7 +189,6 @@ public class Jacket {
         if(isOccupied(offhand)) {
             attackBuff += offhand.getBuffFromSlot(offhand.getItem());
         }
-
         return attackBuff;
     }
 
@@ -205,6 +199,34 @@ public class Jacket {
         }
         return dexterityBuff;
     }
+
+    public boolean isOccupied(ItemSlot<?> slot) {
+        return slot.getItem() != null;
+    }
+
+    public boolean isEmpty(ItemSlot<?> slot) {
+        return slot.getItem() == null;
+    }
+
+    public void viewJacket() {
+        System.out.println("=== Equipped Items ===");
+        System.out.println("Main hand: " + itemName(main) + " - Buff: "+ main.getBuffFromSlot(main.getItem()) + " Attack") ;
+        System.out.println("Offhand:   " + itemName(offhand)+ " - Buff: "+ offhand.getBuffFromSlot(offhand.getItem())+ " Attack");
+        System.out.println("Helmet:    " + itemName(helmet)+ " - Buff: "+ helmet.getBuffFromSlot(helmet.getItem())+ " Damage Reduction");
+        System.out.println("Chest:     " + itemName(chestplate)+ " - Buff: "+ chestplate.getBuffFromSlot(chestplate.getItem())+ " Damage Reduction");
+        System.out.println("Legs:      " + itemName(leggings)+ " - Buff: "+ leggings.getBuffFromSlot(leggings.getItem())+ " Damage Reduction");
+        System.out.println("Spell:     " + itemName(spells)+ " - Buff: "+ spells.getBuffFromSlot(spells.getItem()) + " Dexterity");
+        System.out.println("Potion:    " + itemName(potions));
+        System.out.println("======================");
+
+
+    }
+
+    private String itemName(ItemSlot<?> slot) {
+        return isOccupied(slot) ? slot.getItem().getName() : "Empty";
+    }
+
+
 
     public ArmorSlot getHelmet() {
         return helmet;
@@ -226,31 +248,11 @@ public class Jacket {
         return offhand;
     }
 
-    public SpellSlot getSpell() {
+    public SpellSlot getSpells() {
         return spells;
     }
 
-    public PotionSlot getPotion() {
+    public PotionSlot getPotions() {
         return potions;
-    }
-
-    public void viewJacket() {
-        System.out.println("Jacket view");
-        System.out.println("Main hand: " +
-                (isOccupied(main) ? main.getItem().getName() : "Empty"));
-        System.out.println("Offhand: " +
-                (isOccupied(offhand) ? offhand.getItem().getName() : "Empty"));
-        System.out.println("Helmet: " +
-                (isOccupied(helmet) ? helmet.getItem().getName() : "Empty"));
-        System.out.println("Chestplate: " +
-                (isOccupied(chestplate) ? chestplate.getItem().getName() : "Empty"));
-        System.out.println("Legs: " +
-                (isOccupied(leggings) ? leggings.getItem().getName() : "Empty"));
-        System.out.println("Spell: " +
-                (isOccupied(spells) ? spells.getItem().getName() : "Empty"));
-        System.out.println("Potion: " +
-                (isOccupied(potions) ? potions.getItem().getName() : "Empty"));
-
-
     }
 }

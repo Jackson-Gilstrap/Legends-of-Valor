@@ -47,6 +47,6 @@ public abstract class Potion extends Item implements Consumable {
 
 
 
-
+    // Need to flesh out more but unimportant for now
     public abstract int setStatbuff();
 }

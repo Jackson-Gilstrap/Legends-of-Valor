@@ -113,5 +113,17 @@ public class Stats {
         return agility;
     }
 
+    @Override
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("Health: " + health + "\n");
+        stringBuilder.append("Mana: " + mana + "\n");
+        stringBuilder.append("Attack: "+ attack + "\n");
+        stringBuilder.append("Dexterity: " + dexterity + "\n");
+        stringBuilder.append("Agility: " + agility + "\n");
+        stringBuilder.append("Damage_reduction: " + damage_reduction + "\n");
+        return stringBuilder.toString();
+    }
+
 }
 
