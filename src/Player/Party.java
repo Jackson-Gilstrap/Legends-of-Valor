@@ -5,45 +5,25 @@ import Interfaces.Positionable;
 
 import java.util.ArrayList;
 
-public class Party implements Positionable {
+public class Party {
 
     private final ArrayList<Hero> player_party;
-    private int xPosition;
-    private int yPosition;
 
-    public Party(int xPosition, int yPosition) {
-        this.xPosition = xPosition;
-        this.yPosition = yPosition;
+    public Party() {
         player_party = new ArrayList<Hero>();
-
-
-    }
-    @Override
-    public int getXPosition( ){
-        return xPosition;
-    }
-    @Override
-    public int getYPosition( ){
-        return yPosition;
-    }
-
-    public void setXPosition(int xPosition) {
-        this.xPosition = xPosition;
-    }
-
-    public void setYPosition(int yPosition) {
-        this.yPosition = yPosition;
     }
 
     public void addHeroToParty(Hero hero){
         player_party.add(hero);
 
     }
+    public void removeHeroFromParty(Hero hero){
+        player_party.remove(hero);
+    }
 
     public Hero getHeroFromParty(int slot){
         return player_party.get(slot -1);
     }
-
 
     public void getPartyInfo() {
         System.out.println("===== PARTY INFORMATION =====");

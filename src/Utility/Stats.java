@@ -14,6 +14,8 @@ package Utility;
  */
 
 
+
+
 public class Stats {
     private int health, mana, attack, dexterity;
     private double damage_reduction, agility;

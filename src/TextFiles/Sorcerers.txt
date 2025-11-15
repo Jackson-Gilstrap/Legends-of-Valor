@@ -1,7 +1,7 @@
-Name/mana/strength/agility/dexterity/starting money/starting experience
-Rillifane_Rallathil     1300    750     450     500     2500    9
-Segojan_Earthcaller     900     800     500     650     2500    5
-Reign_Havoc             800     800     800     800     2500    8
-Reverie_Ashels          900     800     700     400     2500    7
-Kalabar                 800     850     400     600     2500    6
-Skye_Soar               1000    700     400     500     2500    5
+Name / health / mana / strength / dexterity / agility / damageReduction
+Lyra Stormweaver,150,300,35,70,0.25,0.02
+Eldon Frostwhisper,140,320,30,75,0.28,0.01
+Sylva Ashenflare,160,290,40,65,0.23,0.03
+Mira Starfire,155,310,32,72,0.27,0.02
+Kael Emberborn,145,330,28,78,0.30,0.01
+Vexa Nightshroud,165,280,45,60,0.22,0.04

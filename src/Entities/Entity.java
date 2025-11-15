@@ -11,6 +11,11 @@ public abstract class Entity {
         this.level = new Level();
     }
 
+    public Entity(String name, int level) {
+        this.name = name;
+        this.level = new Level(level);
+    }
+
     public String getName(){
         return name;
     }
