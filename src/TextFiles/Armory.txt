@@ -1,6 +1,12 @@
 Name/cost/required level/damage reduction
-Platinum_Shield       150   1   200
-Breastplate           350   3   600
-Full_Body_Armor       1000  8   1100
-Wizard_Shield         1200  10  1500
-Guardian_Angel        1000  10  1000
+Light Helmet    100     1   0.05
+Medium Helmet   400     4   0.10
+Heavy Helmet    1000	9   0.15
+
+Light Chest     100	    1	0.08
+Medium Chest	400	    4	0.16
+Heavy Chest     1000	9	0.25
+
+Light Leggings  100	    1	0.03
+Medium Leggings	400	    4	0.08
+Heavy Leggings  1000	9	0.12

@@ -5,72 +5,36 @@ import Interfaces.Positionable;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Tile implements Positionable {
-
-    /*
-    Every tile is going to have a row and col position on the tilemap.
-    a symbol to represent what kind of tile it is
-    a name to give name to tile same as it's symbol
+public abstract class Tile{
 
 
-    There are three types of tiles
-    Common Tile - no action or battles can occur
-    Market Tile - player can enter the market and buy/sell items
-    Blocked Tile - A tile that blocks movement no action
-
-     */
-    private final int xPosition;
-    private final int yPosition;
+    private final int row;
+    private final int col;
     private final String name;
-    private String baseSymbol;
+    private final char symbol;
 
-    private final List<String> overlays = new ArrayList<>();
-
-    public Tile(String name, int xPosition, int yPosition) {
+    /**
+     *
+     * @param name - Name of the type of tile it is
+     * @param row - The row of the tile in its grid
+     * @param col - The column of the tile in its grid
+     * @param symbol - The Symbol of the tile for representation
+     */
+    public Tile(String name, int row, int col, char symbol) {
         this.name = name;
-        this.xPosition = xPosition;
-        this.yPosition = yPosition;
+        this.row = row;
+        this.col = col;
+        this.symbol= symbol;
     }
-
-    public String getName() {
-        return name;
-    }
-
-    public int getXPosition() {
-        return xPosition;
-    }
-    public int getYPosition() {
-        return yPosition;
-    }
-    public void addOverlay(String symbol) {
-        overlays.add(symbol);
-    }
-
-    public void removeOverlay(String symbol) {
-        overlays.remove(symbol);
-    }
-
-    public boolean hasOverlay(String symbol) {
-        return overlays.contains(symbol);
-    }
-
-    public void clearOverlays() {
-        overlays.clear();
-    }
+    public String getName(){return name;}
+    public int getRow(){return row;}
+    public int getCol(){return col;}
+    public char getSymbol(){return symbol;}
 
 
-    protected abstract char getBaseSymbol();
-
-    public final char symbolRepresentation() {
-        if (!overlays.isEmpty()) {
-            String top = overlays.get(overlays.size() - 1);
-            return top.charAt(0);
-        }
-        return getBaseSymbol();
-    }
     @Override
     public String toString() {
-        return "This is an " + name + " tile and its x position is " + xPosition + " and y position is " + yPosition;
+        return "This is an " + name + " tile and its x position is " + row + " and y position is " + col;
     }
 
 }

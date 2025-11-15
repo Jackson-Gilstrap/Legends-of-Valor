@@ -2,12 +2,9 @@ package World;
 
 public class BlockingTile extends Tile {
 
-    public BlockingTile(String name, int x, int y) {
-        super(name, x, y);
+    public BlockingTile(String name, int row, int col) {
+        super(name, row, col,'X');
     }
-    @Override
-    protected char getBaseSymbol() {
-        return 'X';
-    }
+
 
 }

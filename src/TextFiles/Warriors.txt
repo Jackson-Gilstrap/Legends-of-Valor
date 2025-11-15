@@ -1,10 +1,10 @@
-Name/mana/strength/agility/dexterity/starting money/starting experience
-Gaerdal_Ironhand    100     700     500     600     1354    7
-Sehanine_Monnbow    600     700     800     500     2500    8
-Muamman_Duathall    300     900     500     750     2546    6
-Flandal_Steelskin   200     750     650     700     2500    7
-Undefeated_Yoj      400     800     400     700     2500    7
-Eunoia_Cyn          400     700     800     600     2500    6
+Name / health / mana / strength / dexterity / agility / damageReduction
+Clyde Stonebreaker,250,120,75,40,0.15,0.05
+Garruk Ironfist,300,100,90,35,0.10,0.10
+Rogan Bloodhelm,280,110,85,38,0.12,0.08
+Duran Steelsoul,260,130,70,45,0.18,0.04
+Thorn Shieldbearer,310,90,95,30,0.08,0.12
+Brutus Stormcaller,240,140,65,50,0.20,0.03
 
 
 

@@ -15,8 +15,13 @@ public abstract class Hero extends Entity implements Levelable {
     Behavior can be pull out of the hero and into the stat manager class for example
     each hero and monster and item has a Stats that represent some amount of stats
      */
-    protected Hero(String name, int health, int mana, int attack, int dexterity, double agility, double damage_reduction, int gold){
+
+    protected Hero(String name, int health, int mana, int attack, int dexterity, double agility, double damage_reduction){
         super(name);
+
+        this.inventory = new Inventory();
+        this.jacket = new Jacket();
+
         this.stats = new Stats.StatsBuilder()
                 .health(health)
                 .mana(mana)
@@ -25,14 +30,11 @@ public abstract class Hero extends Entity implements Levelable {
                 .agility(agility)
                 .damage_reduction(damage_reduction)
                 .buildStats();
-        this.inventory = new Inventory();
-        this.jacket = new Jacket();
+
         this.experience_points = 0;
-        this.gold = gold;
+        this.gold = 0;
 
     }
-
-
 
     public Inventory getInventory() {
         return inventory;
