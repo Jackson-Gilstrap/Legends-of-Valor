@@ -5,7 +5,7 @@ import Utility.Level;
 
 public class Leggings extends Armor {
 
-    public Leggings(String name, int price, Level level, int defence) {
-        super(name, level, price, defence);
+    public Leggings(String name, int price, int level, double damage_reduction) {
+        super(name, level, price, damage_reduction);
     }
 }

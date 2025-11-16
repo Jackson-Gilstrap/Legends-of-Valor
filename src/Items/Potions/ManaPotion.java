@@ -4,7 +4,7 @@ import Items.Potion;
 import Utility.Level;
 
 public class ManaPotion extends Potion {
-    public ManaPotion (String name, int price, Level level, String type ){
+    public ManaPotion (String name, int price, int level, String type ){
         super(name, price, level, type);
     }
 

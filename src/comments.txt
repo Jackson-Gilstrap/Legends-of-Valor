@@ -1,2 +1,15 @@
 GET RID OF LEVEL Object or come up with a better reason to use it
+there is no level cap so the way that each level will need a threshold for leveling up
+they recommend 100 x level
 ADD GOLD BACK INTO HEROS
+
+fix - players can pick the same character twice.
+fix - monster/item text files
+
+feature - Markets - populate / buy and sell / market inventory resets after leaving market but persists during interaction with heros
+feature - Battles
+feature - Damage scaling - hero and monsters
+feature - Item scaling
+feature -
+
+

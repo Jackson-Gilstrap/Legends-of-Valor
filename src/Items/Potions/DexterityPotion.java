@@ -5,7 +5,7 @@ import Utility.Level;
 
 public class DexterityPotion extends Potion {
 
-    public DexterityPotion(String name, int price, Level level, String type) {
+    public DexterityPotion(String name, int price, int level, String type) {
         super(name, price, level, type);
     }
 

@@ -5,13 +5,13 @@ import Interfaces.Equipable;
 import Utility.Level;
 
 public class Armor extends Item implements Equipable {
-    private final int defence;
+    private final double damage_reduction;
 //    private final int agility;
     private boolean equipped;
 
-    public Armor(String name, Level level, int price, int defence ) {
+    public Armor(String name, int level, int price, double damage_reduction ) {
         super(name, level, price);
-        this.defence = defence;
+        this.damage_reduction = Armor.this.damage_reduction;
 //        this.agility =  agility;
         this.equipped = false;
     }
@@ -25,8 +25,8 @@ public class Armor extends Item implements Equipable {
     public Level getLevel() {
         return super.getLevel();
     }
-    public int getDefence() {
-        return defence;
+    public double getDamage_reduction() {
+        return damage_reduction;
     }
 
     @Override

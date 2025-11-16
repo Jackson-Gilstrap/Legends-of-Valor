@@ -5,7 +5,7 @@ import Utility.Level;
 
 public class HealthPotion extends Potion {
 
-    public HealthPotion(String name, int price, Level level, String type) {
+    public HealthPotion(String name, int price, int level, String type) {
         super(name,price,level,type);
     }
 

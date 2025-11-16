@@ -1,4 +1,5 @@
 package World;
+import Enums.MarketType;
 import Factories.*;
 import Entities.*;
 
@@ -8,6 +9,7 @@ import java.util.List;
 import FileReader.FileReaderUtility;
 import Interfaces.HeroFactory;
 import Interfaces.MonsterFactory;
+import Items.Item;
 import Utility.Stats;
 
 
@@ -79,6 +81,20 @@ public class Seeder {
         }
 
         return monsters;
+    }
+
+    private List<Item> seedItems(String file_path, MarketType marketType) {
+        List<Item> items = new ArrayList<>();
+
+        List<String[]> rows = FileReaderUtility.readFile(file_path, ",");
+
+        for( String[] data : rows) {
+            if (data[0].equals(marketType.toString().toLowerCase())) {
+                // build the item
+            }
+        }
+
+        return items;
     }
 
     public List<Hero> seedWarriors(String file_path) {

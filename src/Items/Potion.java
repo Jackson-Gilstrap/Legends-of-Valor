@@ -9,7 +9,7 @@ public abstract class Potion extends Item implements Consumable {
     private final String type;
     private boolean consumed;
 
-    public Potion(String name, int price, Level level, String type) {
+    public Potion(String name, int price, int level, String type) {
         super(name, level, price);
         this.statBuff = 0;
         this.type = type;
