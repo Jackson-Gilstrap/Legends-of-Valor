@@ -10,7 +10,6 @@ import Items.Potions.*;
 import Items.Weapons.Melee;
 import Items.Weapons.Ranged;
 import Items.Weapons.Shield;
-import Utility.Level;
 
 
 public class ItemBuilder {
@@ -74,21 +73,21 @@ public class ItemBuilder {
     }
 
 
-    public Weapon buildMeleeWeapon() {return new Melee(itemName, price, attack, number_of_hands, new Level(level));}
-    public Weapon buildRangedWeapon() {return new Ranged(itemName, price, attack, number_of_hands, new Level(level));}
-    public Weapon buildShieldWeapon() {return new Shield(itemName, price, attack, number_of_hands, new Level(level));}
+    public Weapon buildMeleeWeapon() {return new Melee(itemName, price, attack, number_of_hands, level);}
+    public Weapon buildRangedWeapon() {return new Ranged(itemName, price, attack, number_of_hands, level);}
+    public Weapon buildShieldWeapon() {return new Shield(itemName, price, attack, number_of_hands, level);}
 
-    public Armor buildHelmet() {return new Helmet(itemName, price, new Level(level), damage_reduction);}
-    public Armor buildChestpiece() {return new ChestPiece(itemName, price, new Level(level), damage_reduction);}
-    public Armor buildLeggings() {return new Leggings(itemName, price, new Level(level), damage_reduction);}
+    public Armor buildHelmet() {return new Helmet(itemName, price, level, damage_reduction);}
+    public Armor buildChestpiece() {return new ChestPiece(itemName, price, level, damage_reduction);}
+    public Armor buildLeggings() {return new Leggings(itemName, price, level, damage_reduction);}
 
-    public Spell buildSpell() {return new Spell(itemName,price, new Level(level), dexterity, mana_cost, spellType);}
+    public Spell buildSpell() {return new Spell(itemName,price, level, dexterity, mana_cost, spellType);}
 
-    public Potion buildHealthPotion() {return new HealthPotion(itemName,price, new Level(level),potionType);}
-    public Potion buildManaPotion() {return new ManaPotion(itemName,price, new Level(level),potionType);}
-    public Potion buildAttackPotion() {return new StrengthPotion(itemName,price, new Level(level),potionType);}
-    public Potion buildDexterityPotion() {return new DexterityPotion(itemName,price, new Level(level),potionType);}
-    public Potion buildAgilityPotion() {return new AgilityPotion(itemName,price, new Level(level),potionType);}
+    public Potion buildHealthPotion() {return new HealthPotion(itemName,price, level, potionType);}
+    public Potion buildManaPotion() {return new ManaPotion(itemName,price, level, potionType);}
+    public Potion buildAttackPotion() {return new StrengthPotion(itemName,price, level, potionType);}
+    public Potion buildDexterityPotion() {return new DexterityPotion(itemName,price, level, potionType);}
+    public Potion buildAgilityPotion() {return new AgilityPotion(itemName,price, level, potionType);}
 
 
     }

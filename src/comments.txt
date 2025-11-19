@@ -6,10 +6,14 @@ ADD GOLD BACK INTO HEROS
 fix - players can pick the same character twice.
 fix - monster/item text files
 
+
+
 feature - Markets - populate / buy and sell / market inventory resets after leaving market but persists during interaction with heros
 feature - Battles
 feature - Damage scaling - hero and monsters
 feature - Item scaling
 feature -
+
+idea -  stats on certain items scaling
 
 

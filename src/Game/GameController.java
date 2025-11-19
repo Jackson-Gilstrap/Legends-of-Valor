@@ -4,10 +4,7 @@ import Entities.Hero;
 import Entities.Warrior;
 import Factories.*;
 import Player.Party;
-import World.MarketTile;
-import World.Seeder;
-import World.Tile;
-import World.TileMap;
+import World.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -153,6 +150,7 @@ public class GameController {
             case "S":
             case "A":
             case "D":
+
                 handleMovement(command);
                 return false;
 
@@ -206,9 +204,10 @@ public class GameController {
 
     private void handleMovement(String cmd) {
         int[] delta = mapInputToVector(cmd);
-
+        if(map.getTile(map.getParty_row() + delta[0], map.getParty_col() + delta[1]) instanceof BlockingTile) {
+            return; // tile should be a blocking tile
+        }
         map.moveParty(delta[0], delta[1]);
-
 
     }
 

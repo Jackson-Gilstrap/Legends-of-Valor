@@ -40,9 +40,9 @@ public class Spell extends Item implements Consumable {
         return mana_cost;
     }
 
-    public Type getType() {
-        return type;
-    }
+//    public Type getType() {
+//        return type;
+//    }
 
 
 
