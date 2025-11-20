@@ -1,9 +1,10 @@
 package Game;
 
 import Entities.Hero;
-import Entities.Warrior;
 import Factories.*;
-import Player.Party;
+import Items.Armor;
+import Items.Weapon;
+import Seeders.EntitySeeder;
 import World.*;
 
 import java.util.ArrayList;
@@ -13,48 +14,74 @@ import java.util.Scanner;
 public class GameController {
     private InputHandler inputHandler;
     private TileMap map;
-    private Seeder seeder;
+    private EntitySeeder entitySeeder;
+    private GameUI ui = new GameUI();
+
 
     private List<Hero> warriors = new ArrayList<>();
     private List<Hero> paladins = new ArrayList<>();
     private List<Hero> sorcerers = new ArrayList<>();
 
+    private List<Weapon> weapons = new ArrayList<>();
+    private List<Armor> armors = new ArrayList<>(); // remove after testing
+
+
 
     public GameController(InputHandler inputHandler, TileMap map) {
         this.inputHandler = inputHandler;
         this.map = map;
-        this.seeder = new Seeder(
+        this.entitySeeder = new EntitySeeder(
                 new WarriorFactory(),
                 new PaladinFactory(),
                 new SorcererFactory(),
                 new DragonFactory(),
                 new ExoskeletonFactory(),
-                new SpiritFactory()
+                new SpiritFactory(),
+                new WeaponFactory(),
+                new ArmorFactory()
         );
 
     }
 
     public void loadGameData() {
-        List<Hero> warrior_data = seeder.seedWarriors("src/TextFiles/warriors.txt");
+        List<Hero> warrior_data = entitySeeder.seedWarriors("src/TextFiles/warriors.txt");
         for(Hero warrior : warrior_data){
             warriors.add(warrior);
         }
 
-        List<Hero> paladin_data = seeder.seedPaladins("src/TextFiles/Paladins.txt");
+        List<Hero> paladin_data = entitySeeder.seedPaladins("src/TextFiles/Paladins.txt");
         for (Hero paladin : paladin_data){
             paladins.add(paladin);
         }
-        List<Hero> sorcerer_data = seeder.seedSorcerers("src/TextFiles/Sorcerers.txt");
+        List<Hero> sorcerer_data = entitySeeder.seedSorcerers("src/TextFiles/Sorcerers.txt");
         for (Hero sorcerer : sorcerer_data){
             sorcerers.add(sorcerer);
 
         }
+
+//        List<Weapon> weapon_data = seeder.seedWeapons("src/TextFiles/Weaponry.txt");
+//        for( Weapon weapon: weapon_data ) {
+//            weapons.add(weapon);
+//        }
+//        List<Armor> armor_data = seeder.seedArmors("src/TextFiles/Armory.txt");
+//        for( Armor armor: armor_data ) {
+//            armors.add(armor);
+//        }
+
 
 
     }
 
     public void startGame() {
         loadGameData();
+
+        for( Weapon weapon : weapons){
+            System.out.println(weapon.toString() );
+        }
+        System.out.println("=========================");
+        for (Armor armor: armors) {
+            System.out.println(armor.toString() );
+        }
         // populate player party here
         showHeroMenu();
         gameLoop();
@@ -155,7 +182,7 @@ public class GameController {
                 return false;
 
             case "F":
-//                interactMarket();
+                interactMarket();
                 // input later
                 return false;
 
@@ -213,6 +240,10 @@ public class GameController {
 
     private void interactMarket() {
         System.out.println("Welcome to the market");
+        if(map.getTile(map.getParty_row(), map.getParty_col()) instanceof MarketTile) {
+            Market market = ((MarketTile) map.getTile(map.getParty_row(), map.getParty_col())).getMarket();
+            market.enterMarket(ui, map.getPlayerParty());
+        }
     }
 
     private int[] mapInputToVector(String cmd) {

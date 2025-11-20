@@ -1,5 +1,3 @@
-import Entities.*;
-import Factories.*;
 import Game.GameController;
 import Game.InputHandler;
 import Player.Party;
@@ -13,6 +11,7 @@ public class Main {
         // Will run test code here as I build up the game before abstracting into classes
         GameController game = new GameController(new InputHandler(), new TileMap(8,8,"Forest", new Party()));
         game.startGame();
+
 
 //        DragonFactory dragon_factory = new DragonFactory();
 //        Monster dragon = dragon_factory.createEntity("Blue Eyes White Dragon", new Stats.StatsBuilder()

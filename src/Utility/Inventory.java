@@ -31,8 +31,9 @@ public class Inventory {
         return item;
     }
 
-
-
+    public int getInventorySize(){
+        return inventory.size();
+    }
 
     public void viewInventory() {
         System.out.println("Inventory: ");

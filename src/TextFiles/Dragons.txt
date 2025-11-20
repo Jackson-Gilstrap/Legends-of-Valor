@@ -1,4 +1,4 @@
-Name/level/damage/defense/dodge chance
+Name/ Health/ Attack / Agiltity / DamageReduction/
 Desghidorrah	 3       300       400     35
 Chrysophylax     2       200       500     20
 BunsenBurner	 4       400       500     45

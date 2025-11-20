@@ -4,7 +4,7 @@ they recommend 100 x level
 ADD GOLD BACK INTO HEROS
 
 fix - players can pick the same character twice.
-fix - monster/item text files
+fix - player chooseing item higher than ammount in shop breaks game!!!
 
 
 

@@ -5,7 +5,7 @@ import Utility.Level;
 
 public class ChestPiece extends Armor {
 
-    public ChestPiece(String name, int price, int level, double damage_reduction) {
-        super(name, level, price, damage_reduction);
-    }
+    public ChestPiece(String type, String name, int price, int level, double damage_reduction) {
+        super(type, name, price, level, damage_reduction);    }
+
 }

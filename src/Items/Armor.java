@@ -5,14 +5,14 @@ import Interfaces.Equipable;
 import Utility.Level;
 
 public class Armor extends Item implements Equipable {
+    private String type;
     private final double damage_reduction;
-//    private final int agility;
     private boolean equipped;
 
-    public Armor(String name, int level, int price, double damage_reduction ) {
-        super(name, level, price);
-        this.damage_reduction = Armor.this.damage_reduction;
-//        this.agility =  agility;
+    public Armor(String type,String name, int level, int price, double damage_reduction ) {
+        super(name, price, level);
+        this.type= type;
+        this.damage_reduction = damage_reduction;
         this.equipped = false;
     }
 
@@ -24,6 +24,9 @@ public class Armor extends Item implements Equipable {
     }
     public Level getLevel() {
         return super.getLevel();
+    }
+    public String getType() {
+        return type;
     }
     public double getDamage_reduction() {
         return damage_reduction;
@@ -43,4 +46,18 @@ public class Armor extends Item implements Equipable {
     public void unequip() {
         equipped = false;
     }
+
+    @Override
+    public String toString() {
+        return String.format(
+                "Armor{type='%s', name='%s', level=%d, price=%d, reduction=%.2f, equipped=%s}",
+                type,
+                getName(),
+                getLevel().getCurrentLevel(),
+                getPrice(),
+                damage_reduction,
+                equipped
+        );
+    }
+
 }

@@ -23,7 +23,7 @@ public class Spell extends Item implements Consumable {
 
 
     public Spell(String name, int price, int level, int damage, int mana_cost, SpellType type) {
-        super(name,level,price);
+        super(name,price,level);
         this.damage = damage;
         this.mana_cost = mana_cost;
         this.consumed = false;
@@ -40,9 +40,9 @@ public class Spell extends Item implements Consumable {
         return mana_cost;
     }
 
-//    public Type getType() {
-//        return type;
-//    }
+    public SpellType getType() {
+        return type;
+    }
 
 
 

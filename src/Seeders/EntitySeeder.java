@@ -1,5 +1,4 @@
-package World;
-import Enums.MarketType;
+package Seeders;
 import Factories.*;
 import Entities.*;
 
@@ -9,11 +8,10 @@ import java.util.List;
 import FileReader.FileReaderUtility;
 import Interfaces.HeroFactory;
 import Interfaces.MonsterFactory;
-import Items.Item;
 import Utility.Stats;
 
 
-public class Seeder {
+public class EntitySeeder {
 
     private final WarriorFactory warriorFactory;
     private final PaladinFactory paladinFactory;
@@ -22,14 +20,20 @@ public class Seeder {
     private final ExoskeletonFactory exoskeletonFactory;
     private final SpiritFactory spiritFactory;
 
+
+
     /**
      *
-     *
-     * @param wf --warrior factory
-     * @param pf -- paladin factory
-     * @param sf -- sorcerer factory
+     * @param wf
+     * @param pf
+     * @param sf
+     * @param df
+     * @param ef
+     * @param spf
+     * @param wpf
+     * @param af
      */
-    public Seeder(WarriorFactory wf, PaladinFactory pf, SorcererFactory sf, DragonFactory df, ExoskeletonFactory ef, SpiritFactory spf) {
+    public EntitySeeder(WarriorFactory wf, PaladinFactory pf, SorcererFactory sf, DragonFactory df, ExoskeletonFactory ef, SpiritFactory spf, WeaponFactory wpf, ArmorFactory af) {
 
         this.warriorFactory = wf;
         this.paladinFactory = pf;
@@ -37,9 +41,12 @@ public class Seeder {
         this.dragonFactory = df;
         this.exoskeletonFactory = ef;
         this.spiritFactory = spf;
+//
 
 
     }
+
+
 
     // HERO SEEDING
 
@@ -83,19 +90,7 @@ public class Seeder {
         return monsters;
     }
 
-    private List<Item> seedItems(String file_path, MarketType marketType) {
-        List<Item> items = new ArrayList<>();
 
-        List<String[]> rows = FileReaderUtility.readFile(file_path, ",");
-
-        for( String[] data : rows) {
-            if (data[0].equals(marketType.toString().toLowerCase())) {
-                // build the item
-            }
-        }
-
-        return items;
-    }
 
     public List<Hero> seedWarriors(String file_path) {
         return  seedHeros(file_path, warriorFactory);
@@ -107,6 +102,9 @@ public class Seeder {
     public List<Hero> seedSorcerers(String file_path) {
         return  seedHeros(file_path, sorcererFactory);
     }
+
+
+
 
     public List<Monster> seedDragons(String file_path) {
         return  seedMonsters(file_path, dragonFactory);

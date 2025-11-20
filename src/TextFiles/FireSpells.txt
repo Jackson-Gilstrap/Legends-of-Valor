@@ -1,6 +1,11 @@
-Name/cost/required level/damage/mana cost
-Flame_Tornado   700     4   850     300
-Breath_of_Fire  350     1   450     100
-Heat_Wave       450     2   600     150
-Lava_Comet      800     7   1000    550
-Hell_Storm      600     3   950     600
+Type/Name/Dexterity/ManaCost/Price/Level
+FIRE,Ember Spark,10,20,150,2
+FIRE,Flame Burst,18,28,220,2
+FIRE,Blazing Orb,25,35,300,4
+FIRE,Inferno Whip,32,40,380,4
+FIRE,Phoenix Flare,40,48,470,6
+FIRE,Scorching Spiral,48,55,560,6
+FIRE,Molten Wave,60,65,700,8
+FIRE,Pyroclasm Strike,72,75,820,8
+FIRE,Dragonfire Nova,85,90,1000,10
+FIRE,Apocalypse Flame,100,110,1300,10

@@ -8,8 +8,8 @@ import java.util.List;
 public abstract class Tile{
 
 
-    private final int row;
-    private final int col;
+    private int row;
+    private int col;
     private final String name;
     private final char symbol;
 
@@ -30,6 +30,11 @@ public abstract class Tile{
     public int getRow(){return row;}
     public int getCol(){return col;}
     public char getSymbol(){return symbol;}
+
+    public void setPosition(int row, int col){
+        this.row = row;
+        this.col = col;
+    }
 
 
     @Override

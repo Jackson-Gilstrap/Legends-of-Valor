@@ -20,7 +20,6 @@ public class Stats {
     private int health, mana, attack, dexterity;
     private double damage_reduction, agility;
 
-    // empty constructor
     public Stats(StatsBuilder stats) {
         this.health = stats.health;
         this.mana = stats.mana;

@@ -1,12 +1,25 @@
-Name/cost/required level/damage reduction
-Light Helmet    100     1   0.05
-Medium Helmet   400     4   0.10
-Heavy Helmet    1000	9   0.15
+Type/name/damage_reduction/price/level
+Helmet,Leather Cap,0.06,90,1
+Helmet,Iron Helm,0.10,150,2
+Helmet,Steel Helm,0.15,230,3
+Helmet,Knight Helm,0.20,330,4
+Helmet,Mythril Visor,0.28,480,5
+Helmet,Dragonbone Helm,0.35,650,6
+Helmet,Obsidian Helm,0.45,850,7
 
-Light Chest     100	    1	0.08
-Medium Chest	400	    4	0.16
-Heavy Chest     1000	9	0.25
+Chestplate,Leather Jerkin,0.10,130,1
+Chestplate,Iron Breastplate,0.18,210,2
+Chestplate,Steel Cuirass,0.26,320,3
+Chestplate,Knight Armor,0.35,450,4
+Chestplate,Mythril Warplate,0.46,650,5
+Chestplate,Dragonbone Chestguard,0.58,900,6
+Chestplate,Obsidian Battleplate,0.70,1200,7
 
-Light Leggings  100	    1	0.03
-Medium Leggings	400	    4	0.08
-Heavy Leggings  1000	9	0.12
+Leggings,Leather Leggings,0.05,80,1
+Leggings,Iron Greaves,0.08,130,2
+Leggings,Steel Legplates,0.12,200,3
+Leggings,Knight Greaves,0.17,300,4
+Leggings,Mythril Legguards,0.23,450,5
+Leggings,Obsidian Legguards,0.32,650,6
+Leggings,Dragonbone Legwraps,0.40,850,7
+

@@ -1,28 +1,32 @@
 package Items;
 
+import Enums.PotionType;
 import Interfaces.Consumable;
 import Utility.Level;
 
-public abstract class Potion extends Item implements Consumable {
+import java.sql.SQLOutput;
 
-    private int statBuff;
-    private final String type;
+public class Potion extends Item implements Consumable {
+
+    private int effect_amount;
+    private final PotionType type;
     private boolean consumed;
 
-    public Potion(String name, int price, int level, String type) {
-        super(name, level, price);
-        this.statBuff = 0;
+    public Potion(String name, int price, int level, PotionType type) {
+        super(name, price, level);
+        this.effect_amount = 0;
         this.type = type;
         this.consumed = false;
     }
 
-    public int  getStatBuff() {
-        return statBuff;
+    public int getEffectAmount() {
+        return effect_amount;
     }
 
-    public String getType() {
+    public PotionType getType() {
         return type;
     }
+
 
 
     @Override
@@ -47,6 +51,4 @@ public abstract class Potion extends Item implements Consumable {
 
 
 
-    // Need to flesh out more but unimportant for now
-    public abstract int setStatbuff();
 }
