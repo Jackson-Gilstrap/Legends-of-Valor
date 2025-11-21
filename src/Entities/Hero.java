@@ -10,11 +10,7 @@ public abstract class Hero extends Entity implements Levelable {
     private final Inventory inventory;
     private final Stats stats;
     private final Jacket jacket;
-    /*
-    Think about maybe encapsulating stats into its own class so that stat modifications
-    Behavior can be pull out of the hero and into the stat manager class for example
-    each hero and monster and item has a Stats that represent some amount of stats
-     */
+
 
     protected Hero(String name, int health, int mana, int attack, int dexterity, double agility, double damage_reduction){
         super(name);

@@ -41,6 +41,7 @@ public class Party {
         }
 
         System.out.println("===== END OF PARTY =====");
+        System.out.println("\n");
     }
 
 }

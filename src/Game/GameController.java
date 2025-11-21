@@ -109,7 +109,7 @@ public class GameController {
         System.out.println(hero.toString());
         boolean exit = false;
         while (!exit) {
-            System.out.println("What would you like to do?\n1. View Inventory\n2. View Equipped Items\n3. Unequip an item\n4. Equip an item\n5. Exit");
+            System.out.println("What would you like to do?\n1. View Inventory\n2. View Equipped Items\n3. View Hero Stats\n4. Unequip an item\n5. Equip an item\n6. Exit");
             int choice = ui.askInt();
             switch (choice) {
                 case 1: // view inventory
@@ -118,56 +118,73 @@ public class GameController {
                 case 2: // view jacket
                     hero.getJacket().viewJacket();
                     break;
-                case 3: // unequip
+                case 3:
+                    hero.viewStats();
+                    break;
+                case 4: // unequip
                     hero.getJacket().viewJacket();
                     System.out.println("What Item would you like to unequip");
                     String slot_choice = ui.askOneWord("Choose a slot: Main / Offhand / Helmet / Chestplate / Legging / Spell / Potion ").toLowerCase();
                     switch (slot_choice) {
                         case "main":
                             if(hero.getJacket().isOccupied(hero.getJacket().getMain())) {
-                                hero.getJacket().getMain().unequipFromSlot();
+                                Item item = hero.getJacket().getMain().unequipFromSlot();
+                                hero.getInventory().addItem(item);
+                                System.out.println("Unequipping " + item.getName() + "from " + slot_choice);
                                 break;
                             }
                             System.out.println("slot is unoccupied");
                             break;
                         case "offhand":
                             if(hero.getJacket().isOccupied(hero.getJacket().getOffhand())) {
-                                hero.getJacket().getOffhand().unequipFromSlot();
+                                Item item = hero.getJacket().getOffhand().unequipFromSlot();
+                                hero.getInventory().addItem(item);
+                                System.out.println("Unequipping " + item.getName() + "from " + slot_choice);
                                 break;
                             }
                             System.out.println("slot is unoccupied");
                             break;
                         case "helmet":
                             if(hero.getJacket().isOccupied(hero.getJacket().getHelmet())) {
-                                hero.getJacket().getHelmet().unequipFromSlot();
+                                Item item = hero.getJacket().getHelmet().unequipFromSlot();
+                                hero.getInventory().addItem(item);
+                                System.out.println("Unequipping " + item.getName() + "from " + slot_choice);
                                 break;
                             }
                             System.out.println("slot is unoccupied");
                             break;
                         case "chestplate":
                             if(hero.getJacket().isOccupied(hero.getJacket().getChestplate())) {
-                                hero.getJacket().getChestplate().unequipFromSlot();
+                                Item item = hero.getJacket().getChestplate().unequipFromSlot();
+                                hero.getInventory().addItem(item);
+                                System.out.println("Unequipping " + item.getName() + "from " + slot_choice);
                                 break;
                             }
                             System.out.println("slot is unoccupied");
                             break;
                         case "legging":
                             if(hero.getJacket().isOccupied(hero.getJacket().getLeggings())) {
-                                hero.getJacket().getLeggings().unequipFromSlot();
+                                Item item = hero.getJacket().getLeggings().unequipFromSlot();
+                                hero.getInventory().addItem(item);
+                                System.out.println("Unequipping " + item.getName() + "from " + slot_choice);
                                 break;
                             }
                             System.out.println("slot is unoccupied");
                             break;
                         case "spell":
                             if(hero.getJacket().isOccupied(hero.getJacket().getSpells())) {
-                                hero.getJacket().getSpells().unequipFromSlot();
+                                Item item = hero.getJacket().getSpells().unequipFromSlot();
+                                hero.getInventory().addItem(item);
+                                System.out.println("Unequipping " + item.getName() + "from " + slot_choice);
 
                             }
                             System.out.println("slot is unoccupied");
                             break;
                         case "potion":
                             if(hero.getJacket().isOccupied(hero.getJacket().getPotions())) {
-                                hero.getJacket().getPotions().unequipFromSlot();
+                                Item item = hero.getJacket().getPotions().unequipFromSlot();
+                                hero.getInventory().addItem(item);
+                                System.out.println("Unequipping " + item.getName() + "from " + slot_choice);
                                 break;
                             }
                             System.out.println("slot is unoccupied");
@@ -177,7 +194,7 @@ public class GameController {
                             break;
                     }
                     break;
-                case 4: // equip
+                case 5: // equip
                     hero.getInventory().viewInventory();
                     if(hero.getInventory().getInventorySize() == 0) {
                         System.out.println("No items in your inventory to equip");
@@ -189,22 +206,33 @@ public class GameController {
                     if(item instanceof Weapon) {
                         hero.getJacket().equipWeapon((Weapon) item);
                         hero.getInventory().removeItem(item);
+                        System.out.println("Equipping "+ item.getName());
+                        break;
                     }else if (item instanceof Armor) {
                         hero.getJacket().equipArmor((Armor) item);
                         hero.getInventory().removeItem(item);
+                        System.out.println("Equipping "+ item.getName());
+                        break;
                     }else if (item instanceof Spell) {
                         hero.getJacket().equipSpell((Spell) item);
                         hero.getInventory().removeItem(item);
+                        System.out.println("Equipping "+ item.getName());
+                        break;
                     } else if (item instanceof Potion) {
                         hero.getJacket().equipPotion((Potion) item);
                         hero.getInventory().removeItem(item);
+                        System.out.println("Equipping "+ item.getName());
+                        break;
                     }else {
                         System.out.println("Not a valid item to equip");
+                        continue;
                     }
-                case 5:
+                case 6:
                    exit = true;
                    break;
-
+               default:
+                   System.out.println("Invalid choice");
+                   break;
             }
         }
 
@@ -271,8 +299,9 @@ public class GameController {
                 switch (choice) {
                     case "Yes":
                     case "yes":
-                        System.out.println("Pick a hero");
                         map.getPlayerParty().getPartyInfo();
+
+                        System.out.println("PICK A HERO\n");
                         int hero_choice = ui.askInt();
                         if(hero_choice > map.getPlayerParty().getPartySize() || hero_choice <= 0) {
                             System.out.println("Invalid choice.");
@@ -334,7 +363,6 @@ public class GameController {
     }
 
     private void interactMarket() {
-        System.out.println("Welcome to the market");
         if(map.getTile(map.getParty_row(), map.getParty_col()) instanceof MarketTile) {
             Market market = ((MarketTile) map.getTile(map.getParty_row(), map.getParty_col())).getMarket();
             market.enterMarket(ui, map.getPlayerParty());

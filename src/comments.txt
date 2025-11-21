@@ -1,21 +1,28 @@
-GET RID OF LEVEL Object or come up with a better reason to use it
-there is no level cap so the way that each level will need a threshold for leveling up
-they recommend 100 x level
-ADD GOLD BACK INTO HEROS
 
-fix - player cant leave the buy menu / sell menu
-fix - player choosing item higher than amount in shop breaks game!!!
+MAJOR FIXES - Game breaking cause runtime errors or prevent game feature from running
+
+FIX - some markets aren't loading proper items (spells and potions)
+
+
+MINOR FIXES - small bugs that impact UX but don't cause runtime errors
+
+fix - player cant leave the buy menu / sell menu (maybe make this an point of no return action you must buy or sell )
 fix - add gold back to hero
-fix - players can pick the same character twice.
-fix - interact with market happens twice sout
 
+
+
+
+FEATURES TO BE ADDED
 
 feature - Battles
 feature - Damage scaling - hero and monsters
 feature - Item scaling
 
+NEW IDEAS
 
 idea - Fix how stats get effected during battle
 idea - don't show render map unless a move is made -  might help with choice selection
+idea - Separate the market buy output for helms/chest/leggings - same for spells and potions better readability
+idea - players can pick the same character twice
 
 
