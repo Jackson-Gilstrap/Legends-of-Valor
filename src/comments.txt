@@ -3,17 +3,19 @@ there is no level cap so the way that each level will need a threshold for level
 they recommend 100 x level
 ADD GOLD BACK INTO HEROS
 
+fix - player cant leave the buy menu / sell menu
+fix - player choosing item higher than amount in shop breaks game!!!
+fix - add gold back to hero
 fix - players can pick the same character twice.
-fix - player chooseing item higher than ammount in shop breaks game!!!
+fix - interact with market happens twice sout
 
 
-
-feature - Markets - populate / buy and sell / market inventory resets after leaving market but persists during interaction with heros
 feature - Battles
 feature - Damage scaling - hero and monsters
 feature - Item scaling
-feature -
 
-idea -  stats on certain items scaling
+
+idea - Fix how stats get effected during battle
+idea - don't show render map unless a move is made -  might help with choice selection
 
 

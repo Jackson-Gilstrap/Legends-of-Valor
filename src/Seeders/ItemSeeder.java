@@ -95,7 +95,7 @@ public class ItemSeeder {
             Potion potion = pf.createPotion(
                     data[1],
                     Integer.parseInt(data[3]),
-                    Integer.parseInt(data[4]),1
+                    Integer.parseInt(data[4]),
 
                     PotionType.valueOf(data[0]),
                     (int) Double.parseDouble(data[2])

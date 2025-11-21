@@ -14,5 +14,16 @@ public class GameUI {
         return in.nextInt();
     }
 
+    public String askOneWord(String prompt) {
+        System.out.println(prompt);
+        return in.next();
+
+    }
+
+    public String askString(String prompt) {
+        System.out.println(prompt);
+        return in.nextLine();
+    }
+
 
 }

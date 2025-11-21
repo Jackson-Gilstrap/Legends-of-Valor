@@ -31,9 +31,9 @@ public class Market{
     public void enterMarket(GameUI ui, Party player_party) {
         //ask the user to choose hero
         showMarketMenu();
-        int market_choice = -1;
-        while (market_choice != 0) {
-        market_choice = ui.askInt();
+        boolean exit = false;
+        while (!exit) {
+        int market_choice = ui.askInt();
         System.out.println("Pick a hero to enter the market");
         for (int i  = 0 ; i < player_party.getPartySize(); i++) {
             System.out.println("Hero " + (i+1) + ": " + player_party.getHeroFromParty(i).getName());
@@ -42,9 +42,18 @@ public class Market{
         Hero hero = player_party.getHeroFromParty(hero_choice - 1);
         switch(market_choice) {
             case 1: // buy
+                if (inventory.getInventorySize() < 1) {
+                    System.out.println("There are no more items to buy from this market");
+                    exit = true;
+                    break;
+                }
                 System.out.println("What item would you like to buy?");
                 inventory.viewInventory();
                 int item_choice = ui.askInt();
+                if(item_choice >= inventory.getInventorySize()) {
+                    System.out.println("Invalid item choice");
+                    continue;
+                }
                 Item buy_item = inventory.getItem(item_choice);
                 int sell_price = sellItem(inventory.getItem(item_choice));
                 hero.getInventory().addItem(buy_item);
@@ -52,9 +61,17 @@ public class Market{
                 break;
 
             case 2: //sell
+                if(hero.getInventory().getInventorySize() < 1){
+                    System.out.println(hero.getName() + " has no items to sell choose another hero");
+                    continue;
+                }
                 System.out.println("What item would you like to sell?");
                 System.out.println(hero.getInventory());
                 int item_choice2 = ui.askInt();
+                if(item_choice2 >= hero.getInventory().getInventorySize()) {
+                    System.out.println("Invalid item choice");
+                    continue;
+                }
                 Item sell_item = hero.getInventory().getItem(item_choice2);
                 int buy_price = buyItem(sell_item);
                 hero.getInventory().removeItem(sell_item);
@@ -62,6 +79,7 @@ public class Market{
                 break;
             case 0: //exit
                 System.out.println("The market will refresh once you leave...\nLeaving market...");
+                exit = true;
                 break;
             default:
                 System.out.println("Invalid choice. Try again.");
