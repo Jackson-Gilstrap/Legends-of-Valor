@@ -9,18 +9,11 @@ public abstract class Item {
     private final int price;
 
     // Regular Item from shop
-    public Item(String name,Level level, int price ) {
+    public Item(String name, int price, int level ) {
         this.durability = 100;
         this.name = name;
-        this.level = level;
+        this.level = new Level(level);
         this.price = price;
-    }
-    //Starting Item in shop
-    public Item(String name) {
-        this.durability = 100;
-        this.name = name;
-        this.level = new Level();
-        this.price = 0;
     }
 
     public int getDurability() {

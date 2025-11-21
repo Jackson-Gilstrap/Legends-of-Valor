@@ -22,7 +22,11 @@ public class Party {
     }
 
     public Hero getHeroFromParty(int slot){
-        return player_party.get(slot -1);
+        return player_party.get(slot);
+    }
+
+    public int getPartySize() {
+        return player_party.size();
     }
 
     public void getPartyInfo() {
@@ -37,6 +41,7 @@ public class Party {
         }
 
         System.out.println("===== END OF PARTY =====");
+        System.out.println("\n");
     }
 
 }

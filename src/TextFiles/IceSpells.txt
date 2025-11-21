@@ -1,5 +1,11 @@
-Name/cost/required level/damage/mana cost
-Snow_Cannon     500     2   650     250
-Ice_Blade       250     1   450     100
-Frost_Blizzard  750     5   850     350
-Arctic_Storm    700     6   800     300
+Type/Name/Dexterity/ManaCost/Price/Level
+ICE,Frost Shard,11,20,150,2
+ICE,Chill Bloom,18,28,220,2
+ICE,Glacier Spike,26,36,310,4
+ICE,Winter’s Grasp,34,42,390,4
+ICE,Arctic Pulse,44,50,520,6
+ICE,Blizzard Edge,52,58,600,6
+ICE,Frozen Cyclone,65,70,760,8
+ICE,Hoarfrost Burst,78,82,900,8
+ICE,Eternal Freeze,92,100,1200,10
+ICE,Absolute Zero,110,130,1500,10

@@ -26,7 +26,7 @@ public class PotionSlot extends ItemSlot<Potion>{
     @Override
     public int getBuffFromSlot(Potion Potion) {
         if(getItem() != null){
-            return Potion.getStatBuff();
+            return Potion.getEffectAmount();
         }
         return 0;
     }

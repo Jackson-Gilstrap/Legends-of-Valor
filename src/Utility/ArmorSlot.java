@@ -28,7 +28,7 @@ public class ArmorSlot extends ItemSlot<Armor>{
     @Override
     public int getBuffFromSlot(Armor armor) {
         if(getItem() != null){
-        return armor.getDefence(); //wrong right now but fixing stats next
+        return (int) armor.getDamage_reduction(); //wrong right now but fixing stats next
         }
         return 0;
     }

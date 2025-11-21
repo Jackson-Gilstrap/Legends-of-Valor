@@ -1,4 +1,4 @@
-package World;
+package Seeders;
 import Factories.*;
 import Entities.*;
 
@@ -11,7 +11,7 @@ import Interfaces.MonsterFactory;
 import Utility.Stats;
 
 
-public class Seeder {
+public class EntitySeeder {
 
     private final WarriorFactory warriorFactory;
     private final PaladinFactory paladinFactory;
@@ -20,14 +20,20 @@ public class Seeder {
     private final ExoskeletonFactory exoskeletonFactory;
     private final SpiritFactory spiritFactory;
 
+
+
     /**
      *
-     *
-     * @param wf --warrior factory
-     * @param pf -- paladin factory
-     * @param sf -- sorcerer factory
+     * @param wf
+     * @param pf
+     * @param sf
+     * @param df
+     * @param ef
+     * @param spf
+     * @param wpf
+     * @param af
      */
-    public Seeder(WarriorFactory wf, PaladinFactory pf, SorcererFactory sf, DragonFactory df, ExoskeletonFactory ef, SpiritFactory spf) {
+    public EntitySeeder(WarriorFactory wf, PaladinFactory pf, SorcererFactory sf, DragonFactory df, ExoskeletonFactory ef, SpiritFactory spf, WeaponFactory wpf, ArmorFactory af) {
 
         this.warriorFactory = wf;
         this.paladinFactory = pf;
@@ -35,9 +41,12 @@ public class Seeder {
         this.dragonFactory = df;
         this.exoskeletonFactory = ef;
         this.spiritFactory = spf;
+//
 
 
     }
+
+
 
     // HERO SEEDING
 
@@ -81,6 +90,8 @@ public class Seeder {
         return monsters;
     }
 
+
+
     public List<Hero> seedWarriors(String file_path) {
         return  seedHeros(file_path, warriorFactory);
     }
@@ -91,6 +102,9 @@ public class Seeder {
     public List<Hero> seedSorcerers(String file_path) {
         return  seedHeros(file_path, sorcererFactory);
     }
+
+
+
 
     public List<Monster> seedDragons(String file_path) {
         return  seedMonsters(file_path, dragonFactory);

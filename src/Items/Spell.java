@@ -8,6 +8,7 @@ Fire deals with Defense, Ice is for damage and lighting is dodge chance
 
  */
 
+import Enums.SpellType;
 import Interfaces.Consumable;
 import Utility.Level;
 
@@ -16,49 +17,13 @@ public class Spell extends Item implements Consumable {
     private final int damage;
     private final int mana_cost;
     private boolean consumed;
-    private final Type type;
+    private final SpellType type;
 
 
-    public enum Type {
-        FIRE {
-            @Override
-            public String effect() {
-                return "The Fire Spell reduces the defense of a monster it is used on";
-            }
-            @Override
-            public double debuffMultiplier(Level level) {
-                return 0.10 + (level.getCurrentLevel()- 1) * 0.01;
-            }
 
-        },
-        ICE {
-            @Override
-            public String effect() {
-                return "The Ice Spell reduces the damage of a monster it is used on";
-            }
-            @Override
-            public double debuffMultiplier(Level level) {
-                return 0.10 + (level.getCurrentLevel()- 1) * 0.01;
-            }
-        },
-        LIGHTNING {
-            @Override
-            public String effect() {
-                return "The Lightning Spell reduces the dodge chance of a monster it is used on";
-            }
-            @Override
-            public double debuffMultiplier(Level level) {
-                return 0.10 + (level.getCurrentLevel()- 1) * 0.01;
-            }
-        };
 
-        // 🔸 This MUST be inside the enum body, after the semicolon.
-        public abstract String effect();
-        public abstract double debuffMultiplier(Level level);
-    }
-
-    public Spell(String name, int price, Level level, int damage, int mana_cost, Type type) {
-        super(name,level,price);
+    public Spell(String name, int price, int level, int damage, int mana_cost, SpellType type) {
+        super(name,price,level);
         this.damage = damage;
         this.mana_cost = mana_cost;
         this.consumed = false;
@@ -75,7 +40,7 @@ public class Spell extends Item implements Consumable {
         return mana_cost;
     }
 
-    public Type getType() {
+    public SpellType getType() {
         return type;
     }
 

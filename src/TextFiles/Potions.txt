@@ -1,7 +1,21 @@
-Name/cost/required level/attribute increase/attribute affected
-Healing_Potion  250     1   100		Health
-Strength_Potion 200     1   75		Strength
-Magic_Potion    350     2   100		Mana
-Luck_Elixir     500     4   65  	Agility
-Mermaid_Tears   850     5   100  	Health/Mana/Strength/Agility
-Ambrosia        1000    8   150		All Health/Mana/Strength/Dexterity/Defense/Agility
+Type / Name / Effect Increase / Price / Level
+HP,Basic Healing Potion,50,100,1
+HP,Super Healing Potion,120,350,5
+HP,Hyper Healing Potion,250,700,10
+
+MP,Basic Mana Potion,40,90,1
+MP,Super Mana Potion,100,320,5
+MP,Hyper Mana Potion,200,650,10
+
+Attack,Basic Attack Potion,10,120,1
+Attack,Super Attack Potion,25,380,5
+Attack,Hyper Attack Potion,50,800,10
+
+Dexterity,Basic Dexterity Potion,8,110,1
+Dexterity,Super Dexterity Potion,18,350,5
+Dexterity,Hyper Dexterity Potion,35,750,10
+
+Agility,Basic Agility Potion,0.05,130,1
+Agility,Super Agility Potion,0.12,400,5
+Agility,Hyper Agility Potion,0.25,900,10
+

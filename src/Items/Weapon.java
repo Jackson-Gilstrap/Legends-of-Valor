@@ -5,25 +5,19 @@ import Utility.Level;
 /*
 Need to think about base values of starting equipment
  */
-public abstract class Weapon extends Item implements Equipable {
-    private final int damage;
+public class Weapon extends Item implements Equipable {
+    private final int attack;
     private final int number_of_hands;
     private boolean equipped;
 
-    public Weapon(String name, int price, int damage, Level level, int number_of_hands) {
-        super(name, level, price);
-        this.damage = damage;
+    public Weapon(String name, int price, int attack, int level, int number_of_hands) {
+        super(name, price, level);
+        this.attack = attack;
         this.number_of_hands = number_of_hands;
         this.equipped = false;
 
     }
 
-    public Weapon(String name, int number_of_hands) {
-        super(name);
-        this.number_of_hands = number_of_hands;
-        this.damage = 100; //some base number idk yet
-        this.equipped = false;
-    }
     public String getName() {
         return super.getName();
     }
@@ -33,8 +27,8 @@ public abstract class Weapon extends Item implements Equipable {
     public Level getLevel() {
         return super.getLevel();
     }
-    public int getDamage() {
-        return this.damage;
+    public int getAttack() {
+        return this.attack;
     }
 
     public int getNumber_of_hands() {
@@ -54,5 +48,18 @@ public abstract class Weapon extends Item implements Equipable {
         this.equipped = false;
     }
 
+
+    @Override
+    public String toString() {
+        return String.format(
+                "Weapon{name='%s', price=%d, attack=%d, level=%d, hands=%d, equipped=%s}",
+                getName(),
+                getPrice(),
+                attack,
+                getLevel().getCurrentLevel(),
+                number_of_hands,
+                equipped
+        );
+    }
 
 }

@@ -1,5 +1,3 @@
-import Entities.*;
-import Factories.*;
 import Game.GameController;
 import Game.InputHandler;
 import Player.Party;
@@ -13,28 +11,6 @@ public class Main {
         // Will run test code here as I build up the game before abstracting into classes
         GameController game = new GameController(new InputHandler(), new TileMap(8,8,"Forest", new Party()));
         game.startGame();
-
-//        TileMap world_map = new TileMap(8,8,"Home World", new Party());
-//        System.out.println((world_map.render()));
-//        Party active_party = world_map.getPlayerParty();
-//        active_party.getPartyInfo()
-
-//
-//        WarriorFactory warrior_factory = new WarriorFactory();
-//        Hero testWarrior = warrior_factory.createEntity("Clyde Jenkins" , new Stats.StatsBuilder()
-//                .health(200)
-//                .mana(100)
-//                .attack(50)
-//                .dexterity(30)
-//                .agility(0.15)
-//                .damage_reduction(0.0)
-//                .buildStats());
-//        player_party.addHeroToParty(testWarrior);
-//        player_party.getPartyInfo();
-
-//        FileReader fr = new FileReader("src/TextFiles/Armory.txt");
-//        fr.readFile();
-//        fr.printFile();
 
 
 //        DragonFactory dragon_factory = new DragonFactory();

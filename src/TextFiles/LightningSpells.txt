@@ -1,5 +1,11 @@
-Name/cost/required level/damage/mana cost
-Lightning_Dagger      400        1       500     150
-Thunder_Blast         750        4       950     400
-Electric_Arrows       550        5       650     200
-Spark_Needles         500        2       600     200
+Type/Name/Dexterity/ManaCost/Price/Level
+LIGHTNING,Spark Jolt,12,18,160,2
+LIGHTNING,Static Ripple,20,25,230,2
+LIGHTNING,Thunder Lash,28,32,320,4
+LIGHTNING,Volt Spear,35,40,400,4
+LIGHTNING,Stormbreaker Charge,45,50,520,6
+LIGHTNING,Arc Surge,55,58,610,6
+LIGHTNING,Tempest Bolt,67,70,760,8
+LIGHTNING,Hypercurrent Blast,80,82,900,8
+LIGHTNING,Thunderlord’s Wrath,95,100,1150,10
+LIGHTNING,Heavenstrike Pulse,110,120,1450,10
