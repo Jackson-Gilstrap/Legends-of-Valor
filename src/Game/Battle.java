@@ -280,7 +280,7 @@ public class Battle {
 
     public boolean battle() {
         boolean isOver = false;
-        boolean gameOver = false;
+        boolean player_lost = false;
         //spawn monsters
         spawnMonsters();
         //display both the player party and the monsters party
@@ -321,15 +321,15 @@ public class Battle {
 
             }
             if (player_party.getAliveHeroes().isEmpty()) {
-                gameOver = true; // YOU LOSE
+                player_lost = true;
                 isOver = true;
-            } else if (allMonstersDead()) {// YOU WIN
+            } else if (allMonstersDead()) {
                 isOver = true;
             }
 
 
         }
-        return gameOver;
+        return !player_lost;
     }
 
     private boolean calculateDodge(double number) {

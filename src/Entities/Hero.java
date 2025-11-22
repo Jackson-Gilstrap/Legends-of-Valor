@@ -53,7 +53,6 @@ public abstract class Hero extends Entity implements Levelable {
     }
 
     public void viewStats(){
-        ;
         System.out.println(("=== Hero Stats ==="));
         System.out.println(("Health: " + getStats().getHealth()));
         System.out.println(("Mana: " + getStats().getMana()));
@@ -64,8 +63,6 @@ public abstract class Hero extends Entity implements Levelable {
         System.out.println("======================");
 
         jacket.viewJacket();
-
-
 
     }
 

@@ -3,28 +3,28 @@ MAJOR FIXES - Game breaking cause runtime errors or prevent game feature from ru
 
 FIX - when item can't be equipped cause slot full still says its being equipped removes from inventory switch order of checking
 FIX - when equipping out of bounds inputs are allowed
+FIX - game breaking if no spells are equipped same for potions
 
 
 
 MINOR FIXES - small bugs that impact UX but don't cause runtime errors
 
+fix - add potion option in battle
 fix - player cant leave the buy menu / sell menu (maybe make this an point of no return action you must buy or sell )
 fix - add gold back to hero
 
 
 
 
-FEATURES TO BE ADDED
 
-feature - Battles
+FEATURES TO BE ADDED
 feature - Damage scaling - hero and monsters
+feature - Battle drops ( exp and gold)
 feature - Item scaling
 
 NEW IDEAS
 
 idea - Fix how stats get effected during battle
-idea - don't show render map unless a move is made -  might help with choice selection
 idea - Separate the market buy output for helms/chest/leggings - same for spells and potions better readability
-idea - players can pick the same character twice
 
 

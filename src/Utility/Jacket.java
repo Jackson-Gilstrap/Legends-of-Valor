@@ -209,18 +209,38 @@ public class Jacket {
     }
 
     public void viewJacket() {
-        System.out.println("=== Equipped Items ===");
-        System.out.println("Main hand: " + itemName(main) + " - Buff: "+ main.getBuffFromSlot(main.getItem()) + " Attack") ;
-        System.out.println("Offhand:   " + itemName(offhand)+ " - Buff: "+ offhand.getBuffFromSlot(offhand.getItem())+ " Attack");
-        System.out.println("Helmet:    " + itemName(helmet)+ " - Buff: "+ helmet.getBuffFromSlot(helmet.getItem())+ " Damage Reduction");
-        System.out.println("Chest:     " + itemName(chestplate)+ " - Buff: "+ chestplate.getBuffFromSlot(chestplate.getItem())+ " Damage Reduction");
-        System.out.println("Legs:      " + itemName(leggings)+ " - Buff: "+ leggings.getBuffFromSlot(leggings.getItem())+ " Damage Reduction");
-        System.out.println("Spell:     " + itemName(spells)+ " - Buff: "+ spells.getBuffFromSlot(spells.getItem()) + " Dexterity");
-        System.out.println("Potion:    " + itemName(potions));
+
+        System.out.println("=== EQUIPPED ITEMS ===");
+
+        printSlot("Main Hand",   main,      "Attack");
+        printSlot("Off Hand",    offhand,   "Attack");
+        printSlot("Helmet",      helmet,    "Damage Reduction");
+        printSlot("Chestplate",  chestplate,"Damage Reduction");
+        printSlot("Leggings",    leggings,  "Damage Reduction");
+        printSlot("Spell",       spells,    "Dexterity");
+        printSlot("Potion",      potions,   null); // potions don’t buff
+
         System.out.println("======================");
-
-
     }
+
+    private <T extends Item> void printSlot(String name, ItemSlot<T> slot, String buffName) {
+        String item = itemName(slot);
+        String buff = "";
+
+        if (slot.getItem() != null && buffName != null) {
+            double rawBuff = slot.getBuffFromSlot(slot.getItem());
+
+            // If buff is an integer, print without decimals
+            if (rawBuff == Math.floor(rawBuff)) {
+                buff = String.format(" | +%d %s", (int)rawBuff, buffName);
+            } else {
+                buff = String.format(" | +%.2f %s", rawBuff, buffName);
+            }
+        }
+
+        System.out.printf("┃ %-11s : %-20s%s┃\n", name, item, buff);
+    }
+
 
     private String itemName(ItemSlot<?> slot) {
         return isOccupied(slot) ? slot.getItem().getName() : "Empty";

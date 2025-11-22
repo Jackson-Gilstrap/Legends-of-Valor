@@ -36,11 +36,13 @@ public class Inventory {
     }
 
     public void viewInventory() {
-        System.out.println("Inventory: ");
-        for( int i =0; i <inventory.size(); i++){
-            System.out.println("Slot[" + i + "] - Item: " + inventory.get(i).getName());
+        System.out.println("=== INVENTORY ===");
+        for (int i = 0; i < inventory.size(); i++) {
+            System.out.printf("Slot %-3d | %s\n", i, inventory.get(i).getName());
         }
+        System.out.println("=================\n");
     }
+
 
     public Item getItem(int index){
         return inventory.get(index);

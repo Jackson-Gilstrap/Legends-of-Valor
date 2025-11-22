@@ -61,48 +61,89 @@ public class GameController {
 
     public void startGame() {
         loadGameData(); // loads heros into game
+        introduceGame();
         showHeroMenu(); // players choose their party
         gameLoop(); // run the game
     }
 
+    private void introduceGame() {
+        try {
+            System.out.println("Welcome to the world of Monsters vs Heros");
+            Thread.sleep(2000);
+            System.out.println();
+            System.out.println("The aim of the game is to take you party of heroes and battle monsters along your journey");
+            Thread.sleep(2000);
+            System.out.println("On your journey you will encounter various Dragons, ExoSkeletons, and Spirits");
+            Thread.sleep(2000);
+            System.out.println("The goal... Survive as long as possible");
+            Thread.sleep(3000);
+            System.out.println();
+            System.out.println();
+            System.out.println();
+            System.out.println("Good luck...");
+            System.out.println();
+
+        } catch (InterruptedException e) {
+            System.err.println("Thread was interrupted " + e.getMessage());
+
+            Thread.currentThread().interrupt();
+        }
+
+    }
+
+
+
     private void showHeroMenu() {
-        Scanner scanner = new Scanner(System.in);
+
+
+        final int PARTY_CAPACITY = 3;
+        System.out.println("MAX PARTY SIZE = "+ PARTY_CAPACITY);
+
 
         while (true) {
-            System.out.println("\n--- HERO SELECTION MENU ---");
-            System.out.println("1. Show Warriors");
-            System.out.println("2. Show Paladins");
-            System.out.println("3. Show Sorcerers");
-            System.out.println("0. Exit - Exiting this menu will start the game and you can't select anymore characters");
-            System.out.print("Enter choice: ");
 
-            String input = scanner.nextLine().trim();
+            if(map.getPlayerParty().getPartySize() >= PARTY_CAPACITY) {
+                System.out.println("Party is full no more heroes can be added to the party\n");
+                System.out.println("Starting game!...");
+                System.out.println();
+                return;
+            }
+
+            System.out.println("\n--- HERO SELECTION MENU ---");
+            System.out.println();
+            System.out.print("0. Start Game\t1. Add a warrior\t2. Add a Paladin\t3.Add a Sorcerer \nSelect: ");
+            int input = ui.askInt();
 
             switch (input) {
-                case "1":
+                case 1:
                     addHeroToParty(warriors);
                     break;
-                case "2":
+                case 2:
                     addHeroToParty(paladins);
                     break;
 
-                case "3":
+                case 3:
                     addHeroToParty(sorcerers);
                     break;
-                case "0" :
-                {
-                    System.out.println("Are you sure you want to start the game?");
-                    String choice = scanner.nextLine().trim();
+                case 0 :
+                    if (map.getPlayerParty().getPartySize() == 0) {
+                        System.out.println("You need at least one party size");
+                        break;
+
+                    }
+                    System.out.println();
+                    map.getPlayerParty().getPartyInfo();
+                    String choice = ui.askOneWord("Are you sure you want to start the game?");
                     if (choice.equalsIgnoreCase("yes")) {
                     System.out.println("Starting game!");
                     return;
                     }
                     break;
 
-                }
                 default:
                     System.out.println("Invalid choice. Please enter 0–3.");
             }
+
         }
 
     }
@@ -241,15 +282,16 @@ public class GameController {
     }
 
     private void addHeroToParty(List<Hero> list)  {
-        Scanner scanner = new Scanner(System.in);
 
         System.out.println("\nChoose a hero to add to your party:");
-        for (int i = 1; i <= list.size(); i++) {
-            System.out.println(i + ". " + list.get(i - 1));
+        for (int i = 0; i < list.size(); i++) {
+            System.out.println((i+1) + ". " + list.get(i));
         }
+        System.out.println();
 
         System.out.print("Enter choice (1 - " + list.size() + "): ");
-        int input = scanner.nextInt();
+        int input = ui.askInt();
+        System.out.println();
 
         int index = input - 1;
 
@@ -257,10 +299,10 @@ public class GameController {
             System.out.println("Invalid choice.");
             return;
         }
-
         map.getPlayerParty().addHeroToParty(list.get(index));
-
-
+        System.out.println(list.get(index).getName() + " has been added to the party");
+        System.out.println();
+        list.remove(index);
     }
 
 
@@ -350,16 +392,27 @@ public class GameController {
 
     private boolean handleMovement(String cmd) {
         int[] delta = mapInputToVector(cmd);
-        if(map.getTile(map.getParty_row() + delta[0], map.getParty_col() + delta[1]) instanceof BlockingTile) {
-            return false; // tile should be a blocking tile
+
+        int next_row = map.getParty_row() + delta[0];
+        int next_col = map.getParty_col() + delta[1];
+
+        if(!map.inBounds(next_row, next_col)) {
+            return false;
         }
-        map.moveParty(delta[0], delta[1]);
-        if(map.getTile(map.getParty_row() +  delta[0], map.getParty_col() + delta[1] ) instanceof CommonTile) {
+
+        if(map.getTile(next_row, next_col) instanceof BlockingTile) {
+            return false;
+        }
+
+        if(map.getTile(next_row, next_col) instanceof CommonTile) {
             if(rollDie()) {
                 Battle battle = new Battle(map.getPlayerParty());
-                return battle.battle();
+                boolean player_survived = battle.battle();
+                if(!player_survived) return true; // game over
+
             }
         }
+        map.moveParty(delta[0], delta[1]);
         return false;
     }
 
@@ -387,8 +440,8 @@ public class GameController {
 
     private boolean rollDie() {
         Random random = new Random();
-        int die1 = random.nextInt(6);
-        int die2 = random.nextInt(6);
+        int die1 = random.nextInt(9);
+        int die2 = random.nextInt(9);
         return die1 == die2;
     }
 
