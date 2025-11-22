@@ -42,20 +42,12 @@ public class GameController {
 
     public void loadGameData() {
         List<Hero> warrior_data = entitySeeder.seedWarriors("src/TextFiles/warriors.txt");
-        for(Hero warrior : warrior_data){
-            warriors.add(warrior);
-        }
+        warriors.addAll(warrior_data);
 
         List<Hero> paladin_data = entitySeeder.seedPaladins("src/TextFiles/Paladins.txt");
-        for (Hero paladin : paladin_data){
-            paladins.add(paladin);
-        }
+        paladins.addAll(paladin_data);
         List<Hero> sorcerer_data = entitySeeder.seedSorcerers("src/TextFiles/Sorcerers.txt");
-        for (Hero sorcerer : sorcerer_data){
-            sorcerers.add(sorcerer);
-
-        }
-
+        sorcerers.addAll(sorcerer_data);
 
     }
 
@@ -405,12 +397,13 @@ public class GameController {
         }
 
         if(map.getTile(next_row, next_col) instanceof CommonTile) {
-            if(rollDie()) {
+            if(rollDie(9)) {
                 Battle battle = new Battle(map.getPlayerParty());
                 boolean player_survived = battle.battle();
                 if(!player_survived) return true; // game over
 
             }
+
         }
         map.moveParty(delta[0], delta[1]);
         return false;
@@ -438,10 +431,10 @@ public class GameController {
         }
     }
 
-    private boolean rollDie() {
+    private boolean rollDie(int sides) {
         Random random = new Random();
-        int die1 = random.nextInt(9);
-        int die2 = random.nextInt(9);
+        int die1 = random.nextInt(sides);
+        int die2 = random.nextInt(sides);
         return die1 == die2;
     }
 

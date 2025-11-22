@@ -4,19 +4,24 @@ import Interfaces.Levelable;
 import Utility.Inventory;
 import Utility.Jacket;
 import Utility.Stats;
+import Utility.Wallet;
 
 public abstract class Hero extends Entity implements Levelable {
-    private int gold, experience_points;
+    private int experience_points, to_next_level;
     private final Inventory inventory;
     private final Stats stats;
     private final Jacket jacket;
+    private final Wallet wallet;
 
 
     protected Hero(String name, int health, int mana, int attack, int dexterity, double agility, double damage_reduction){
         super(name);
+        this.experience_points = 0;
+        this.to_next_level = 10 * super.getLevelObj().getCurrentLevel();
 
         this.inventory = new Inventory();
         this.jacket = new Jacket();
+        this.wallet = new Wallet();
 
         this.stats = new Stats.StatsBuilder()
                 .health(health)
@@ -27,76 +32,51 @@ public abstract class Hero extends Entity implements Levelable {
                 .damage_reduction(damage_reduction)
                 .buildStats();
 
-        this.experience_points = 0;
-        this.gold = 0;
 
     }
 
     public Inventory getInventory() {
         return inventory;
     }
-
+    public Wallet getWallet() {return wallet;}
     public Stats getStats() {
         return stats;
     }
-
     public Jacket getJacket() {
         return jacket;
     }
-
-    // these two methods used when hero is in the market
-    public int getGold() {
-        return gold;
-    }
-    public void setGold(int gold) {
-        this.gold = gold;
-    }
+    public int getExperiencePoints() {return experience_points;}
+    public int getExpToNextLevel() {return to_next_level;}
 
     public void viewStats(){
-        System.out.println(("=== Hero Stats ==="));
-        System.out.println(("Health: " + getStats().getHealth()));
-        System.out.println(("Mana: " + getStats().getMana()));
-        System.out.println(("Attack: " +getStats().getAttack()));
-        System.out.println(("Dexterity: " + getStats().getDexterity()));
-        System.out.println(("Agility: " + getStats().getAgility()));
-        System.out.println(("Damage_reduction: " + getStats().getDamage_reduction()));
-        System.out.println("======================");
-
+        System.out.println(stats.toString());
         jacket.viewJacket();
-
     }
 
-
-    // used to check if hero can level up
-    @Override
-    public int getExperiencePoints() {
-        return this.experience_points;
-    }
     // used for after a battle
     @Override
-    public void addExperiencePoints(int experience_points) {
-        this.experience_points += experience_points;
+    public void gainExperiencePoints(int experience_points) {
         System.out.println(name + " earned " + experience_points + " points");
+        this.experience_points += experience_points;
+        if(canLevelUp(this.experience_points)){
+            levelUp();
+            this.experience_points = 0;
+        }
     }
-    // used after a battle and experience point have hit the threshold from can level up method
     @Override
     public void levelUp() {
-        if(canLevelUp(this.experience_points)) {
-            super.getLevelObj().increaseLevel();
-            System.out.println(this.name + " leveled up to " + level.getCurrentLevel());
-        }
+        super.getLevelObj().increaseLevel();
+        System.out.println(this.name + " leveled up from " + level.getCurrentLevel());
+        //touch stats
+
 
     }
 
     @Override
     public boolean canLevelUp(int experience_points) {
-        return this.experience_points >= level.getXPForNextLevel();
+        return this.experience_points >= to_next_level;
     }
 
-    @Override
-    public int getLevel(){
-        return level.getCurrentLevel();
-    }
 
 
 }

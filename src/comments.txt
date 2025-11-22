@@ -1,9 +1,11 @@
 
 MAJOR FIXES - Game breaking cause runtime errors or prevent game feature from running
 
-FIX - when item can't be equipped cause slot full still says its being equipped removes from inventory switch order of checking
+FIX - when item can't be equipped cause slot full still says its being equipped removes from market_inventory switch order of checking
 FIX - when equipping out of bounds inputs are allowed
 FIX - game breaking if no spells are equipped same for potions
+FIX - picking an index higher than the amount in the monster party
+FIX - overkill leaves the monster in the party during a hero turn.
 
 
 

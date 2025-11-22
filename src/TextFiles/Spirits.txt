@@ -1,12 +1,12 @@
 Name/level/damage/defense/dodge chance
-Andrealphus,1600,600,0.20,0.70
-Blinky,900,450,0.18,0.65
-Andromalius,1800,550,0.22,0.60
-Chiang-shih,2100,700,0.25,0.75
-FallenAngel,2500,800,0.28,0.80
-Ereshkigall,3000,950,0.20,0.70
-Melchiresas,1300,350,0.15,0.85
-Jormunngand,2800,600,0.30,0.55
-Rakkshasass,2600,550,0.22,0.65
-Taltecuhtli,3000,300,0.18,0.75
-Casper,500,100,0.10,0.60
+Andrealphus,130,18,0.28,0.08
+Blinky,110,15,0.26,0.07
+Andromalius,135,17,0.25,0.09
+Chiang-shih,150,20,0.30,0.10
+FallenAngel,160,22,0.32,0.12
+Ereshkigall,170,25,0.30,0.10
+Melchiresas,120,14,0.35,0.06
+Jormunngand,155,18,0.22,0.11
+Rakkshasass,150,17,0.27,0.09
+Taltecuhtli,160,12,0.30,0.08
+Casper,90,10,0.22,0.05
