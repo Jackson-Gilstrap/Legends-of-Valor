@@ -6,7 +6,7 @@ import Entities.Spirit;
 
 public class MonsterBuilder {
     private String name;
-    private int health, attack;
+    private int health, attack, level;
     private double agility, damage_reduction;
 
    public MonsterBuilder setName(String name) {
@@ -32,9 +32,15 @@ public class MonsterBuilder {
        return this;
     }
 
+    public MonsterBuilder setLevel(int level) {
+       this.level = level;
+       return this;
+    }
 
-    public Dragon buildDragon() {return new Dragon(name, health, attack, agility, damage_reduction);}
-    public Spirit buildSpirit() {return new Spirit(name, health, attack, agility, damage_reduction);}
-    public Exoskeleton buildExoskeleton() {return new Exoskeleton(name, health, attack, agility, damage_reduction);}
+
+
+    public Dragon buildDragon() {return new Dragon(name, health, attack, agility, damage_reduction, level);}
+    public Spirit buildSpirit() {return new Spirit(name, health, attack, agility, damage_reduction, level);}
+    public Exoskeleton buildExoskeleton() {return new Exoskeleton(name, health, attack, agility, damage_reduction, level);}
 
 }

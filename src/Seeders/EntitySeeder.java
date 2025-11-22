@@ -34,7 +34,6 @@ public class EntitySeeder {
      * @param af
      */
     public EntitySeeder(WarriorFactory wf, PaladinFactory pf, SorcererFactory sf, DragonFactory df, ExoskeletonFactory ef, SpiritFactory spf, WeaponFactory wpf, ArmorFactory af) {
-
         this.warriorFactory = wf;
         this.paladinFactory = pf;
         this.sorcererFactory = sf;
@@ -42,8 +41,15 @@ public class EntitySeeder {
         this.exoskeletonFactory = ef;
         this.spiritFactory = spf;
 //
+    }
 
-
+    public EntitySeeder(DragonFactory df, ExoskeletonFactory ef, SpiritFactory sf){
+        this.dragonFactory = df;
+        this.exoskeletonFactory = ef;
+        this.spiritFactory = sf;
+        this.warriorFactory = null;
+        this.paladinFactory = null;
+        this.sorcererFactory = null;
     }
 
 
@@ -82,7 +88,8 @@ public class EntitySeeder {
                     .attack(Integer.parseInt(data[2]))
                     .damage_reduction(Double.parseDouble(data[3]))
                     .agility(Double.parseDouble(data[4]))
-                    .buildStats());
+                    .buildStats(), 1);
+
 
             monsters.add(monster);
         }

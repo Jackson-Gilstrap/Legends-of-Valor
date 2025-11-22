@@ -1,7 +1,9 @@
 
 MAJOR FIXES - Game breaking cause runtime errors or prevent game feature from running
 
-FIX - some markets aren't loading proper items (spells and potions)
+FIX - when item can't be equipped cause slot full still says its being equipped removes from inventory switch order of checking
+FIX - when equipping out of bounds inputs are allowed
+
 
 
 MINOR FIXES - small bugs that impact UX but don't cause runtime errors

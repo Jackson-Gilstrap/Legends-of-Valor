@@ -20,6 +20,30 @@ public class Stats {
     private int health, mana, attack, dexterity;
     private double damage_reduction, agility;
 
+    public void setHealth(int health) {
+        this.health = health;
+    }
+
+    public void setMana(int mana) {
+        this.mana = mana;
+    }
+
+    public void setAttack(int attack) {
+        this.attack = attack;
+    }
+
+    public void setDexterity(int dexterity) {
+        this.dexterity = dexterity;
+    }
+
+    public void setDamage_reduction(double damage_reduction) {
+        this.damage_reduction = damage_reduction;
+    }
+
+    public void setAgility(double agility) {
+        this.agility = agility;
+    }
+
     public Stats(StatsBuilder stats) {
         this.health = stats.health;
         this.mana = stats.mana;

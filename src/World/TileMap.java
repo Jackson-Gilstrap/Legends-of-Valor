@@ -243,6 +243,7 @@ public class TileMap {
            for( Spell spell: spell_data ) {
                spells.add(spell);
            }
+//
 
        }
 
@@ -250,6 +251,7 @@ public class TileMap {
        for( Potion potion: potion_data ) {
            potions.add(potion);
        }
+
     }
 
     private List<Market> buildMarkets() {
@@ -263,10 +265,12 @@ public class TileMap {
         for (Armor a : armors) armorInv.addItem(a);
 
         Inventory spellInv = new Inventory();
-        // add seeds later
+
+        for (Spell s : spells) spellInv.addItem(s);
 
         Inventory potionInv = new Inventory();
         // add seeds later
+        for (Potion p : potions) potionInv.addItem(p);
 
         markets.add(new Market(weaponInv));
         markets.add(new Market(armorInv));

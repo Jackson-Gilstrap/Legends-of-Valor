@@ -8,6 +8,7 @@ import World.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 
 public class GameController {
@@ -15,6 +16,7 @@ public class GameController {
     private TileMap map;
     private EntitySeeder entitySeeder;
     private GameUI ui = new GameUI();
+    private Battle battle;
 
     private List<Hero> warriors = new ArrayList<>();
     private List<Hero> paladins = new ArrayList<>();
@@ -268,7 +270,6 @@ public class GameController {
 
        // add method that checks entire party health if 0 end game
         while (!gameOver) {
-
             System.out.println(map.render());
 
             String command = inputHandler.getInput();
@@ -285,13 +286,10 @@ public class GameController {
             case "S":
             case "A":
             case "D":
-
-                handleMovement(command);
-                return false;
+                return handleMovement(command);
 
             case "F":
                 interactMarket();
-                // input later
                 return false;
 
             case "I":
@@ -307,7 +305,7 @@ public class GameController {
                             System.out.println("Invalid choice.");
                             break;
                         }
-                        showHeroDetails(map.getPlayerParty().getHeroFromParty(hero_choice - 1));
+                        showHeroDetails((Hero) map.getPlayerParty().getHeroFromParty(hero_choice - 1));
                         break;
                     case "No":
                     case "no":
@@ -349,17 +347,20 @@ public class GameController {
         }
     }
 
-    private boolean handleBattleCommand(String command) {
-        return true;
-    }
 
-    private void handleMovement(String cmd) {
+    private boolean handleMovement(String cmd) {
         int[] delta = mapInputToVector(cmd);
         if(map.getTile(map.getParty_row() + delta[0], map.getParty_col() + delta[1]) instanceof BlockingTile) {
-            return; // tile should be a blocking tile
+            return false; // tile should be a blocking tile
         }
         map.moveParty(delta[0], delta[1]);
-
+        if(map.getTile(map.getParty_row() +  delta[0], map.getParty_col() + delta[1] ) instanceof CommonTile) {
+            if(rollDie()) {
+                Battle battle = new Battle(map.getPlayerParty());
+                return battle.battle();
+            }
+        }
+        return false;
     }
 
     private void interactMarket() {
@@ -382,6 +383,13 @@ public class GameController {
             default:
                 return new int[]{0, 0};
         }
+    }
+
+    private boolean rollDie() {
+        Random random = new Random();
+        int die1 = random.nextInt(6);
+        int die2 = random.nextInt(6);
+        return die1 == die2;
     }
 
 

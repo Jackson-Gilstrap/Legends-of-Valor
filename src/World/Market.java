@@ -47,7 +47,7 @@ public class Market{
                 continue;
             }
 
-            Hero hero = player_party.getHeroFromParty(hero_choice - 1);
+            Hero hero = (Hero) player_party.getHeroFromParty(hero_choice - 1);
 
             System.out.println("Choose and action");
             showMarketMenu();

@@ -28,7 +28,6 @@ public class Potion extends Item implements Consumable {
     }
 
 
-
     @Override
     public boolean isConsumed() {
         if (super.getDurability() ==0) {

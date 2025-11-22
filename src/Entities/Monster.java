@@ -10,10 +10,11 @@ NEXT GOAL FOCUS ON THE STAT BREAKDOWN
 public abstract class Monster extends Entity {
     private String name;
     private Stats stats;
+    private int level;
 
 
-    public Monster(String name, int health, int attack, double agility, double damage_reduction) {
-        super(name);
+    public Monster(String name, int health, int attack, double agility, double damage_reduction, int level) {
+        super(name, level);
         stats = new Stats.StatsBuilder()
                 .health(health)
                 .attack(attack)
