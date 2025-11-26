@@ -1,23 +1,21 @@
 package Player;
 
 import Entities.Hero;
-import Interfaces.Positionable;
-
 import java.util.ArrayList;
-import java.util.List;
+
 
 public class Party {
 
     private final ArrayList<Hero> hero_party;
 
     public Party() {
-        hero_party = new ArrayList<Hero>();
+        hero_party = new ArrayList<>();
     }
 
     public void addHeroToParty(Hero entity) {
         hero_party.add(entity);
-
     }
+
     public void removeHeroFromParty(Hero hero){
         hero_party.remove(hero);
     }
@@ -28,6 +26,14 @@ public class Party {
 
     public int getPartySize() {
         return hero_party.size();
+    }
+
+    public int getPartyLevel() {
+        int  level = 0;
+        for (Hero hero : hero_party) {
+           level += hero.getLevelObj().getCurrentLevel();
+        }
+        return level / hero_party.size();
     }
 
     public ArrayList<Hero> getAliveHeroes(){

@@ -8,7 +8,7 @@ public abstract class ItemSlot<T extends Item> {
 
     abstract public void equipToSlot(T item);
     abstract public T unequipFromSlot();
-    abstract public int getBuffFromSlot(T item);
+    abstract public double getBuffFromSlot(T item);
 
 
 

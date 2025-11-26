@@ -35,6 +35,8 @@ public abstract class Hero extends Entity implements Levelable {
 
     }
 
+    protected abstract void applyLevelUpGrowth(Stats stats);
+
     public Inventory getInventory() {
         return inventory;
     }
@@ -47,10 +49,21 @@ public abstract class Hero extends Entity implements Levelable {
     }
     public int getExperiencePoints() {return experience_points;}
     public int getExpToNextLevel() {return to_next_level;}
+    private void setExpToNextLevel() {
+        this.to_next_level = 10 * super.getLevelObj().getCurrentLevel();
+    }
 
     public void viewStats(){
         System.out.println(stats.toString());
         jacket.viewJacket();
+    }
+
+    public boolean hasSpellEquipped () {
+        return jacket.isOccupied(jacket.getSpells());
+    }
+
+    public boolean hasPotionEquipped () {
+        return jacket.isOccupied(jacket.getPotions());
     }
 
     // used for after a battle
@@ -58,25 +71,38 @@ public abstract class Hero extends Entity implements Levelable {
     public void gainExperiencePoints(int experience_points) {
         System.out.println(name + " earned " + experience_points + " points");
         this.experience_points += experience_points;
-        if(canLevelUp(this.experience_points)){
+
+        while (canLevelUp(this.experience_points)) {
             levelUp();
-            this.experience_points = 0;
         }
     }
+
     @Override
     public void levelUp() {
+        int old_level = super.getLevelObj().getCurrentLevel();
+
+        // consume XP for this level
+        this.experience_points -= to_next_level;
+
         super.getLevelObj().increaseLevel();
-        System.out.println(this.name + " leveled up from " + level.getCurrentLevel());
-        //touch stats
+        int new_level = super.getLevelObj().getCurrentLevel();
 
+        setExpToNextLevel(); // recompute for the *next* level
 
+        System.out.println(name + " has leveled up from " + old_level + " to " + new_level);
+        System.out.println();
+        System.out.println("Stats before level up\n" + stats.toString());
+        System.out.println();
+
+        applyLevelUpGrowth(stats);
+
+        System.out.println("Stats after level up\n" + stats.toString());
     }
 
     @Override
     public boolean canLevelUp(int experience_points) {
         return this.experience_points >= to_next_level;
     }
-
 
 
 }

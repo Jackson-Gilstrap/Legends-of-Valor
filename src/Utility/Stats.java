@@ -17,28 +17,16 @@ public class Stats {
         this.max_mana = stats.max_mana   == 0 ? stats.mana   : stats.max_mana;
     }
 
-    public Stats addStats(Stats otherStats) {
+    public Stats copy() {
         return new StatsBuilder()
-                .health(this.health + otherStats.health)
-                .mana(this.mana +otherStats.mana)
-                .attack(this.attack + otherStats.attack)
-                .dexterity(this.dexterity + otherStats.dexterity)
-                .agility(this.agility + otherStats.agility)
-                .damage_reduction(this.damage_reduction + otherStats.damage_reduction)
-                .max_health(this.max_health + otherStats.max_health)
-                .max_mana(this.max_mana + otherStats.max_mana)
-                .buildStats();
-    }
-    public Stats subtractStats(Stats otherStats) {
-        return new StatsBuilder()
-                .health(this.health - otherStats.health)
-                .mana(this.mana -otherStats.mana)
-                .attack(this.attack - otherStats.attack)
-                .dexterity(this.dexterity - otherStats.dexterity)
-                .agility(this.agility - otherStats.agility)
-                .damage_reduction(this.damage_reduction - otherStats.damage_reduction)
-                .max_health(this.max_health - otherStats.max_health)
-                .max_mana(this.max_mana - otherStats.max_mana)
+                .health(this.health)
+                .mana(this.mana)
+                .attack(this.attack)
+                .dexterity(this.dexterity)
+                .agility(this.agility)
+                .damage_reduction(this.damage_reduction)
+                .max_health(this.max_health)
+                .max_mana(this.max_mana)
                 .buildStats();
     }
 
@@ -60,6 +48,8 @@ public class Stats {
     public double getAgility() {
         return agility;
     }
+    public int getMax_health() {return max_health;}
+    public int getMax_mana() {return max_mana;}
 
     public void setHealth(int health) {this.health = Math.min(health, max_health);}
     public void setMana(int mana) {this.mana = Math.min(mana, max_mana);}
@@ -67,6 +57,22 @@ public class Stats {
     public void setDexterity(int dexterity) {this.dexterity = dexterity;}
     public void setDamage_reduction(double damage_reduction) {this.damage_reduction = damage_reduction;}
     public void setAgility(double agility) {this.agility = agility;}
+    public void setMax_health(int max_health) {this.max_health = max_health;}
+    public void setMax_mana(int max_mana) {this.max_mana = max_mana;}
+
+    public void increaseMaxHealth(int delta, boolean healToFull) {
+        this.max_health += delta;
+        if (healToFull) {
+            this.health = this.max_health;
+        }
+    }
+
+    public void increaseMaxMana(int delta, boolean fillToFull) {
+        this.max_mana += delta;
+        if (fillToFull) {
+            this.mana = this.max_mana;
+        }
+    }
 
     @Override
     public String toString() {

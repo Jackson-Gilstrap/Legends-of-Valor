@@ -7,17 +7,7 @@ import Items.Armors.Leggings;
 
 
 public class Jacket {
-    /*
-    The idea behind this item is that the hero owns this and then can equip items from the inventory to the jacket
-    giving the hero a boost in base stats depending on the items equipped
-    Should have certain slots
-    2 slots for weapons (representing hands)
-    3 slots for armor (head,chest,legs)
-    1 for spell
-    1 for potion
-    Can check if item can be inserted into by checking typeof item == typeof slot
-    Can check for two handed or one handed by a disabled flag on weapon slots
-     */
+
     private Stats buffStats;
 
     private ArmorSlot helmet;
@@ -148,7 +138,6 @@ public class Jacket {
         return null;
     }
 
-
     public Stats getBuffStats() {
         return buffStats;
     }
@@ -162,9 +151,6 @@ public class Jacket {
 
        return this.buffStats;
     }
-
-
-
 
     private double addDR () {
         double drBuff = 0;
@@ -184,10 +170,10 @@ public class Jacket {
     private int addAttack() {
         int attackBuff =0;
         if(isOccupied(main)) {
-            attackBuff += main.getBuffFromSlot(main.getItem());
+            attackBuff += (int)main.getBuffFromSlot(main.getItem());
         }
         if(isOccupied(offhand)) {
-            attackBuff += offhand.getBuffFromSlot(offhand.getItem());
+            attackBuff += (int) offhand.getBuffFromSlot(offhand.getItem());
         }
         return attackBuff;
     }
@@ -195,7 +181,7 @@ public class Jacket {
     private int addDexterity() {
         int dexterityBuff = 0;
         if(isOccupied(spells)) {
-            dexterityBuff = spells.getBuffFromSlot(spells.getItem());
+            dexterityBuff = (int) spells.getBuffFromSlot(spells.getItem());
         }
         return dexterityBuff;
     }
@@ -272,7 +258,11 @@ public class Jacket {
         return spells;
     }
 
+    public Spell getSpell() {return spells.getItem();}
+
     public PotionSlot getPotions() {
         return potions;
     }
+
+    public Potion getPotion() {return potions.getItem();}
 }

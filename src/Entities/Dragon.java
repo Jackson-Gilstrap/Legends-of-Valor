@@ -6,6 +6,25 @@ public class Dragon extends Monster{
         super(name, health, attack, agility, damage_reduction, level);
     }
 
+    protected Dragon (Dragon dragon){
+        super(dragon);
+    }
+
+    @Override
+    public Dragon copy(){
+        return new Dragon(this);
+    }
+
+    @Override
+    protected double hpGrowthPerLevel() {
+        return 0.14;
+    }
+
+    @Override
+    protected double atkGrowthPerLevel() {
+        return 0.12;
+    }
+
     @Override
     public String toString() {
         return String.format(

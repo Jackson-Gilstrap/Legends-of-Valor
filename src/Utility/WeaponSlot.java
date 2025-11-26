@@ -41,7 +41,7 @@ public class WeaponSlot extends ItemSlot<Weapon> {
     }
 
     @Override
-    public int getBuffFromSlot(Weapon weapon) {
+    public double getBuffFromSlot(Weapon weapon) {
         if(getItem() != null){
             return weapon.getAttack();
         }

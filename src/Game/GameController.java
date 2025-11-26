@@ -237,27 +237,48 @@ public class GameController {
                     }
                     System.out.println("Choose an item from your inventory");
                     int inventory_choice = ui.askInt();
+
+                    if(inventory_choice < 0 || inventory_choice >= hero.getInventory().getInventorySize()) {
+                        System.out.println("Invalid choice");
+                        break;
+                    }
                     Item item = hero.getInventory().getItem(inventory_choice);
                     if(item instanceof Weapon) {
-                        hero.getJacket().equipWeapon((Weapon) item);
-                        hero.getInventory().removeItem(item);
-                        System.out.println("Equipping "+ item.getName());
+                        if(hero.getJacket().equipWeapon((Weapon) item)) {
+                            hero.getInventory().removeItem(item);
+                            System.out.println("Equipping "+ item.getName());
+                        }  else {
+                            System.out.println("Failed to equip " + item.getName());
+                        }
                         break;
+
                     }else if (item instanceof Armor) {
-                        hero.getJacket().equipArmor((Armor) item);
-                        hero.getInventory().removeItem(item);
-                        System.out.println("Equipping "+ item.getName());
+                        if(hero.getJacket().equipArmor((Armor) item)) {
+                            hero.getInventory().removeItem(item);
+                            System.out.println("Equipping "+ item.getName());
+                        } else {
+                            System.out.println("Failed to equip " + item.getName());
+                        }
                         break;
+
                     }else if (item instanceof Spell) {
-                        hero.getJacket().equipSpell((Spell) item);
-                        hero.getInventory().removeItem(item);
-                        System.out.println("Equipping "+ item.getName());
+                        if(hero.getJacket().equipSpell((Spell) item)) {
+                            hero.getInventory().removeItem(item);
+                            System.out.println("Equipping "+ item.getName());
+                        } else {
+                            System.out.println("Failed to equip " + item.getName());
+                        }
                         break;
+
                     } else if (item instanceof Potion) {
-                        hero.getJacket().equipPotion((Potion) item);
-                        hero.getInventory().removeItem(item);
-                        System.out.println("Equipping "+ item.getName());
+                        if(hero.getJacket().equipPotion((Potion) item)) {
+                            hero.getInventory().removeItem(item);
+                            System.out.println("Equipping "+ item.getName());
+                        } else {
+                            System.out.println("Failed to equip " + item.getName());
+                        }
                         break;
+
                     }else {
                         System.out.println("Not a valid item to equip");
                         continue;
@@ -339,7 +360,7 @@ public class GameController {
                             System.out.println("Invalid choice.");
                             break;
                         }
-                        showHeroDetails((Hero) map.getPlayerParty().getHeroFromParty(hero_choice - 1));
+                        showHeroDetails(map.getPlayerParty().getHeroFromParty(hero_choice - 1));
                         break;
                     case "No":
                     case "no":

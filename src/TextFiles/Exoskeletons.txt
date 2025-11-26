@@ -1,4 +1,4 @@
-Name/level/damage/defense/dodge chance
+Name/health/damage/defense/dodge chance
 Cyrrollalee,160,20,0.12,0.28
 Brandobaris,130,15,0.10,0.22
 BigBad-Wolf,110,12,0.08,0.18

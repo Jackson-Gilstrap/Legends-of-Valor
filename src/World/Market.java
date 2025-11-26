@@ -8,11 +8,18 @@ import Utility.Inventory;
 
 
 public class Market{
-    private Inventory market_inventory;
+    private final Inventory market_inventory;
 
     public Market(Inventory market_inventory) {
         this.market_inventory = market_inventory;
 
+    }
+
+    private void viewMarketItems() {
+        for (int i = 0; i < market_inventory.getInventorySize(); i++) {
+            Item item = market_inventory.getItem(i);
+            System.out.println("[" + i + "] " + item.getName() + ": " + item.getPrice() + " gold " + "Required equip level : " + item.getLevel().getCurrentLevel() );
+        }
     }
 
     // when the hero wants to sell an item to the market
@@ -45,6 +52,8 @@ public class Market{
 
             Hero hero = player_party.getHeroFromParty(hero_choice - 1);
 
+
+            System.out.println("Current gold: " + hero.getWallet().getCurrent_gold());
             System.out.println("Choose and action");
             showMarketMenu();
 
@@ -63,31 +72,40 @@ public class Market{
                         break;
                     }
                     System.out.println("What item would you like to buy?");
-                    market_inventory.viewInventory();
+                    viewMarketItems();
                     int item_choice = ui.askInt();
                     if(item_choice >= market_inventory.getInventorySize()) {
                         System.out.println("Invalid item choice");
                         continue;
                     }
+
                     Item buy_item = market_inventory.getItem(item_choice);
-                    int sell_price = sellItem(market_inventory.getItem(item_choice));
-                    hero.getInventory().addItem(buy_item);
-                    hero.getWallet().makeTransaction(sell_price);
-                    System.out.println("Hero " + hero.getName() + " has bought " + buy_item.getName());
+                    if(hero.getWallet().canMakePurchase(buy_item.getPrice())) {
+                        int sell_price = sellItem(market_inventory.getItem(item_choice));
+                        hero.getWallet().makeTransaction(sell_price);
+                        hero.getInventory().addItem(buy_item);
+                        System.out.println("Hero " + hero.getName() + " has bought " + buy_item.getName());
+                        break;
+                    }
+                    System.out.println("Hero " + hero.getName() + " does not have enough money to buy " + buy_item.getName());
                     break;
+
 
                 case 2: //sell
                     if(hero.getInventory().getInventorySize() < 1){
                         System.out.println(hero.getName() + " has no items to sell choose another hero");
                         continue;
                     }
+
                     System.out.println("What item would you like to sell?");
-                    hero.getInventory().viewInventory();;
+                    hero.getInventory().viewInventory();
+
                     int item_choice2 = ui.askInt();
                     if(item_choice2 >= hero.getInventory().getInventorySize()) {
                         System.out.println("Invalid item choice");
                         continue;
                     }
+
                     Item sell_item = hero.getInventory().getItem(item_choice2);
                     int buy_price = buyItem(sell_item);
                     hero.getInventory().removeItem(sell_item);
@@ -108,14 +126,6 @@ public class Market{
 
         }
 
-    }
-
-    public void refreshItems() {
-        for(int i = 0; i < market_inventory.getInventorySize(); i++ ) {
-            Item item = market_inventory.getItem(i);
-            market_inventory.removeItem(item);
-        }
-        // load the market_inventory
     }
 
     private void showMarketMenu() {

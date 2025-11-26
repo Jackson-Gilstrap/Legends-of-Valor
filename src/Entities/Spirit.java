@@ -6,6 +6,41 @@ public class Spirit extends Monster{
         super(name, health, attack, agility, damage_reduction, level);
     }
 
+    protected Spirit (Spirit spirit){
+        super(spirit);
+    }
+
+    @Override
+    public Spirit copy(){
+        return new Spirit(this);
+    }
+
+
+    @Override
+    protected double agiGrowthPerLevel() {
+        return 0.035;
+    }
+
+    @Override
+    protected double hpGrowthPerLevel() {
+        return 0.08;
+    }
+
+    @Override
+    protected double atkGrowthPerLevel() {
+        return 0.07;
+    }
+
+    @Override
+    protected double drGrowthPerLevel() {
+        return 0.006;
+    }
+
+    @Override
+    protected double maxAgilityCap() {
+        return 0.85;
+    }
+
     @Override
     public String toString() {
         return String.format(
