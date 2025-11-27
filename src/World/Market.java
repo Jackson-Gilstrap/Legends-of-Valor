@@ -3,7 +3,7 @@ package World;
 import Entities.Hero;
 import Game.GameUI;
 import Items.Item;
-import Player.Party;
+import Parties.Party;
 import Utility.Inventory;
 
 
@@ -18,7 +18,7 @@ public class Market{
     private void viewMarketItems() {
         for (int i = 0; i < market_inventory.getInventorySize(); i++) {
             Item item = market_inventory.getItem(i);
-            System.out.println("[" + i + "] " + item.getName() + ": " + item.getPrice() + " gold " + "Required equip level : " + item.getLevel().getCurrentLevel() );
+            System.out.println("[" + i + "] " + item.getName() + ": cost " + item.getPrice() + " gold " + "| Required equip level : " + item.getLevel().getCurrentLevel() );
         }
     }
 

@@ -8,9 +8,12 @@ import Items.Armor;
 import Items.Potion;
 import Items.Spell;
 import Items.Weapon;
-import Player.Party;
+import Parties.Party;
 import Seeders.ItemSeeder;
 import Utility.Inventory;
+import World.TileTypes.BlockingTile;
+import World.TileTypes.CommonTile;
+import World.TileTypes.MarketTile;
 
 import java.util.ArrayList;
 import java.util.Collections;

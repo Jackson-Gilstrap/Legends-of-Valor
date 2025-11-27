@@ -5,6 +5,9 @@ import Factories.*;
 import Items.*;
 import Seeders.EntitySeeder;
 import World.*;
+import World.TileTypes.BlockingTile;
+import World.TileTypes.CommonTile;
+import World.TileTypes.MarketTile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +19,6 @@ public class GameController {
     private TileMap map;
     private EntitySeeder entitySeeder;
     private GameUI ui = new GameUI();
-    private Battle battle;
 
     private List<Hero> warriors = new ArrayList<>();
     private List<Hero> paladins = new ArrayList<>();
@@ -244,6 +246,10 @@ public class GameController {
                     }
                     Item item = hero.getInventory().getItem(inventory_choice);
                     if(item instanceof Weapon) {
+                        if(hero.getLevelObj().getCurrentLevel() < item.getLevel().getCurrentLevel()){
+                            System.out.println("Item is not equippable yet please level up");
+                            break;
+                        }
                         if(hero.getJacket().equipWeapon((Weapon) item)) {
                             hero.getInventory().removeItem(item);
                             System.out.println("Equipping "+ item.getName());
@@ -253,6 +259,10 @@ public class GameController {
                         break;
 
                     }else if (item instanceof Armor) {
+                        if(hero.getLevelObj().getCurrentLevel() < item.getLevel().getCurrentLevel()){
+                            System.out.println("Item is not equippable yet please level up");
+                            break;
+                        }
                         if(hero.getJacket().equipArmor((Armor) item)) {
                             hero.getInventory().removeItem(item);
                             System.out.println("Equipping "+ item.getName());
@@ -262,6 +272,10 @@ public class GameController {
                         break;
 
                     }else if (item instanceof Spell) {
+                        if(hero.getLevelObj().getCurrentLevel() < item.getLevel().getCurrentLevel()){
+                            System.out.println("Item is not equippable yet please level up");
+                            break;
+                        }
                         if(hero.getJacket().equipSpell((Spell) item)) {
                             hero.getInventory().removeItem(item);
                             System.out.println("Equipping "+ item.getName());
@@ -271,6 +285,10 @@ public class GameController {
                         break;
 
                     } else if (item instanceof Potion) {
+                        if(hero.getLevelObj().getCurrentLevel() < item.getLevel().getCurrentLevel()) {
+                            System.out.println("Item is not equippable yet please level up");
+                            break;
+                        }
                         if(hero.getJacket().equipPotion((Potion) item)) {
                             hero.getInventory().removeItem(item);
                             System.out.println("Equipping "+ item.getName());
@@ -418,7 +436,7 @@ public class GameController {
         }
 
         if(map.getTile(next_row, next_col) instanceof CommonTile) {
-            if(rollDie(9)) {
+            if(rollDie(7)) {
                 Battle battle = new Battle(map.getPlayerParty());
                 boolean player_survived = battle.battle();
                 if(!player_survived) return true; // game over

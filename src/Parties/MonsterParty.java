@@ -1,6 +1,5 @@
-package Player;
+package Parties;
 
-import Entities.Hero;
 import Entities.Monster;
 
 import java.util.ArrayList;

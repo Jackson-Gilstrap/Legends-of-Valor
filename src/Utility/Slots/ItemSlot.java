@@ -1,4 +1,4 @@
-package Utility;
+package Utility.Slots;
 
 import Items.Item;
 

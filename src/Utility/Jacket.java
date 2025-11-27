@@ -4,6 +4,7 @@ import Items.*;
 import Items.Armors.ChestPiece;
 import Items.Armors.Helmet;
 import Items.Armors.Leggings;
+import Utility.Slots.*;
 
 
 public class Jacket {

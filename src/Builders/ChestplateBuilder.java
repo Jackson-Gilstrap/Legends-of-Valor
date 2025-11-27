@@ -35,6 +35,6 @@ public class ChestplateBuilder {
     }
 
     public ChestPiece build() {
-        return new ChestPiece(type, name, price, level, damage_reduction);
+        return new ChestPiece(type, name, level, price, damage_reduction);
     }
 }

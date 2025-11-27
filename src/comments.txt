@@ -3,8 +3,6 @@ MAJOR FIXES - Game breaking cause runtime errors or prevent game feature from ru
 
 MINOR FIXES - small bugs that impact UX but don't cause runtime errors
 
-display cost next to items in market
-
 
 FEATURES TO BE ADDED
 feature - Damage scaling - hero and monsters

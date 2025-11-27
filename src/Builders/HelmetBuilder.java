@@ -36,6 +36,6 @@ public class HelmetBuilder {
     }
 
     public Helmet build() {
-        return new Helmet(type,name, price, level, damage_reduction);
+        return new Helmet(type,name, level, price, damage_reduction);
     }
 }

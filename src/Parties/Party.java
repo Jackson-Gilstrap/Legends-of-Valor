@@ -1,4 +1,4 @@
-package Player;
+package Parties;
 
 import Entities.Hero;
 import java.util.ArrayList;

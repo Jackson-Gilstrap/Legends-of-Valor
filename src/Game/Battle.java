@@ -5,8 +5,8 @@ import Entities.Monster;
 import Enums.PotionType;
 import Items.Potion;
 import Items.Spell;
-import Player.MonsterParty;
-import Player.Party;
+import Parties.MonsterParty;
+import Parties.Party;
 import Seeders.EntitySeeder;
 import Factories.*;
 

@@ -35,6 +35,6 @@ public class LeggingsBuilder {
     }
 
     public Leggings build() {
-        return new Leggings(type, name, price, level, damage_reduction);
+        return new Leggings(type, name, level, price, damage_reduction);
     }
 }
