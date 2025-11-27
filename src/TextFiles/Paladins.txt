@@ -1,7 +1,8 @@
-Name / health / mana / strength / dexterity / agility / damageReduction
-Alyndra Lightward,220,180,60,55,0.17,0.15
-Theron Pureheart,240,160,65,50,0.14,0.18
-Mariel Dawnguard,210,200,55,60,0.20,0.12
-Lorian Brightshield,230,170,70,48,0.13,0.20
-Seraphine Holyedge,200,210,50,62,0.22,0.10
-Galen Faithbinder,250,150,75,45,0.12,0.25
+Name / health / mana / attack / dexterity / agility / damageReduction
+
+Alyndra Lightward,220,180,60,55,0.16,0.06
+Theron Pureheart,240,150,70,48,0.14,0.04
+Mariel Dawnguard,210,210,52,62,0.13,0.03
+Lorian Brightshield,230,170,66,50,0.20,0.04
+Seraphine Holyedge,215,220,50,60,0.12,0.07
+Galen Faithbinder,250,160,68,47,0.11,0.08

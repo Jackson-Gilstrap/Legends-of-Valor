@@ -213,6 +213,7 @@ public class GameController {
                                 Item item = hero.getJacket().getSpells().unequipFromSlot();
                                 hero.getInventory().addItem(item);
                                 System.out.println("Unequipping " + item.getName() + "from " + slot_choice);
+                                break;
 
                             }
                             System.out.println("slot is unoccupied");

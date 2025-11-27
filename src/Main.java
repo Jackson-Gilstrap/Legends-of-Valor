@@ -1,7 +1,6 @@
 import Game.GameController;
 import Game.InputHandler;
 import Parties.Party;
-
 import World.TileMap;
 
 

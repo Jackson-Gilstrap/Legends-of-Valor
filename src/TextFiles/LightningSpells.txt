@@ -1,11 +1,15 @@
 Type/Name/Dexterity/ManaCost/Price/Level
-LIGHTNING,Spark Jolt,12,18,160,2
-LIGHTNING,Static Ripple,20,25,230,2
+LIGHTNING,Spark Jolt,15,18,160,2
+LIGHTNING,Static Ripple,23,25,230,2
+
 LIGHTNING,Thunder Lash,28,32,320,4
-LIGHTNING,Volt Spear,35,40,400,4
-LIGHTNING,Stormbreaker Charge,45,50,520,6
-LIGHTNING,Arc Surge,55,58,610,6
-LIGHTNING,Tempest Bolt,67,70,760,8
-LIGHTNING,Hypercurrent Blast,80,82,900,8
-LIGHTNING,Thunderlord’s Wrath,95,100,1150,10
-LIGHTNING,Heavenstrike Pulse,110,120,1450,10
+LIGHTNING,Volt Spear,34,40,400,4
+
+LIGHTNING,Stormbreaker Charge,40,50,520,6
+LIGHTNING,Arc Surge,48,58,610,6
+
+LIGHTNING,Tempest Bolt,58,70,760,8
+LIGHTNING,Hypercurrent Blast,70,82,900,8
+
+LIGHTNING,Thunderlord’s Wrath,84,100,1150,10
+LIGHTNING,Heavenstrike Pulse,108,120,1450,10

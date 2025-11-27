@@ -7,15 +7,16 @@ MP,Basic Mana Potion,40,90,1
 MP,Super Mana Potion,100,320,5
 MP,Hyper Mana Potion,200,650,10
 
-Attack,Basic Attack Potion,10,120,1
-Attack,Super Attack Potion,25,380,5
-Attack,Hyper Attack Potion,50,800,10
+Attack,Basic Attack Potion,7,120,1
+Attack,Super Attack Potion,18,380,5
+Attack,Hyper Attack Potion,32,800,10
 
-Dexterity,Basic Dexterity Potion,8,110,1
-Dexterity,Super Dexterity Potion,18,350,5
-Dexterity,Hyper Dexterity Potion,35,750,10
+Dexterity,Basic Dexterity Potion,7,110,1
+Dexterity,Super Dexterity Potion,17,350,5
+Dexterity,Hyper Dexterity Potion,28,750,10
 
-Agility,Basic Agility Potion,0.05,130,1
-Agility,Super Agility Potion,0.12,400,5
-Agility,Hyper Agility Potion,0.25,900,10
+Agility,Basic Agility Potion,0.03,130,1
+Agility,Super Agility Potion,0.07,400,5
+Agility,Hyper Agility Potion,0.12,900,10
+
 

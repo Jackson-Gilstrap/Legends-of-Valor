@@ -76,9 +76,9 @@ public class ItemSeeder {
             Spell spell = sf.createSpell(
                     data[1],                       // Name
                     Integer.parseInt(data[2]),     // Dexterity
-                    Integer.parseInt(data[3]),     // Mana Cost
+                    Integer.parseInt(data[5]),     // level
                     Integer.parseInt(data[4]),     // Price
-                    Integer.parseInt(data[5]),     // Level
+                    Integer.parseInt(data[3]),     // Mana cost
                     SpellType.valueOf(data[0])     // Type
             );
 

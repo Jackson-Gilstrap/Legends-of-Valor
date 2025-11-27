@@ -1,11 +1,16 @@
 Type/Name/Dexterity/ManaCost/Price/Level
-FIRE,Ember Spark,10,20,150,2
-FIRE,Flame Burst,18,28,220,2
-FIRE,Blazing Orb,25,35,300,4
-FIRE,Inferno Whip,32,40,380,4
-FIRE,Phoenix Flare,40,48,470,6
-FIRE,Scorching Spiral,48,55,560,6
+FIRE,Ember Spark,16,20,150,2
+FIRE,Flame Burst,24,28,220,2
+
+FIRE,Blazing Orb,30,35,300,4
+FIRE,Inferno Whip,36,40,380,4
+
+FIRE,Phoenix Flare,42,48,470,6
+FIRE,Scorching Spiral,50,55,560,6
+
 FIRE,Molten Wave,60,65,700,8
 FIRE,Pyroclasm Strike,72,75,820,8
-FIRE,Dragonfire Nova,85,90,1000,10
-FIRE,Apocalypse Flame,100,110,1300,10
+
+FIRE,Dragonfire Nova,88,90,1000,10
+FIRE,Apocalypse Flame,112,110,1300,10
+

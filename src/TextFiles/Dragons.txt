@@ -1,13 +1,15 @@
-Name/ Health/ Attack / Agility / DamageReduction/
-Desghidorrah,150,30,0.12,0.10
-Chrysophylax,130,22,0.10,0.08
-BunsenBurner,160,32,0.14,0.12
-Natsunomeryu,100,15,0.08,0.06
-TheScaleless,180,35,0.18,0.14
-Kas-Ethelinh,170,30,0.16,0.12
-Alexstraszan,180,35,0.20,0.15
-Phaarthurnax,160,28,0.15,0.11
-D-Maleficent,175,32,0.17,0.13
-TheWeatherbe,165,30,0.16,0.12
-Igneel,155,28,0.14,0.11
-BlueEyesWhite,175,33,0.18,0.13
+Name/ Health/ Attack / Agility / DamageReduction /
+Natsunomeryu,190,38,0.08,0.05
+Chrysophylax,210,42,0.09,0.06
+TheWeatherbe,220,44,0.10,0.06
+Igneel,210,26,0.32,0.05
+
+Desghidorrah,240,48,0.11,0.08
+BunsenBurner,260,50,0.13,0.09
+Kas-Ethelinh,270,52,0.12,0.10
+Phaarthurnax,250,54,0.14,0.09
+
+TheScaleless,290,56,0.15,0.11
+Alexstraszan,310,60,0.16,0.12
+BlueEyesWhite,280,62,0.14,0.10
+D-Maleficent,340,65,0.17,0.14
