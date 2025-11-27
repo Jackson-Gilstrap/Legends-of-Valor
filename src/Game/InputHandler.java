@@ -1,6 +1,6 @@
 package Game;
 
-import Game.GameUI;
+
 public class InputHandler {
 
     GameUI ui = new GameUI();

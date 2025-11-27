@@ -12,21 +12,7 @@ import Factories.*;
 
 import java.util.*;
 
-/**
- * Steps of a battle
- * 1. Battle requires player party from map // done
- * 2. initialize player party in the battle // done
- * 3. based on the parties level and number of heros spawn in a monsters party of equal level and number 1v1, 2v2,etc // done
- * 4. Players will be able to choose 1 of 4 options 1. view monsters current stats 2. Attack the monster 3. Use a spell on a monster 4. use a potion on a hero //done
- * 4.1 choosing 2 will always consume a turn choosing 3 or 4 will only consume a turn if the player has either a spell or potion equipped
- * 4.2 Player will then select the target monster or hero to receive 2-4 action
- * 4.3 repeat 4 loop until entire player party has chosen their action
- * 4.4 execute turns - if any monster faints -remove from monster party & give out rewards
- * 5. Remaining monsters will pick do their attack picking a random hero from the party list
- * 5.1 monster turn ends
- * 6. If all hero or all monsters die end the battle.
- *
- */
+
 public class Battle {
     private Party player_party;
     private MonsterParty monster_party;

@@ -1,25 +1,25 @@
 Type/name/damage_reduction/price/level
-Helmet,Leather Cap,0.06,90,1
-Helmet,Iron Helm,0.10,150,2
-Helmet,Steel Helm,0.15,230,3
-Helmet,Knight Helm,0.20,330,4
-Helmet,Mythril Visor,0.28,480,5
-Helmet,Dragonbone Helm,0.35,650,6
-Helmet,Obsidian Helm,0.45,850,7
+Helmet,Leather Cap,0.05,90,1
+Helmet,Iron Helm,0.08,150,2
+Helmet,Steel Helm,0.10,230,3
+Helmet,Knight Helm,0.14,330,4
+Helmet,Mythril Visor,0.17,480,5
+Helmet,Dragonbone Helm,0.20,650,6
+Helmet,Obsidian Helm,0.22,850,7
 
-Chestplate,Leather Jerkin,0.10,130,1
-Chestplate,Iron Breastplate,0.18,210,2
-Chestplate,Steel Cuirass,0.26,320,3
-Chestplate,Knight Armor,0.35,450,4
-Chestplate,Mythril Warplate,0.46,650,5
-Chestplate,Dragonbone Chestguard,0.58,900,6
-Chestplate,Obsidian Battleplate,0.70,1200,7
+Chestplate,Leather Jerkin,0.09,130,1
+Chestplate,Iron Breastplate,0.13,210,2
+Chestplate,Steel Cuirass,0.17,320,3
+Chestplate,Knight Armor,0.23,450,4
+Chestplate,Mythril Warplate,0.28,650,5
+Chestplate,Dragonbone Chestguard,0.33,900,6
+Chestplate,Obsidian Battleplate,0.38,1200,7
 
-Leggings,Leather Leggings,0.05,80,1
-Leggings,Iron Greaves,0.08,130,2
-Leggings,Steel Legplates,0.12,200,3
-Leggings,Knight Greaves,0.17,300,4
-Leggings,Mythril Legguards,0.23,450,5
-Leggings,Obsidian Legguards,0.32,650,6
-Leggings,Dragonbone Legwraps,0.40,850,7
+Leggings,Leather Leggings,0.04,80,1
+Leggings,Iron Greaves,0.05,130,2
+Leggings,Steel Legplates,0.07,200,3
+Leggings,Knight Greaves,0.09,300,4
+Leggings,Mythril Legguards,0.11,450,5
+Leggings,Obsidian Legguards,0.13,650,6
+Leggings,Dragonbone Legwraps,0.15,850,7
 

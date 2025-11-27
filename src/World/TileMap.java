@@ -55,29 +55,11 @@ public class TileMap {
         spawnParty();
     }
 
-    public String getTileMapName() {
-        return tile_map_name;
-    }
-    public int getNumRows() {
-        return rows;
-    }
-    public int getNumCols() {
-        return cols;
-    }
     public int getParty_row() {return party_row;}
     public int getParty_col() {return party_col;}
     public Party getPlayerParty() {return player_party;}
     public List<Tile> getMarkets() {return markets;}
     public Tile getTile(int row, int col) {return tile_map[row][col];}
-
-    private int getRandomRow() {
-        Random rand = new Random();
-        return rand.nextInt(rows - 1);
-    }
-    private int getRandomCol() {
-        Random rand = new Random();
-        return rand.nextInt(cols - 1);
-    }
 
     public boolean inBounds(int row, int col){
         return row >= 0 && row < rows && col >= 0 && col < cols;

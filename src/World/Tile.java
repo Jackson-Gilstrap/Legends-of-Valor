@@ -8,13 +8,7 @@ public abstract class Tile{
     private final String name;
     private final char symbol;
 
-    /**
-     *
-     * @param name - Name of the type of tile it is
-     * @param row - The row of the tile in its grid
-     * @param col - The column of the tile in its grid
-     * @param symbol - The Symbol of the tile for representation
-     */
+
     public Tile(String name, int row, int col, char symbol) {
         this.name = name;
         this.row = row;
