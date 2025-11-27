@@ -20,10 +20,6 @@ public class GameUI {
 
     }
 
-    public String askString(String prompt) {
-        System.out.println(prompt);
-        return in.nextLine();
-    }
 
 
 }

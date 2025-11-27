@@ -1,4 +1,7 @@
-package World;
+package World.TileTypes;
+
+import World.Market;
+import World.Tile;
 
 public class MarketTile extends Tile {
     // need to add a market object here

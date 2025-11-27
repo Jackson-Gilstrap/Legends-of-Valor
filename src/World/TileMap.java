@@ -8,10 +8,12 @@ import Items.Armor;
 import Items.Potion;
 import Items.Spell;
 import Items.Weapon;
-import Player.Party;
-import Seeders.EntitySeeder;
+import Parties.Party;
 import Seeders.ItemSeeder;
 import Utility.Inventory;
+import World.TileTypes.BlockingTile;
+import World.TileTypes.CommonTile;
+import World.TileTypes.MarketTile;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -19,13 +21,7 @@ import java.util.List;
 import java.util.Random;
 
 public class TileMap {
-    /*
-    The tile map consists will be a 2d array of Tiles of the various Types Common, Blocking, Market
-    Testing map size will be 5x5 so expect rebalancing
-    The map should have ~50,20,30 split
-    The map should know what tile is in what space on the map and based on that provide interactions
 
-     */
     private final String tile_map_name;
     private final int rows;
     private final int cols;
@@ -243,6 +239,7 @@ public class TileMap {
            for( Spell spell: spell_data ) {
                spells.add(spell);
            }
+//
 
        }
 
@@ -250,6 +247,7 @@ public class TileMap {
        for( Potion potion: potion_data ) {
            potions.add(potion);
        }
+
     }
 
     private List<Market> buildMarkets() {
@@ -263,10 +261,12 @@ public class TileMap {
         for (Armor a : armors) armorInv.addItem(a);
 
         Inventory spellInv = new Inventory();
-        // add seeds later
+
+        for (Spell s : spells) spellInv.addItem(s);
 
         Inventory potionInv = new Inventory();
         // add seeds later
+        for (Potion p : potions) potionInv.addItem(p);
 
         markets.add(new Market(weaponInv));
         markets.add(new Market(armorInv));

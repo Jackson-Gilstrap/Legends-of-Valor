@@ -1,5 +1,6 @@
 package Factories;
 
+import Entities.Entity;
 import Entities.Hero;
 import Builders.HeroBuilder;
 import Interfaces.HeroFactory;
@@ -18,5 +19,10 @@ public class PaladinFactory implements HeroFactory {
                 .setAgility(stats.getAgility())
                 .setDamageReduction(stats.getDamage_reduction())
                 .buildPaladin();
+    }
+
+    @Override
+    public Entity createEntity(String name, Stats stats, int level) {
+        return null;
     }
 }

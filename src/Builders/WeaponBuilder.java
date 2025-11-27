@@ -33,6 +33,6 @@ public class WeaponBuilder {
     }
 
 
-    public Weapon buildWeapon() {return new Weapon(name, price, level, attack, hands);}
+    public Weapon buildWeapon() {return new Weapon(name, price, attack ,level, hands);}
 
 }

@@ -1,4 +1,6 @@
-package World;
+package World.TileTypes;
+
+import World.Tile;
 
 public class CommonTile extends Tile {
 

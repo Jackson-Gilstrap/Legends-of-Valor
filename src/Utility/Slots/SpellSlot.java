@@ -1,4 +1,4 @@
-package Utility;
+package Utility.Slots;
 
 import Items.Spell;
 
@@ -25,7 +25,7 @@ public class SpellSlot extends ItemSlot<Spell> {
     }
 
     @Override
-    public int getBuffFromSlot(Spell spell) {
+    public double getBuffFromSlot(Spell spell) {
         if(getItem() != null){
             return spell.getDamage();
         }

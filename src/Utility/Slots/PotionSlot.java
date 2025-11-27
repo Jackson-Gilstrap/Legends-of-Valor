@@ -1,4 +1,4 @@
-package Utility;
+package Utility.Slots;
 
 import Items.Potion;
 
@@ -24,10 +24,10 @@ public class PotionSlot extends ItemSlot<Potion>{
     }
 
     @Override
-    public int getBuffFromSlot(Potion Potion) {
+    public double getBuffFromSlot(Potion Potion) {
         if(getItem() != null){
             return Potion.getEffectAmount();
         }
-        return 0;
+        return 0.00;
     }
 }

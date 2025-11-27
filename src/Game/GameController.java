@@ -5,9 +5,13 @@ import Factories.*;
 import Items.*;
 import Seeders.EntitySeeder;
 import World.*;
+import World.TileTypes.BlockingTile;
+import World.TileTypes.CommonTile;
+import World.TileTypes.MarketTile;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 
 public class GameController {
@@ -40,67 +44,100 @@ public class GameController {
 
     public void loadGameData() {
         List<Hero> warrior_data = entitySeeder.seedWarriors("src/TextFiles/warriors.txt");
-        for(Hero warrior : warrior_data){
-            warriors.add(warrior);
-        }
+        warriors.addAll(warrior_data);
 
         List<Hero> paladin_data = entitySeeder.seedPaladins("src/TextFiles/Paladins.txt");
-        for (Hero paladin : paladin_data){
-            paladins.add(paladin);
-        }
+        paladins.addAll(paladin_data);
         List<Hero> sorcerer_data = entitySeeder.seedSorcerers("src/TextFiles/Sorcerers.txt");
-        for (Hero sorcerer : sorcerer_data){
-            sorcerers.add(sorcerer);
-
-        }
-
+        sorcerers.addAll(sorcerer_data);
 
     }
 
     public void startGame() {
         loadGameData(); // loads heros into game
+        introduceGame();
         showHeroMenu(); // players choose their party
         gameLoop(); // run the game
     }
 
+    private void introduceGame() {
+        try {
+            System.out.println("Welcome to the world of Monsters vs Heros");
+            Thread.sleep(2000);
+            System.out.println();
+            System.out.println("The aim of the game is to take you party of heroes and battle monsters along your journey");
+            Thread.sleep(2000);
+            System.out.println("On your journey you will encounter various Dragons, ExoSkeletons, and Spirits");
+            Thread.sleep(2000);
+            System.out.println("The goal... Survive as long as possible");
+            Thread.sleep(3000);
+            System.out.println();
+            System.out.println();
+            System.out.println();
+            System.out.println("Good luck...");
+            System.out.println();
+
+        } catch (InterruptedException e) {
+            System.err.println("Thread was interrupted " + e.getMessage());
+
+            Thread.currentThread().interrupt();
+        }
+
+    }
+
+
+
     private void showHeroMenu() {
-        Scanner scanner = new Scanner(System.in);
+
+
+        final int PARTY_CAPACITY = 3;
+        System.out.println("MAX PARTY SIZE = "+ PARTY_CAPACITY);
+
 
         while (true) {
-            System.out.println("\n--- HERO SELECTION MENU ---");
-            System.out.println("1. Show Warriors");
-            System.out.println("2. Show Paladins");
-            System.out.println("3. Show Sorcerers");
-            System.out.println("0. Exit - Exiting this menu will start the game and you can't select anymore characters");
-            System.out.print("Enter choice: ");
 
-            String input = scanner.nextLine().trim();
+            if(map.getPlayerParty().getPartySize() >= PARTY_CAPACITY) {
+                System.out.println("Party is full no more heroes can be added to the party\n");
+                System.out.println("Starting game!...");
+                System.out.println();
+                return;
+            }
+
+            System.out.println("\n--- HERO SELECTION MENU ---");
+            System.out.println();
+            System.out.print("0. Start Game\t1. Add a warrior\t2. Add a Paladin\t3.Add a Sorcerer \nSelect: ");
+            int input = ui.askInt();
 
             switch (input) {
-                case "1":
+                case 1:
                     addHeroToParty(warriors);
                     break;
-                case "2":
+                case 2:
                     addHeroToParty(paladins);
                     break;
 
-                case "3":
+                case 3:
                     addHeroToParty(sorcerers);
                     break;
-                case "0" :
-                {
-                    System.out.println("Are you sure you want to start the game?");
-                    String choice = scanner.nextLine().trim();
+                case 0 :
+                    if (map.getPlayerParty().getPartySize() == 0) {
+                        System.out.println("You need at least one party size");
+                        break;
+
+                    }
+                    System.out.println();
+                    map.getPlayerParty().getPartyInfo();
+                    String choice = ui.askOneWord("Are you sure you want to start the game?");
                     if (choice.equalsIgnoreCase("yes")) {
                     System.out.println("Starting game!");
                     return;
                     }
                     break;
 
-                }
                 default:
                     System.out.println("Invalid choice. Please enter 0–3.");
             }
+
         }
 
     }
@@ -202,27 +239,64 @@ public class GameController {
                     }
                     System.out.println("Choose an item from your inventory");
                     int inventory_choice = ui.askInt();
+
+                    if(inventory_choice < 0 || inventory_choice >= hero.getInventory().getInventorySize()) {
+                        System.out.println("Invalid choice");
+                        break;
+                    }
                     Item item = hero.getInventory().getItem(inventory_choice);
                     if(item instanceof Weapon) {
-                        hero.getJacket().equipWeapon((Weapon) item);
-                        hero.getInventory().removeItem(item);
-                        System.out.println("Equipping "+ item.getName());
+                        if(hero.getLevelObj().getCurrentLevel() < item.getLevel().getCurrentLevel()){
+                            System.out.println("Item is not equippable yet please level up");
+                            break;
+                        }
+                        if(hero.getJacket().equipWeapon((Weapon) item)) {
+                            hero.getInventory().removeItem(item);
+                            System.out.println("Equipping "+ item.getName());
+                        }  else {
+                            System.out.println("Failed to equip " + item.getName());
+                        }
                         break;
+
                     }else if (item instanceof Armor) {
-                        hero.getJacket().equipArmor((Armor) item);
-                        hero.getInventory().removeItem(item);
-                        System.out.println("Equipping "+ item.getName());
+                        if(hero.getLevelObj().getCurrentLevel() < item.getLevel().getCurrentLevel()){
+                            System.out.println("Item is not equippable yet please level up");
+                            break;
+                        }
+                        if(hero.getJacket().equipArmor((Armor) item)) {
+                            hero.getInventory().removeItem(item);
+                            System.out.println("Equipping "+ item.getName());
+                        } else {
+                            System.out.println("Failed to equip " + item.getName());
+                        }
                         break;
+
                     }else if (item instanceof Spell) {
-                        hero.getJacket().equipSpell((Spell) item);
-                        hero.getInventory().removeItem(item);
-                        System.out.println("Equipping "+ item.getName());
+                        if(hero.getLevelObj().getCurrentLevel() < item.getLevel().getCurrentLevel()){
+                            System.out.println("Item is not equippable yet please level up");
+                            break;
+                        }
+                        if(hero.getJacket().equipSpell((Spell) item)) {
+                            hero.getInventory().removeItem(item);
+                            System.out.println("Equipping "+ item.getName());
+                        } else {
+                            System.out.println("Failed to equip " + item.getName());
+                        }
                         break;
+
                     } else if (item instanceof Potion) {
-                        hero.getJacket().equipPotion((Potion) item);
-                        hero.getInventory().removeItem(item);
-                        System.out.println("Equipping "+ item.getName());
+                        if(hero.getLevelObj().getCurrentLevel() < item.getLevel().getCurrentLevel()) {
+                            System.out.println("Item is not equippable yet please level up");
+                            break;
+                        }
+                        if(hero.getJacket().equipPotion((Potion) item)) {
+                            hero.getInventory().removeItem(item);
+                            System.out.println("Equipping "+ item.getName());
+                        } else {
+                            System.out.println("Failed to equip " + item.getName());
+                        }
                         break;
+
                     }else {
                         System.out.println("Not a valid item to equip");
                         continue;
@@ -239,15 +313,16 @@ public class GameController {
     }
 
     private void addHeroToParty(List<Hero> list)  {
-        Scanner scanner = new Scanner(System.in);
 
         System.out.println("\nChoose a hero to add to your party:");
-        for (int i = 1; i <= list.size(); i++) {
-            System.out.println(i + ". " + list.get(i - 1));
+        for (int i = 0; i < list.size(); i++) {
+            System.out.println((i+1) + ". " + list.get(i));
         }
+        System.out.println();
 
         System.out.print("Enter choice (1 - " + list.size() + "): ");
-        int input = scanner.nextInt();
+        int input = ui.askInt();
+        System.out.println();
 
         int index = input - 1;
 
@@ -255,10 +330,10 @@ public class GameController {
             System.out.println("Invalid choice.");
             return;
         }
-
         map.getPlayerParty().addHeroToParty(list.get(index));
-
-
+        System.out.println(list.get(index).getName() + " has been added to the party");
+        System.out.println();
+        list.remove(index);
     }
 
 
@@ -268,7 +343,6 @@ public class GameController {
 
        // add method that checks entire party health if 0 end game
         while (!gameOver) {
-
             System.out.println(map.render());
 
             String command = inputHandler.getInput();
@@ -285,13 +359,10 @@ public class GameController {
             case "S":
             case "A":
             case "D":
-
-                handleMovement(command);
-                return false;
+                return handleMovement(command);
 
             case "F":
                 interactMarket();
-                // input later
                 return false;
 
             case "I":
@@ -349,17 +420,32 @@ public class GameController {
         }
     }
 
-    private boolean handleBattleCommand(String command) {
-        return true;
-    }
 
-    private void handleMovement(String cmd) {
+    private boolean handleMovement(String cmd) {
         int[] delta = mapInputToVector(cmd);
-        if(map.getTile(map.getParty_row() + delta[0], map.getParty_col() + delta[1]) instanceof BlockingTile) {
-            return; // tile should be a blocking tile
+
+        int next_row = map.getParty_row() + delta[0];
+        int next_col = map.getParty_col() + delta[1];
+
+        if(!map.inBounds(next_row, next_col)) {
+            return false;
+        }
+
+        if(map.getTile(next_row, next_col) instanceof BlockingTile) {
+            return false;
+        }
+
+        if(map.getTile(next_row, next_col) instanceof CommonTile) {
+            if(rollDie(7)) {
+                Battle battle = new Battle(map.getPlayerParty());
+                boolean player_survived = battle.battle();
+                if(!player_survived) return true; // game over
+
+            }
+
         }
         map.moveParty(delta[0], delta[1]);
-
+        return false;
     }
 
     private void interactMarket() {
@@ -382,6 +468,13 @@ public class GameController {
             default:
                 return new int[]{0, 0};
         }
+    }
+
+    private boolean rollDie(int sides) {
+        Random random = new Random();
+        int die1 = random.nextInt(sides);
+        int die2 = random.nextInt(sides);
+        return die1 == die2;
     }
 
 

@@ -49,9 +49,9 @@ public class HeroBuilder {
 
 
 
-    public Warrior buildWarrior() {return new Warrior(name, health, mana, attack, dexterity, agility, damage_reduction, gold);}
-    public Sorcerer buildSorcerer() {return new Sorcerer(name, health, mana, attack, dexterity, agility, damage_reduction, gold);}
-    public Paladin buildPaladin() {return new Paladin(name, health, mana, attack, dexterity, agility, damage_reduction, gold);}
+    public Warrior buildWarrior() {return new Warrior(name, health, mana, attack, dexterity, agility, damage_reduction);}
+    public Sorcerer buildSorcerer() {return new Sorcerer(name, health, mana, attack, dexterity, agility, damage_reduction);}
+    public Paladin buildPaladin() {return new Paladin(name, health, mana, attack, dexterity, agility, damage_reduction);}
 
 
 
