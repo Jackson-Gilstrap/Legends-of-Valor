@@ -1,0 +1,15 @@
+Name/health/damage/defense/dodge chance
+BigBad-Wolf,120,34,0.06,0.14
+WickedWitch,130,35,0.07,0.16
+Brandobaris,135,36,0.07,0.18
+
+Cyrrollalee,150,40,0.09,0.19
+Aasterinian,155,41,0.09,0.20
+St-Shargaas,155,42,0.10,0.21
+DocOck,160,42,0.10,0.20
+
+Chronepsish,170,44,0.11,0.21
+St-Yeenoghu,175,46,0.12,0.22
+Kiaransalee,180,47,0.12,0.23
+Merrshaullk,185,48,0.13,0.22
+Exodia,190,50,0.13,0.24

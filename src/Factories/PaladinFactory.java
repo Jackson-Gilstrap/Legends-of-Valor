@@ -1,0 +1,28 @@
+package Factories;
+
+import Entities.Entity;
+import Entities.Hero;
+import Builders.HeroBuilder;
+import Interfaces.HeroFactory;
+import Utility.Stats;
+
+public class PaladinFactory implements HeroFactory {
+
+    @Override
+    public Hero createEntity(String name, Stats stats) {
+        return new HeroBuilder()
+                .setName(name)
+                .setHealth(stats.getHealth())
+                .setMana(stats.getAttack())
+                .setAttack(stats.getAttack())
+                .setDexterity(stats.getDexterity())
+                .setAgility(stats.getAgility())
+                .setDamageReduction(stats.getDamage_reduction())
+                .buildPaladin();
+    }
+
+    @Override
+    public Entity createEntity(String name, Stats stats, int level) {
+        return null;
+    }
+}

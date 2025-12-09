@@ -1,0 +1,21 @@
+Weapons -  Name/Attack/required hands/price/level
+
+Bronze Sword,12,1,120,1
+Iron Sword,18,1,180,2
+Steel Sword,25,1,250,3
+Knight’s Sword,32,1,330,4
+Mythril Sword,42,1,450,5
+Dragonbone Sword,54,1,600,6
+Obsidian Sword,68,1,800,7
+Eternal Saber,84,1,1100,8
+Royal Sunblade,100,1,1400,9
+Divine Sword of Dawn,120,1,1800,10
+
+Greatsword,20,2,200,1
+Steel Greatsword,30,2,300,2
+Knight’s Claymore,40,2,420,3
+Warrior’s Zweihander,52,2,560,4
+Mythril Greatblade,68,2,750,5
+
+
+

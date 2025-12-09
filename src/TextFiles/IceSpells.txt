@@ -1,0 +1,15 @@
+Type/Name/Dexterity/ManaCost/Price/Level
+ICE,Frost Shard,14,20,150,2
+ICE,Chill Bloom,22,28,220,2
+
+ICE,Glacier Spike,26,36,310,4
+ICE,Winter’s Grasp,32,42,390,4
+
+ICE,Arctic Pulse,38,50,520,6
+ICE,Blizzard Edge,46,58,600,6
+
+ICE,Frozen Cyclone,56,70,760,8
+ICE,Hoarfrost Burst,66,82,900,8
+
+ICE,Eternal Freeze,80,100,1200,10
+ICE,Absolute Zero,104,130,1500,10

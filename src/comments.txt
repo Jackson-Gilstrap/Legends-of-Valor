@@ -1,0 +1,15 @@
+
+MAJOR FIXES - Game breaking cause runtime errors or prevent game feature from running
+
+MINOR FIXES - small bugs that impact UX but don't cause runtime errors
+
+
+FEATURES TO BE ADDED
+feature - Damage scaling - hero and monsters
+feature - Item scaling
+
+NEW IDEAS
+
+idea - Separate the market buy output for helms/chest/leggings - same for spells and potions better readability
+
+

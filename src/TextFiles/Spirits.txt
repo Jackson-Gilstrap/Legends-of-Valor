@@ -1,0 +1,15 @@
+Name/health/damage/defense/dodge chance
+Casper,100,21,0.05,0.16
+Blinky,115,23,0.05,0.18
+Melchiresas,125,24,0.06,0.19
+
+Andromalius,135,26,0.07,0.20
+Andrealphus,145,27,0.07,0.21
+Rakkshasass,150,28,0.08,0.22
+Chiang-shih,155,29,0.08,0.23
+Jormunngand,160,30,0.09,0.21
+
+Taltecuhtli,170,29,0.09,0.23
+FallenAngel,175,32,0.10,0.24
+Ereshkigall,185,34,0.11,0.25
+

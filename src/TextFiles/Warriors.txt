@@ -1,0 +1,11 @@
+Name / health / mana / attack / dexterity / agility / damageReduction
+
+Clyde Stonebreaker,260,120,72,42,0.15,0.05
+Garruk Ironfist,290,110,82,36,0.11,0.04
+Rogan Bloodhelm,270,115,78,40,0.14,0.04
+Duran Steelsoul,260,135,68,46,0.16,0.07
+Thorn Shieldbearer,300,100,70,34,0.09,0.08
+Brutus Stormcaller,245,145,65,50,0.18,0.03
+
+
+

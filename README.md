@@ -1,4 +1,4 @@
-# Legends of Valor - Text based SOBA
+```# Legends of Valor - Text based SOBA
 
 ## Overview
 From the world of Monsters vs Heroes we land in the battle arena of Valor. 
