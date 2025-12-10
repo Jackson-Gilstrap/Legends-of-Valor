@@ -4,11 +4,12 @@ import Entities.Hero;
 import Factories.*;
 import Items.*;
 import Seeders.EntitySeeder;
-import World.*;
-import World.Maps.TileMap;
-import World.Tiles.BlockingTile;
-import World.Tiles.CommonTile;
-import World.Tiles.MarketTile;
+import WorldSets.*;
+import WorldSets.Maps.World;
+import WorldSets.Spaces.MarketSpace;
+import WorldSets.Spaces.ObstacleSpace;
+import WorldSets.Spaces.PlainSpace;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +18,7 @@ import java.util.Scanner;
 
 public class GameController {
     private InputHandler inputHandler;
-    private TileMap map;
+    private World map;
     private EntitySeeder entitySeeder;
     private GameUI ui = new GameUI();
 
@@ -27,7 +28,7 @@ public class GameController {
 
 
 
-    public GameController(InputHandler inputHandler, TileMap map) {
+    public GameController(InputHandler inputHandler, World map) {
         this.inputHandler = inputHandler;
         this.map = map;
         this.entitySeeder = new EntitySeeder(
@@ -394,7 +395,7 @@ public class GameController {
                 return false;
 
             case "T":
-                if (map.getTile(map.getParty_row(), map.getParty_col()) instanceof MarketTile) {
+                if (map.getSpace(map.getParty_row(), map.getParty_col()) instanceof MarketSpace) {
                     System.out.println("Market fast travel locations\n Copy the desired coordinates to fast travel");
                     for(Space market: map.getMarkets()) {
                         System.out.println("Coordinates: " + market.getRow() + "," + market.getCol());
@@ -433,11 +434,11 @@ public class GameController {
             return false;
         }
 
-        if(map.getTile(next_row, next_col) instanceof BlockingTile) {
+        if(map.getSpace(next_row, next_col) instanceof ObstacleSpace) {
             return false;
         }
 
-        if(map.getTile(next_row, next_col) instanceof CommonTile) {
+        if(map.getSpace(next_row, next_col) instanceof PlainSpace) {
             if(rollDie(7)) {
                 Battle battle = new Battle(map.getPlayerParty());
                 boolean player_survived = battle.battle();
@@ -451,8 +452,8 @@ public class GameController {
     }
 
     private void interactMarket() {
-        if(map.getTile(map.getParty_row(), map.getParty_col()) instanceof MarketTile) {
-            Market market = ((MarketTile) map.getTile(map.getParty_row(), map.getParty_col())).getMarket();
+        if(map.getSpace(map.getParty_row(), map.getParty_col()) instanceof MarketSpace) {
+            Market market = ((MarketSpace) map.getSpace(map.getParty_row(), map.getParty_col())).getMarket();
             market.enterMarket(ui, map.getPlayerParty());
         }
     }

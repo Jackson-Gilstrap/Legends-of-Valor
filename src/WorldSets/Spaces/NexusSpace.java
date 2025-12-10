@@ -1,6 +1,6 @@
-package World.Spaces;
+package WorldSets.Spaces;
 
-import World.Space;
+import WorldSets.Space;
 
 public class NexusSpace extends Space {
     // needs to hold state of either a Monster or Hero

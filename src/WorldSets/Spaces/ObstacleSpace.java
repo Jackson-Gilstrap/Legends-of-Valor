@@ -1,4 +1,4 @@
-package World.Spaces;
+package WorldSets.Spaces;
 
 public class ObstacleSpace extends PlainSpace{
 
@@ -11,5 +11,7 @@ public class ObstacleSpace extends PlainSpace{
     public boolean canEnter() {
         return false;
     }
+
+    // NEED TO REPRESENT AT A SINGLE X OR A FEW LESS THAN THE WALL
 
 }

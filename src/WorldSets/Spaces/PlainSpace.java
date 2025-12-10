@@ -1,6 +1,6 @@
-package World.Spaces;
+package WorldSets.Spaces;
 
-import World.Space;
+import WorldSets.Space;
 
 public class PlainSpace extends Space {
     private boolean obstacle;

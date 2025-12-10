@@ -1,21 +1,26 @@
-package World.Maps;
+package WorldSets.Maps;
 
-import World.Map;
-import World.Space;
-import World.Spaces.NexusSpace;
-import World.Spaces.PlainSpace;
-import World.Spaces.WallSpace;
+import WorldSets.MapSet;
+import WorldSets.Space;
+import WorldSets.Spaces.NexusSpace;
+import WorldSets.Spaces.PlainSpace;
+import WorldSets.Spaces.WallSpace;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Arena extends Map {
+public class Arena extends MapSet {
     private final Space[][] arena;
 
     public Arena(int rows, int cols) {
         super(rows, cols);
         this.arena = new Space[cols][rows];
         build();
+    }
+
+    @Override
+    public Space getSpace(int row, int col) {
+        return arena[row][col];
     }
 
     protected void build() {

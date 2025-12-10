@@ -1,15 +1,37 @@
 package Parties;
 
 import Entities.Hero;
+import Interfaces.Positionable;
+
 import java.util.ArrayList;
 
 
-public class Party {
+public class Party implements Positionable {
 
     private final ArrayList<Hero> hero_party;
+    private int row;
+    private int col;
 
-    public Party() {
+    public Party(int row, int col) {
         hero_party = new ArrayList<>();
+        this.row = row;
+        this.col = col;
+
+    }
+
+    @Override
+    public int getRow() {
+        return row;
+    }
+    @Override
+    public int getCol() {
+        return col;
+    }
+
+    @Override
+    public void setPosition(int row, int col) {
+        this.row = row;
+        this.col = col;
     }
 
     public void addHeroToParty(Hero entity) {

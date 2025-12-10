@@ -1,4 +1,4 @@
-package World;
+package WorldSets;
 
 public abstract class Tile extends Space{
     private final char symbol;

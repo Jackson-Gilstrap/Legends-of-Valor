@@ -1,4 +1,4 @@
-package World;
+package WorldSets;
 
 import Entities.Hero;
 import Game.GameUI;

@@ -1,4 +1,4 @@
-package World.Maps;
+package WorldSets.Maps;
 
 import Factories.ArmorFactory;
 import Factories.PotionFactory;
@@ -11,33 +11,32 @@ import Items.Weapon;
 import Parties.Party;
 import Seeders.ItemSeeder;
 import Utility.Inventory;
-import World.Map;
-import World.Market;
-import World.Tile;
-import World.Tiles.BlockingTile;
-import World.Tiles.CommonTile;
-import World.Tiles.MarketTile;
-
+import WorldSets.MapSet;
+import WorldSets.Market;
+import WorldSets.Space;
+import WorldSets.Spaces.MarketSpace;
+import WorldSets.Spaces.ObstacleSpace;
+import WorldSets.Spaces.PlainSpace;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-public class TileMap extends Map {
-    private final Tile[][] tile_map;
+public class World extends MapSet {
+    private final Space[][] world_map;
     private final Party player_party;
     private int party_row;
     private int party_col;
-    private List<Tile> markets = new ArrayList<>();
+    private List<Space> markets = new ArrayList<>();
     private ItemSeeder item_seeder;
     private List<Weapon> weapons = new ArrayList<>();
     private List<Armor> armors = new ArrayList<>();
     private List<Spell> spells = new ArrayList<>();
     private List<Potion> potions = new ArrayList<>();
 
-    public TileMap(int rows, int cols, Party player_party) {
+    public World(int rows, int cols, Party player_party) {
         super(rows, cols);
-        this.tile_map = new Tile[rows][cols];
+        this.world_map = new Space[rows][cols];
 
 
         this.player_party = player_party;
@@ -55,8 +54,8 @@ public class TileMap extends Map {
     public int getParty_row() {return party_row;}
     public int getParty_col() {return party_col;}
     public Party getPlayerParty() {return player_party;}
-    public List<Tile> getMarkets() {return markets;}
-    public Tile getTile(int row, int col) {return tile_map[row][col];}
+    public List<Space> getMarkets() {return markets;}
+    public Space getSpace(int row, int col) {return world_map[row][col];}
 
 
 
@@ -67,8 +66,8 @@ public class TileMap extends Map {
             int r = rand.nextInt(super.getRows());
             int c = rand.nextInt(super.getCols());
 
-            // Must be a CommonTile
-            if (tile_map[r][c] instanceof CommonTile) {
+            // Must be a CommonSpace
+            if (world_map[r][c] instanceof PlainSpace) {
                 this.party_row = r;
                 this.party_col = c;
                 return;
@@ -90,12 +89,12 @@ public class TileMap extends Map {
             System.out.println("You decide that its best not to proceed.");
         }
 
-        if(tile_map[new_row][new_col] instanceof BlockingTile){
+        if(world_map[new_row][new_col] instanceof ObstacleSpace){
             System.out.println("There appears to be a massive rock formation blocking you path...");
             System.out.println("You imagine there is some way around it.");
         }
 
-        if(tile_map[new_row][new_col] instanceof MarketTile) {
+        if(world_map[new_row][new_col] instanceof MarketSpace) {
             System.out.println("You have reached a market... Press f to enter or t to traval to another market");
         }
 
@@ -110,7 +109,7 @@ public class TileMap extends Map {
             return false;
         }
 
-        if(tile_map[target_row][target_col] instanceof MarketTile){
+        if(world_map[target_row][target_col] instanceof MarketSpace){
             party_row = target_row;
             party_col = target_col;
             System.out.println("You begin to see your body glow bright.");
@@ -127,35 +126,35 @@ public class TileMap extends Map {
     protected void build() {
         loadMarketData();
         List<Market> mkt_objs = buildMarkets();
-        List<Tile> tiles = new ArrayList<>();
+        List<Space> spaces = new ArrayList<>();
         int total_tiles = super.getRows() * super.getCols();
         for(int i = 0; i < 4; i++){
-            tiles.add(new MarketTile("Market",-1,-1, mkt_objs.get(i)));
+            spaces.add(new MarketSpace("Market",-1,-1, mkt_objs.get(i)));
         }
 
         int remaining_tiles = total_tiles - 4;
         int num_blocking_tiles = (int)Math.round(remaining_tiles * 0.10);
         int num_common_tiles = remaining_tiles - num_blocking_tiles;
         for (int i = 0; i < num_blocking_tiles; i++) {
-            tiles.add(new BlockingTile("Inaccessible", -1, -1));
+            spaces.add(new ObstacleSpace("Obstacle", -1, -1));
         }
         for (int i = 0; i < num_common_tiles; i++) {
-            tiles.add(new CommonTile("Common", -1, -1));
+            spaces.add(new PlainSpace("Plain", -1, -1));
         }
-        Collections.shuffle(tiles);
+        Collections.shuffle(spaces);
 
         int tiles_index = 0;
         for(int row = 0; row < super.getRows(); row++){
             for(int col = 0; col < super.getCols(); col++){
 
-                Tile tile = tiles.get(tiles_index++);
+                Space space = spaces.get(tiles_index++);
 
-                tile.setPosition(row, col);
+                space.setPosition(row, col);
 
-                tile_map[row][col] = tile;
+                world_map[row][col] = space;
 
-                if(tile instanceof MarketTile){
-                    markets.add(tile);
+                if(space instanceof MarketSpace){
+                    markets.add(space);
                 }
 
             }
@@ -176,7 +175,7 @@ public class TileMap extends Map {
                 if (r == party_row && c == party_col) {
                     sb.append(" P |");
                 } else {
-                    sb.append(" ").append(tile_map[r][c].getSymbol()).append(" |");
+                    sb.append(" ").append(world_map[r][c].getName().toUpperCase().charAt(0)).append(" |");
                 }
             }
             sb.append('\n');
