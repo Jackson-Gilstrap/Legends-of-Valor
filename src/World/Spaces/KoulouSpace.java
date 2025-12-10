@@ -1,6 +1,8 @@
-package World;
+package World.Spaces;
 
-public class KoulouSpace extends Space{
+import World.Space;
+
+public class KoulouSpace extends Space {
 
     public KoulouSpace(String name, int row, int col){
         super(name,row,col);

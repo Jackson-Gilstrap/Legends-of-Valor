@@ -1,4 +1,4 @@
-package World;
+package World.Maps;
 
 import Factories.ArmorFactory;
 import Factories.PotionFactory;
@@ -11,21 +11,19 @@ import Items.Weapon;
 import Parties.Party;
 import Seeders.ItemSeeder;
 import Utility.Inventory;
-import World.TileTypes.BlockingTile;
-import World.TileTypes.CommonTile;
-import World.TileTypes.MarketTile;
+import World.Map;
+import World.Market;
+import World.Tile;
+import World.Tiles.BlockingTile;
+import World.Tiles.CommonTile;
+import World.Tiles.MarketTile;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-public class TileMap {
-
-    private final String tile_map_name;
-    private final int rows;
-    private final int cols;
-
+public class TileMap extends Map {
     private final Tile[][] tile_map;
     private final Party player_party;
     private int party_row;
@@ -37,11 +35,10 @@ public class TileMap {
     private List<Spell> spells = new ArrayList<>();
     private List<Potion> potions = new ArrayList<>();
 
-    public TileMap(int rows, int cols, String tile_map_name, Party player_party) {
+    public TileMap(int rows, int cols, Party player_party) {
+        super(rows, cols);
         this.tile_map = new Tile[rows][cols];
-        this.tile_map_name = tile_map_name;
-        this.rows = rows;
-        this.cols = cols;
+
 
         this.player_party = player_party;
         this.item_seeder = new ItemSeeder(
@@ -51,7 +48,7 @@ public class TileMap {
                 new PotionFactory()
         );
 
-        buildMap();
+        build();
         spawnParty();
     }
 
@@ -61,16 +58,14 @@ public class TileMap {
     public List<Tile> getMarkets() {return markets;}
     public Tile getTile(int row, int col) {return tile_map[row][col];}
 
-    public boolean inBounds(int row, int col){
-        return row >= 0 && row < rows && col >= 0 && col < cols;
-    }
+
 
     private void spawnParty( ) {
         Random rand = new Random();
 
         while (true) {
-            int r = rand.nextInt(rows);
-            int c = rand.nextInt(cols);
+            int r = rand.nextInt(super.getRows());
+            int c = rand.nextInt(super.getCols());
 
             // Must be a CommonTile
             if (tile_map[r][c] instanceof CommonTile) {
@@ -129,11 +124,11 @@ public class TileMap {
 
     }
 
-    private void buildMap() {
+    protected void build() {
         loadMarketData();
         List<Market> mkt_objs = buildMarkets();
         List<Tile> tiles = new ArrayList<>();
-        int total_tiles = rows * cols;
+        int total_tiles = super.getRows() * super.getCols();
         for(int i = 0; i < 4; i++){
             tiles.add(new MarketTile("Market",-1,-1, mkt_objs.get(i)));
         }
@@ -150,8 +145,8 @@ public class TileMap {
         Collections.shuffle(tiles);
 
         int tiles_index = 0;
-        for(int row = 0; row < rows; row++){
-            for(int col = 0; col < cols; col++){
+        for(int row = 0; row < super.getRows(); row++){
+            for(int col = 0; col < super.getCols(); col++){
 
                 Tile tile = tiles.get(tiles_index++);
 
@@ -170,13 +165,13 @@ public class TileMap {
     public String render() {
         StringBuilder sb = new StringBuilder();
 
-        for (int r = 0; r < rows; r++) {
+        for (int r = 0; r < super.getRows(); r++) {
 
             // Top border of the row
             sb.append(drawHorizontalBorder()).append('\n');
 
             sb.append("|");
-            for (int c = 0; c < cols; c++) {
+            for (int c = 0; c < super.getCols(); c++) {
 
                 if (r == party_row && c == party_col) {
                     sb.append(" P |");
@@ -197,7 +192,7 @@ public class TileMap {
     private String drawHorizontalBorder() {
         StringBuilder sb = new StringBuilder();
         sb.append("+");
-        for (int i = 0; i < cols; i++) {
+        for (int i = 0; i < super.getCols(); i++) {
             sb.append("---+");
         }
         return sb.toString();
@@ -207,35 +202,34 @@ public class TileMap {
 
     private void loadMarketData() {
         List<Weapon> weapon_data = item_seeder.seedWeapons("src/TextFiles/Weaponry.txt");
-      for( Weapon weapon: weapon_data ) {
-           weapons.add(weapon);
-      }
-       List<Armor> armor_data = item_seeder.seedArmors("src/TextFiles/Armory.txt");
-       for( Armor armor: armor_data ) {
-           armors.add(armor);
-       }
+        for( Weapon weapon: weapon_data ) {
+            weapons.add(weapon);
+        }
+        List<Armor> armor_data = item_seeder.seedArmors("src/TextFiles/Armory.txt");
+        for( Armor armor: armor_data ) {
+            armors.add(armor);
+        }
 
-       String[] files =  {"src/TextFiles/FireSpells.txt","src/TextFiles/IceSpells.txt", "src/TextFiles/LightningSpells.txt"};
-       for (String file : files) {
-           List<Spell> spell_data = item_seeder.seedSpells(file);
-           for( Spell spell: spell_data ) {
-               spells.add(spell);
-           }
+        String[] files =  {"src/TextFiles/FireSpells.txt","src/TextFiles/IceSpells.txt", "src/TextFiles/LightningSpells.txt"};
+        for (String file : files) {
+            List<Spell> spell_data = item_seeder.seedSpells(file);
+            for( Spell spell: spell_data ) {
+                spells.add(spell);
+            }
 //
 
-       }
+        }
 
-       List<Potion> potion_data = item_seeder.seedPotions("src/TextFiles/Potions.txt");
-       for( Potion potion: potion_data ) {
-           potions.add(potion);
-       }
+        List<Potion> potion_data = item_seeder.seedPotions("src/TextFiles/Potions.txt");
+        for( Potion potion: potion_data ) {
+            potions.add(potion);
+        }
 
     }
 
     private List<Market> buildMarkets() {
         List<Market> markets = new ArrayList<>();
 
-        // Build Inventories
         Inventory weaponInv = new Inventory();
         for (Weapon w : weapons) weaponInv.addItem(w);
 
@@ -247,7 +241,6 @@ public class TileMap {
         for (Spell s : spells) spellInv.addItem(s);
 
         Inventory potionInv = new Inventory();
-        // add seeds later
         for (Potion p : potions) potionInv.addItem(p);
 
         markets.add(new Market(weaponInv));

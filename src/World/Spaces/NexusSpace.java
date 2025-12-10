@@ -1,8 +1,8 @@
-package World;
+package World.Spaces;
 
-import java.util.ArrayList;
+import World.Space;
 
-public class NexusSpace extends Space{
+public class NexusSpace extends Space {
     // needs to hold state of either a Monster or Hero
     // need to hold state of a global market
 

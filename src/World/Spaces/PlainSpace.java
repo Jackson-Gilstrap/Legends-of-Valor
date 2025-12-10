@@ -1,6 +1,8 @@
-package World;
+package World.Spaces;
 
-public class PlainSpace extends Space{
+import World.Space;
+
+public class PlainSpace extends Space {
     private boolean obstacle;
 
     public PlainSpace(String name, int row, int col) {

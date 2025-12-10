@@ -1,6 +1,8 @@
-package World;
+package World.Spaces;
 
-public class BushSpace extends Space{
+import World.Space;
+
+public class BushSpace extends Space {
 
     public BushSpace(String name, int row, int col) {
         super(name, row, col);

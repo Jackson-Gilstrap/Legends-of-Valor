@@ -5,9 +5,10 @@ import Factories.*;
 import Items.*;
 import Seeders.EntitySeeder;
 import World.*;
-import World.TileTypes.BlockingTile;
-import World.TileTypes.CommonTile;
-import World.TileTypes.MarketTile;
+import World.Maps.TileMap;
+import World.Tiles.BlockingTile;
+import World.Tiles.CommonTile;
+import World.Tiles.MarketTile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -395,7 +396,7 @@ public class GameController {
             case "T":
                 if (map.getTile(map.getParty_row(), map.getParty_col()) instanceof MarketTile) {
                     System.out.println("Market fast travel locations\n Copy the desired coordinates to fast travel");
-                    for(Tile market: map.getMarkets()) {
+                    for(Space market: map.getMarkets()) {
                         System.out.println("Coordinates: " + market.getRow() + "," + market.getCol());
                     }
                     Scanner scanner = new Scanner(System.in);

@@ -12,6 +12,7 @@ public abstract class Hero extends Entity implements Levelable {
     private final Stats stats;
     private final Jacket jacket;
     private final Wallet wallet;
+    private final char symbol;
 
 
     protected Hero(String name, int health, int mana, int attack, int dexterity, double agility, double damage_reduction){
@@ -31,6 +32,8 @@ public abstract class Hero extends Entity implements Levelable {
                 .agility(agility)
                 .damage_reduction(damage_reduction)
                 .buildStats();
+
+        this.symbol = 'H';
 
 
     }
@@ -52,7 +55,7 @@ public abstract class Hero extends Entity implements Levelable {
     private void setExpToNextLevel() {
         this.to_next_level = 10 * super.getLevelObj().getCurrentLevel();
     }
-
+    public char getSymbol() {return symbol;}
     public void viewStats(){
         System.out.println(stats.toString());
         jacket.viewJacket();

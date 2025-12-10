@@ -1,6 +1,8 @@
-package World;
+package World.Spaces;
 
-public class WallSpace extends Space{
+import World.Space;
+
+public class WallSpace extends Space {
     /**
      *
      * @param name

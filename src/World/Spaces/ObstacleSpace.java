@@ -1,4 +1,4 @@
-package World;
+package World.Spaces;
 
 public class ObstacleSpace extends PlainSpace{
 
