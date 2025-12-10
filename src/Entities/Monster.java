@@ -10,6 +10,7 @@ NEXT GOAL FOCUS ON THE STAT BREAKDOWN
 public abstract class Monster extends Entity {
     private Stats stats;
     private int gold_drop, experience_drop;
+    private char symbol;
 
 
     public Monster(String name, int health, int attack, double agility, double damage_reduction, int level) {
@@ -22,6 +23,7 @@ public abstract class Monster extends Entity {
                 .buildStats();
         this.gold_drop = 20 * (int)(Math.pow(level, 2));
         this.experience_drop = 10 * (int) (Math.pow(level,1.5));
+        this.symbol = 'M';
 
     }
 
@@ -42,7 +44,7 @@ public abstract class Monster extends Entity {
     public int getExperienceDrop() {return experience_drop;}
     public void setGoldDrop() {this.gold_drop = 20 * (int)(Math.pow(super.getLevelObj().getCurrentLevel(), 2));}
     public void setExperienceDrop() {this.experience_drop  = 20 * (int)(Math.pow(super.getLevelObj().getCurrentLevel(), 1.5));}
-
+    public char getSymbol() {return symbol;}
 
     protected double hpGrowthPerLevel()    { return 0.12; }   // +12% HP per level
     protected double atkGrowthPerLevel()   { return 0.08; }   // +8% ATK per level

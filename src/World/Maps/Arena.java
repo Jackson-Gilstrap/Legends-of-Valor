@@ -8,7 +8,7 @@ public class Arena extends Map {
 
     public Arena(int rows, int cols) {
         super(rows, cols);
-        this.arena = new Space[rows][cols];
+        this.arena = new Space[cols][rows];
     }
 
     public void build() {
@@ -19,4 +19,5 @@ public class Arena extends Map {
         return "";
     }
 
+    public Space getSpaceAt(int row, int col) {return arena[col][row];}
 }
