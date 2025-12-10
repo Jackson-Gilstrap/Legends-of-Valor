@@ -1,6 +1,5 @@
 package Controllers;
 
-
 import Enums.Direction;
 import Interfaces.Positionable;
 import WorldSets.MapSet;
@@ -9,14 +8,10 @@ import WorldSets.Spaces.ObstacleSpace;
 
 public abstract class MovementController {
 
-    protected final MapSet map;
+    protected final MapSet mapSet;
 
-    /**
-     *
-     * @param map - The Map that is being used per game
-     */
-    protected MovementController(MapSet map) {
-        this.map = map;
+    protected MovementController(MapSet mapSet) {
+        this.mapSet = mapSet;
     }
 
     /**
@@ -25,32 +20,32 @@ public abstract class MovementController {
      * @param direction - Direction that target is moving in
      * @return - true or false move has been made
      */
-    public final boolean move (Positionable target, Direction direction) {
+    public boolean move(Positionable target, Direction direction) {
         int current_row = target.getRow();
         int current_col = target.getCol();
 
         int target_row = current_row + direction.dRow();
         int target_col = current_col+ direction.dCol();
 
-        if(!map.inBounds(target_row, target_col)) {
+        if(!mapSet.inBounds(target_row, target_col)) {
             onOutOfBounds(target,target_row,target_col);
             return false;
         }
 
-        Space destination = map.getSpace(target_row, target_col);
+        Space destination = mapSet.getSpace(target_row, target_col);
         if(destination instanceof ObstacleSpace) {
-            onOutOfBounds(target,target_row,target_col);
+            onBlocked(target, mapSet.getSpace(target_row, target_col));
             return false;
         }
 
 
-        if (!canEnter(target, direction, destination, target_row, target_col)) {
+        if (!canInteract(target, direction, destination)) {
             return false;
         }
 
         target.setPosition(target_row, target_col);
 
-        onEnter(target, destination, target_row, target_col);
+        onInteract(target, destination);
 
         return true;
     }
@@ -60,13 +55,9 @@ public abstract class MovementController {
      * @param target Some party of Heroes or a singular Hero or Monster that is Positionable
      * @param direction - Direction that target is moving in
      * @param space - The space that the target wants to move to
-     * @param row - x pos of the row desired
-     * @param col -  y pos of the col desired
      * @return - true or false
      */
-    protected boolean canEnter(Positionable target, Direction direction, Space space, int row, int col) {
-        return true;
-    }
+    protected abstract boolean canInteract(Positionable target, Direction direction, Space space);
 
     /**
      *
@@ -74,30 +65,20 @@ public abstract class MovementController {
      * @param row x pos of the target space
      * @param col y pos of the target space
      */
-    protected void onOutOfBounds(Positionable target, int row, int col) {
-        System.out.println("Out of Bounds");
-    }
+    protected abstract void onOutOfBounds(Positionable target, int row, int col);
 
     /**
      *
      * @param target Some party of Heroes or a singular Hero or Monster that is Positionable
-     * @param space The target space the target is moving to
-     * @param row x pos of the target space
-     * @param col y pos of the target space
+     * @param space The target space the target is being blocked by
      */
-    protected void onBlocked(Positionable target, Space space, int row, int col) {
-        System.out.println("Blocked");
-    }
+    protected abstract void onBlocked(Positionable target, Space space);
 
     /**
      *
      * @param target Some party of Heroes or a singular Hero or Monster that is Positionable
-     * @param space The target space the target is moving to
-     * @param row x pos of the target space
-     * @param col y pos of the target space
+     * @param space The target space the target is interacting with
      */
-    protected void onEnter(Positionable target, Space space, int row, int col) {}
-
-
+    protected abstract void onInteract(Positionable target, Space space);
 
 }

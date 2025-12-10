@@ -75,6 +75,7 @@ public class World extends MapSet {
         }
     }
 
+
     public void moveParty(int delta_row, int delta_col){
 
         int new_row = party_row + delta_row;

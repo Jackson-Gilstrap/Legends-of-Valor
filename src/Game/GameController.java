@@ -447,6 +447,7 @@ public class GameController {
             }
 
         }
+
         map.moveParty(delta[0], delta[1]);
         return false;
     }

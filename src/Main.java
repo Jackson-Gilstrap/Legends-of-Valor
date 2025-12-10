@@ -1,9 +1,6 @@
 import Parties.Party;
 import WorldSets.Maps.Arena;
 import WorldSets.Maps.World;
-import WorldSets.Space;
-import WorldSets.Spaces.PlainSpace;
-import WorldSets.Spaces.WallSpace;
 
 public class Main {
 

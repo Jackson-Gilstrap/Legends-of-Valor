@@ -14,7 +14,7 @@ public class MVHMVMTController extends MovementController {
     }
 
     @Override
-    protected void onBlocked(Positionable target, Space space, int row, int col) {
+    protected void onBlocked(Positionable target, Space space) {
         System.out.println("There appears to be a massive rock formation blocking your path...");
         System.out.println("You imagine there is some way around it.");
     }
@@ -26,14 +26,14 @@ public class MVHMVMTController extends MovementController {
     }
 
     @Override
-    protected void onEnter(Positionable target, Space space, int row, int col) {
+    protected void onInteract(Positionable target, Space space) {
         if (space instanceof MarketSpace) {
             System.out.println("You have reached a market... Press f to enter or t to travel to another market");
         }
     }
 
     @Override
-    protected boolean canEnter(Positionable target, Direction direction, Space space, int row, int col) {
+    protected boolean canInteract(Positionable target, Direction direction, Space space) {
         return space instanceof MarketSpace;
     }
 }
