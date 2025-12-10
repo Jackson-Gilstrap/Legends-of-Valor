@@ -3,6 +3,9 @@ package World;
 import Entities.Hero;
 import Entities.Monster;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public abstract class Space {
     private final String name;
@@ -11,14 +14,16 @@ public abstract class Space {
     private Hero hero;
     private Monster monster;
 
+    protected static final int SPACE_ROWS = 3;
+    protected static final int SPACE_COLS = 3;
+
     public Space(String name, int row, int col) {
         this.name = name;
         this.row = row;
         this.col = col;
-        this.hero = null;
-        this.monster = null;
 
     }
+
 
     public String getName() {
         return name;
@@ -29,79 +34,66 @@ public abstract class Space {
     public int getCol() {
         return col;
     }
-    public boolean hasHero() {
-        return hero != null;
-    }
-    public boolean hasMonster() {
-        return monster != null;
-    }
-    public Hero getHero() {
-        return hero;
-    }
 
-    public Monster getMonster() {
-        return monster;
-    }
+    public boolean hasHero() {return hero != null;}
+    public boolean hasMonster() {return monster != null;}
 
-
-
+    public abstract boolean canEnter();
 
     public void setPosition(int row, int col){
         this.row = row;
         this.col = col;
     }
 
-    public abstract boolean canEnter();
+
+
 
     @Override
     public String toString() {
-        int rows = 2;
-        int cols = 3;
-        StringBuilder sb = new StringBuilder();
-
-        for (int r = 0; r < rows; r++) {
-
-            for (int c = 0; c < cols; c++) {
-                sb.append(name.toUpperCase().charAt(0));
-                if (c< cols - 1) {sb.append(" - ");}
-            }
-           sb.append("\n");
-
-            if (r < rows -1 ) {
-                sb.append(buildMiddle(false, true, cols));
-                sb.append("\n");
-            }
-
-        }
-        return sb.toString();
+        return String.join("\n",renderLines());
     }
 
     // helpful render methods
-    private String buildMiddle(boolean has_hero, boolean has_monster, int cols) {
+
+    protected String buildHorizontal() {
         StringBuilder sb = new StringBuilder();
 
+        for (int c = 0; c < SPACE_COLS; c++) {
+            sb.append(name.toUpperCase().charAt(0));
+            if (c < SPACE_COLS - 1) {sb.append(" - ");}
+        }
+
+        return sb.toString();
+    }
+    protected String buildMiddle() {
+
+        StringBuilder sb = new StringBuilder();
+
+        String leftSpace = hasHero() ? "H" : " ";
+        String rightSpace = hasMonster() ? "M" : " ";
+
+        int insideWidth = (SPACE_COLS - 1)* 4 -1;
+        int gap = insideWidth - 2;
+
         sb.append("|");
-//        String leftSpace = has_hero ? String.valueOf(hero.getSymbol()) : " ";
-//        String rightSpace = has_monster ? String.valueOf(monster.getSymbol()) : " ";
-
-        //testing
-        String leftSpace = has_hero ? "H" : " ";
-        String rightSpace = has_monster ? "M" : " ";
-
-
-
-        int insideWidth = (cols - 1)* 4 -1;
-        int gap =insideWidth -2;
-
         sb.append(leftSpace);
         for (int i = 0; i < gap; i++) {sb.append(" ");}
-
         sb.append(rightSpace);
         sb.append("|");
 
         return sb.toString();
     }
 
+
+
+
+    public List<String> renderLines() {
+        List<String> lines = new ArrayList<>();
+        lines.add(buildHorizontal());
+        lines.add(buildMiddle());
+        lines.add(buildHorizontal());
+        return lines;
+    }
 
 
 }

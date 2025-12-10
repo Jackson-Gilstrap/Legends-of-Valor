@@ -9,6 +9,8 @@ public abstract class Tile extends Space{
     }
     public char getSymbol(){return symbol;}
 
+
+
     @Override
     public String toString() {
         return "This is an " + super.getName() + " tile and its x position is " + super.getRow() + " and y position is " + super.getCol();

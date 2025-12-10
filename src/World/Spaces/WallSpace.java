@@ -18,4 +18,15 @@ public class WallSpace extends Space {
     public boolean canEnter() {
         return false;
     }
+
+    @Override
+    protected String buildMiddle() {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("|");
+        int insideWidth = (SPACE_COLS -1) * 4 -1;
+        for (int i = 0; i < insideWidth; i++) {sb.append("X");}
+        sb.append("|");
+        return sb.toString();
+    }
 }

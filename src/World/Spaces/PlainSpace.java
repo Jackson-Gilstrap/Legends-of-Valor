@@ -23,4 +23,6 @@ public class PlainSpace extends Space {
     public boolean canEnter() {
         return !obstacle;
     }
+
+
 }
