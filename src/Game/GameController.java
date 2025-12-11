@@ -16,7 +16,7 @@ public abstract class GameController {
         return die1 == die2;
     }
 
-
+    public abstract String getName();
 
 }
 

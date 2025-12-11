@@ -157,7 +157,12 @@ public class MonstersVsHeroes extends GameController {
 
     }
 
-
+    /**
+     * Get the name of the game.
+     */
+    public String getName(){
+        return "Monsters VS Heroes";
+    }
 
 
 
