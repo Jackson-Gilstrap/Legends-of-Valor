@@ -1,3 +1,5 @@
+package Adapters;
+
 import Interfaces.Positionable;
 import WorldSets.Maps.World;
 

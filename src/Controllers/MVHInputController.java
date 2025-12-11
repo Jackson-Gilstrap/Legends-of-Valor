@@ -31,10 +31,18 @@ public class MVHInputController {
         switch (command) {
 
             // Movement
-            case "W": return movement.move(worldMap.getPlayerParty(), Direction.UP);
-            case "S": return movement.move(worldMap.getPlayerParty(), Direction.DOWN);
-            case "A": return movement.move(worldMap.getPlayerParty(), Direction.LEFT);
-            case "D": return movement.move(worldMap.getPlayerParty(), Direction.RIGHT);
+            case "W":
+                movement.move(Direction.UP);
+                return false;
+            case "S":
+                movement.move(Direction.DOWN);
+                return false;
+            case "A":
+                movement.move(Direction.LEFT);
+                return false;
+            case "D":
+                movement.move(Direction.RIGHT);
+                return false;
 
             // Market
             case "F":
@@ -61,6 +69,7 @@ public class MVHInputController {
         }
 
     }
+
 
     private void interactMarket() {
         if(worldMap.getSpace(worldMap.getParty_row(), worldMap.getParty_col()) instanceof MarketSpace) {

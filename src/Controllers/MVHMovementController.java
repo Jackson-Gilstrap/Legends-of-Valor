@@ -17,7 +17,7 @@ public class MVHMovementController extends MovementController {
 
     }
     @Override
-    public boolean move(Direction direction) {
+    public void move(Direction direction) {
         int current_row = target.getRow();
         int current_col = target.getCol();
 
@@ -26,21 +26,17 @@ public class MVHMovementController extends MovementController {
 
         if(!mapSet.inBounds(target_row, target_col)) {
             onOutOfBounds(target_row,target_col);
-            return false;
+            return;
         }
 
         Space destination = mapSet.getSpace(target_row, target_col);
         if(destination instanceof ObstacleSpace) {
             onBlocked(mapSet.getSpace(target_row, target_col));
-            return false;
+            return;
         }
-
-
 
         target.setPosition(target_row, target_col);
 
-
-        return true;
     }
 
     @Override

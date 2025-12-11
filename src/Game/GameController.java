@@ -7,140 +7,22 @@ import Seeders.EntitySeeder;
 import WorldSets.*;
 import WorldSets.Maps.World;
 import WorldSets.Spaces.MarketSpace;
-import WorldSets.Spaces.ObstacleSpace;
-import WorldSets.Spaces.PlainSpace;
 
 
-import java.util.ArrayList;
+
+
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
 public abstract class GameController {
-    private InputHandler inputHandler;
-    private World map;
-    private EntitySeeder entitySeeder;
-    private GameUI ui = new GameUI();
 
-    private List<Hero> warriors = new ArrayList<>();
-    private List<Hero> paladins = new ArrayList<>();
-    private List<Hero> sorcerers = new ArrayList<>();
+    public abstract void startGame();
+    public abstract void gameLoop();
 
 
 
-    public GameController(InputHandler inputHandler, World map) {
-        this.inputHandler = inputHandler;
-        this.map = map;
-        this.entitySeeder = new EntitySeeder(
-                new WarriorFactory(),
-                new PaladinFactory(),
-                new SorcererFactory(),
-                new DragonFactory(),
-                new ExoskeletonFactory(),
-                new SpiritFactory(),
-                new WeaponFactory(),
-                new ArmorFactory()
-        );
 
-    }
-
-    public void loadGameData() {
-        List<Hero> warrior_data = entitySeeder.seedWarriors("src/TextFiles/warriors.txt");
-        warriors.addAll(warrior_data);
-
-        List<Hero> paladin_data = entitySeeder.seedPaladins("src/TextFiles/Paladins.txt");
-        paladins.addAll(paladin_data);
-        List<Hero> sorcerer_data = entitySeeder.seedSorcerers("src/TextFiles/Sorcerers.txt");
-        sorcerers.addAll(sorcerer_data);
-
-    }
-
-    public void startGame() {
-        loadGameData(); // loads heros into game
-//        introduceGame();
-        showHeroMenu(); // players choose their party
-        gameLoop(); // run the game
-    }
-
-    private void introduceGame() {
-        try {
-            System.out.println("Welcome to the world of Monsters vs Heros");
-            Thread.sleep(2000);
-            System.out.println();
-            System.out.println("The aim of the game is to take you party of heroes and battle monsters along your journey");
-            Thread.sleep(2000);
-            System.out.println("On your journey you will encounter various Dragons, ExoSkeletons, and Spirits");
-            Thread.sleep(2000);
-            System.out.println("The goal... Survive as long as possible");
-            Thread.sleep(3000);
-            System.out.println();
-            System.out.println();
-            System.out.println();
-            System.out.println("Good luck...");
-            System.out.println();
-
-        } catch (InterruptedException e) {
-            System.err.println("Thread was interrupted " + e.getMessage());
-
-            Thread.currentThread().interrupt();
-        }
-
-    }
-
-    private void showHeroMenu() {
-
-
-        final int PARTY_CAPACITY = 3;
-        System.out.println("MAX PARTY SIZE = "+ PARTY_CAPACITY);
-
-
-        while (true) {
-
-            if(map.getPlayerParty().getPartySize() >= PARTY_CAPACITY) {
-                System.out.println("Party is full no more heroes can be added to the party\n");
-                System.out.println("Starting game!...");
-                System.out.println();
-                return;
-            }
-
-            System.out.println("\n--- HERO SELECTION MENU ---");
-            System.out.println();
-            System.out.print("0. Start Game\t1. Add a warrior\t2. Add a Paladin\t3.Add a Sorcerer \nSelect: ");
-            int input = ui.askInt();
-
-            switch (input) {
-                case 1:
-                    addHeroToParty(warriors);
-                    break;
-                case 2:
-                    addHeroToParty(paladins);
-                    break;
-
-                case 3:
-                    addHeroToParty(sorcerers);
-                    break;
-                case 0 :
-                    if (map.getPlayerParty().getPartySize() == 0) {
-                        System.out.println("You need at least one party size");
-                        break;
-
-                    }
-                    System.out.println();
-                    map.getPlayerParty().getPartyInfo();
-                    String choice = ui.askOneWord("Are you sure you want to start the game?");
-                    if (choice.equalsIgnoreCase("yes")) {
-                    System.out.println("Starting game!");
-                    return;
-                    }
-                    break;
-
-                default:
-                    System.out.println("Invalid choice. Please enter 0–3.");
-            }
-
-        }
-
-    }
 
     private void showHeroDetails(Hero hero) {
         System.out.println(hero.toString());
@@ -313,111 +195,11 @@ public abstract class GameController {
 
     }
 
-    private void addHeroToParty(List<Hero> list)  {
 
-        System.out.println("\nChoose a hero to add to your party:");
-        for (int i = 0; i < list.size(); i++) {
-            System.out.println((i+1) + ". " + list.get(i));
-        }
-        System.out.println();
 
-        System.out.print("Enter choice (1 - " + list.size() + "): ");
-        int input = ui.askInt();
-        System.out.println();
 
-        int index = input - 1;
 
-        if (index < 0 || index >= list.size()) {
-            System.out.println("Invalid choice.");
-            return;
-        }
-        map.getPlayerParty().addHeroToParty(list.get(index));
-        System.out.println(list.get(index).getName() + " has been added to the party");
-        System.out.println();
-        list.remove(index);
-    }
 
-    private void gameLoop() {
-        boolean gameOver = false;
-
-       // add method that checks entire party health if 0 end game
-        while (!gameOver) {
-            System.out.println(map.render());
-
-            String command = inputHandler.getInput();
-
-            gameOver = handleCommand(command);
-        }
-
-        System.out.println("Game over");
-    }
-
-    private boolean handleCommand(String command) {
-        switch (command) {
-            case "W":
-            case "S":
-            case "A":
-            case "D":
-                return handleMovement(command);
-
-            case "F":
-                interactMarket();
-                return false;
-
-            case "I":
-                String choice = ui.askOneWord("Would you like to view your heros...\nYes or No.");
-                switch (choice) {
-                    case "Yes":
-                    case "yes":
-                        map.getPlayerParty().getPartyInfo();
-
-                        System.out.println("PICK A HERO\n");
-                        int hero_choice = ui.askInt();
-                        if(hero_choice > map.getPlayerParty().getPartySize() || hero_choice <= 0) {
-                            System.out.println("Invalid choice.");
-                            break;
-                        }
-                        showHeroDetails(map.getPlayerParty().getHeroFromParty(hero_choice - 1));
-                        break;
-                    case "No":
-                    case "no":
-                        break;
-                    default:
-                        System.out.println("Not a valid choice.");
-                        break;
-
-                }
-
-                return false;
-
-            case "T":
-                if (map.getSpace(map.getParty_row(), map.getParty_col()) instanceof MarketSpace) {
-                    System.out.println("Market fast travel locations\n Copy the desired coordinates to fast travel");
-                    for(Space market: map.getMarkets()) {
-                        System.out.println("Coordinates: " + market.getRow() + "," + market.getCol());
-                    }
-                    Scanner scanner = new Scanner(System.in);
-                    int row = scanner.nextInt();
-                    int col = scanner.nextInt();
-
-                    System.out.println("fast traveling to next location");
-                    map.fastTravel(row, col);
-                }
-                else {
-                    System.out.println("Not on a market square no fast travel available");
-                }
-
-                return false;
-
-            case "Q":
-                System.out.println("Thanks for playing!");
-                return true;
-
-            default:
-                System.out.println("Invalid command");
-                return false;
-        }
-    }
 
 
 

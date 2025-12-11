@@ -6,33 +6,17 @@ import Interfaces.Positionable;
 import java.util.ArrayList;
 
 
-public class Party implements Positionable {
+public class Party {
 
     private final ArrayList<Hero> hero_party;
     private int row;
     private int col;
 
-    public Party(int row, int col) {
+    public Party() {
         hero_party = new ArrayList<>();
-        this.row = row;
-        this.col = col;
 
     }
 
-    @Override
-    public int getRow() {
-        return row;
-    }
-    @Override
-    public int getCol() {
-        return col;
-    }
-
-    @Override
-    public void setPosition(int row, int col) {
-        this.row = row;
-        this.col = col;
-    }
 
     public void addHeroToParty(Hero entity) {
         hero_party.add(entity);

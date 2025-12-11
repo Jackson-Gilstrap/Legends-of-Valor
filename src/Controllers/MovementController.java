@@ -21,7 +21,7 @@ public abstract class MovementController {
      * @param direction - Direction that target is moving in
      * @return - true or false move has been successful
      */
-    public abstract boolean move(Direction direction);
+    public abstract void move(Direction direction);
 
     /**
      *
