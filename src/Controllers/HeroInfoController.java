@@ -5,7 +5,7 @@ import Game.GameUI;
 import Items.*;
 
 public class HeroInfoController {
-    private GameUI ui;
+    private final GameUI ui;
 
     public HeroInfoController(GameUI ui) {
         this.ui = ui;

@@ -2,8 +2,8 @@ package Interfaces;
 
 public interface Positionable {
 
-    public int getRow();
-    public int getCol();
+    int getRow();
+    int getCol();
 
-    public void setPosition(int row, int col);
+    void setPosition(int row, int col);
 }
