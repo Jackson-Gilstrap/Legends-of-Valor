@@ -53,6 +53,10 @@ public class World extends MapSet {
 
     public int getParty_row() {return party_row;}
     public int getParty_col() {return party_col;}
+    public void setPartyPosition(int row, int col) {
+        this.party_row = row;
+        this.party_col = col;
+    }
     public Party getPlayerParty() {return player_party;}
     public List<Space> getMarkets() {return markets;}
     public Space getSpace(int row, int col) {return world_map[row][col];}
@@ -176,7 +180,7 @@ public class World extends MapSet {
                 if (r == party_row && c == party_col) {
                     sb.append(" P |");
                 } else {
-                    sb.append(" ").append(world_map[r][c].getName().toUpperCase().charAt(0)).append(" |");
+                    sb.append(" ").append(world_map[r][c].getSymbol()).append(" |");
                 }
             }
             sb.append('\n');
@@ -197,6 +201,9 @@ public class World extends MapSet {
         }
         return sb.toString();
     }
+
+
+
 
 
 

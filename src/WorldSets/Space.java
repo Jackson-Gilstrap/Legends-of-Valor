@@ -9,6 +9,7 @@ import java.util.List;
 
 public abstract class Space {
     private final String name;
+    private final char symbol;
     private int row;
     private int col;
     private Hero hero;
@@ -21,6 +22,7 @@ public abstract class Space {
         this.name = name;
         this.row = row;
         this.col = col;
+        this.symbol = name.toUpperCase().charAt(0);
 
     }
 
@@ -34,6 +36,7 @@ public abstract class Space {
     public int getCol() {
         return col;
     }
+    public char getSymbol() {return symbol;}
 
     public boolean hasHero() {return hero != null;}
     public boolean hasMonster() {return monster != null;}
@@ -59,7 +62,7 @@ public abstract class Space {
         StringBuilder sb = new StringBuilder();
 
         for (int c = 0; c < SPACE_COLS; c++) {
-            sb.append(name.toUpperCase().charAt(0));
+            sb.append(symbol);
             if (c < SPACE_COLS - 1) {sb.append(" - ");}
         }
 

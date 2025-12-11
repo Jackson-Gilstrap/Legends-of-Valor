@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
-public class GameController {
+public abstract class GameController {
     private InputHandler inputHandler;
     private World map;
     private EntitySeeder entitySeeder;
@@ -57,7 +57,7 @@ public class GameController {
 
     public void startGame() {
         loadGameData(); // loads heros into game
-        introduceGame();
+//        introduceGame();
         showHeroMenu(); // players choose their party
         gameLoop(); // run the game
     }
@@ -86,8 +86,6 @@ public class GameController {
         }
 
     }
-
-
 
     private void showHeroMenu() {
 
@@ -339,8 +337,6 @@ public class GameController {
         list.remove(index);
     }
 
-
-
     private void gameLoop() {
         boolean gameOver = false;
 
@@ -424,55 +420,33 @@ public class GameController {
     }
 
 
-    private boolean handleMovement(String cmd) {
-        int[] delta = mapInputToVector(cmd);
 
-        int next_row = map.getParty_row() + delta[0];
-        int next_col = map.getParty_col() + delta[1];
 
-        if(!map.inBounds(next_row, next_col)) {
-            return false;
-        }
+public void getHeroInfo(){
+    String choice = ui.askOneWord("Would you like to view your heros...\nYes or No.");
+                switch (choice) {
+        case "Yes":
+        case "yes":
+            map.getPlayerParty().getPartyInfo();
 
-        if(map.getSpace(next_row, next_col) instanceof ObstacleSpace) {
-            return false;
-        }
-
-        if(map.getSpace(next_row, next_col) instanceof PlainSpace) {
-            if(rollDie(7)) {
-                Battle battle = new Battle(map.getPlayerParty());
-                boolean player_survived = battle.battle();
-                if(!player_survived) return true; // game over
-
+            System.out.println("PICK A HERO\n");
+            int hero_choice = ui.askInt();
+            if(hero_choice > map.getPlayerParty().getPartySize() || hero_choice <= 0) {
+                System.out.println("Invalid choice.");
+                break;
             }
+            showHeroDetails(map.getPlayerParty().getHeroFromParty(hero_choice - 1));
+            break;
+        case "No":
+        case "no":
+            break;
+        default:
+            System.out.println("Not a valid choice.");
+            break;
 
-        }
-
-        map.moveParty(delta[0], delta[1]);
-        return false;
     }
 
-    private void interactMarket() {
-        if(map.getSpace(map.getParty_row(), map.getParty_col()) instanceof MarketSpace) {
-            Market market = ((MarketSpace) map.getSpace(map.getParty_row(), map.getParty_col())).getMarket();
-            market.enterMarket(ui, map.getPlayerParty());
-        }
-    }
-
-    private int[] mapInputToVector(String cmd) {
-        switch (cmd) {
-            case "W":
-                return new int[]{-1, 0};
-            case "S":
-                return new int[]{1, 0};
-            case "A":
-                return new int[]{0, -1};
-            case "D":
-                return new int[]{0, 1};
-            default:
-                return new int[]{0, 0};
-        }
-    }
+}
 
     private boolean rollDie(int sides) {
         Random random = new Random();
