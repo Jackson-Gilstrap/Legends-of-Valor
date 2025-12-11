@@ -1,5 +1,6 @@
 package Items;
 
+import Entities.Hero;
 import Utility.Level;
 
 public abstract class Item {
@@ -39,5 +40,11 @@ public abstract class Item {
         return name;
     }
 
+    /**
+     * The item will call the hero to equip itself.
+     * @param h
+     * @return
+     */
+    public abstract boolean getEquipped(Hero h);
 
 }

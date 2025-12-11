@@ -6,6 +6,8 @@ import Utility.Level;
 
 import java.sql.SQLOutput;
 
+import Entities.Hero;
+
 public class Potion extends Item implements Consumable {
 
     private double effect_amount;
@@ -66,6 +68,11 @@ public class Potion extends Item implements Consumable {
         System.out.println("Spell used durability - 100 points");
         super.setDurability(super.getDurability() - 100); // 100 for now for one time use
 
+    }
+
+    @Override
+    public boolean getEquipped(Hero h) {
+        return h.getJacket().equipPotion(this);
     }
 
 

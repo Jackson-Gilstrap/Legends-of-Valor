@@ -1,5 +1,7 @@
 package Items;
 
+import Entities.Hero;
+
 /*
 Spells are multi use items that can be equipped before battle by any hero
 Base spells are fire, ice and lighting these all have some sort of debuff that takes in an attribute and decreases it
@@ -64,6 +66,11 @@ public class Spell extends Item implements Consumable {
         System.out.println("Spell used all durability and cannot be used");
         }
 
+    }
+
+    @Override
+    public boolean getEquipped(Hero h) {
+        return h.getJacket().equipSpell(this);
     }
 
 

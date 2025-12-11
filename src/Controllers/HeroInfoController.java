@@ -131,18 +131,7 @@ public class HeroInfoController {
 
         boolean success = false;
 
-        if (item instanceof Weapon) {
-            success = hero.getJacket().equipWeapon((Weapon) item);
-        } else if (item instanceof Armor) {
-            success = hero.getJacket().equipArmor((Armor) item);
-        } else if (item instanceof Spell) {
-            success = hero.getJacket().equipSpell((Spell) item);
-        } else if (item instanceof Potion) {
-            success = hero.getJacket().equipPotion((Potion) item);
-        } else {
-            System.out.println("This item type cannot be equipped.");
-            return;
-        }
+        success = item.getEquipped(hero);
 
         if (success) {
             hero.getInventory().removeItem(item);

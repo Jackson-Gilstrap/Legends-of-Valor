@@ -1,6 +1,7 @@
 package Items;
 
 
+import Entities.Hero;
 import Interfaces.Equipable;
 import Utility.Level;
 
@@ -58,6 +59,11 @@ public class Armor extends Item implements Equipable {
                 damage_reduction,
                 equipped
         );
+    }
+
+    @Override
+    public boolean getEquipped(Hero h) {
+        return h.getJacket().equipArmor(this);
     }
 
 }

@@ -1,5 +1,6 @@
 package Items;
 
+import Entities.Hero;
 import Interfaces.Equipable;
 import Utility.Level;
 /*
@@ -60,6 +61,11 @@ public class Weapon extends Item implements Equipable {
                 number_of_hands,
                 equipped
         );
+    }
+
+    @Override
+    public boolean getEquipped(Hero h) {
+        return h.getJacket().equipWeapon(this);
     }
 
 }

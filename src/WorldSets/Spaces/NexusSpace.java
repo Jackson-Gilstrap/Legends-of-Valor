@@ -1,9 +1,10 @@
 package WorldSets.Spaces;
 
 import Entities.Hero;
+import WorldSets.Market;
 import WorldSets.Space;
 
-public class NexusSpace extends Space {
+public class NexusSpace extends MarketSpace {
     // needs to hold state of either a Monster or Hero
     // need to hold state of a global market
 
@@ -21,8 +22,8 @@ public class NexusSpace extends Space {
      * @param col
      * @param type
      */
-    public NexusSpace(String name, int row, int col, NexusType type) {
-        super(name, row, col);
+    public NexusSpace(String name, int row, int col, Market market, NexusType type) {
+        super(name, row, col, market);
         this.type = type;
     }
 
@@ -30,27 +31,5 @@ public class NexusSpace extends Space {
     public NexusType getType() {
         return type;
     }
-
-    @Override
-    public boolean canEnter() {
-        return true;
-    }
-
-
-    @Override
-    public void onEnter(Hero h) {
-        // do nothing
-    }
-
-
-    @Override
-    public void onLeave(Hero h) {
-        // do nothing
-    }
-
-
-
-
-
 
 }
