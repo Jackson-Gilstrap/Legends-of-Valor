@@ -1,5 +1,6 @@
 package WorldSets.Spaces;
 
+import Entities.Hero;
 import WorldSets.Space;
 
 public class NexusSpace extends Space {
@@ -33,6 +34,18 @@ public class NexusSpace extends Space {
     @Override
     public boolean canEnter() {
         return true;
+    }
+
+
+    @Override
+    public void onEnter(Hero h) {
+        // do nothing
+    }
+
+
+    @Override
+    public void onLeave(Hero h) {
+        // do nothing
     }
 
 

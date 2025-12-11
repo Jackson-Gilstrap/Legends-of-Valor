@@ -43,13 +43,23 @@ public abstract class Space {
 
     public abstract boolean canEnter();
 
+    /**
+     * The effect the space will do on the hero 
+     * (heroes only for now, maybe in the future we will do some effect on monsters)
+     * @param h The hero on the space
+     */
+    public abstract void onEnter(Hero h);
+
+    /**
+     * Same as above. The effet whe leaving.
+     * @param h
+     */
+    public abstract void onLeave(Hero h);
+
     public void setPosition(int row, int col){
         this.row = row;
         this.col = col;
     }
-
-
-
 
     @Override
     public String toString() {
@@ -57,7 +67,6 @@ public abstract class Space {
     }
 
     // helpful render methods
-
     protected String buildHorizontal() {
         StringBuilder sb = new StringBuilder();
 
@@ -68,6 +77,7 @@ public abstract class Space {
 
         return sb.toString();
     }
+
     protected String buildMiddle() {
 
         StringBuilder sb = new StringBuilder();
@@ -86,8 +96,6 @@ public abstract class Space {
 
         return sb.toString();
     }
-
-
 
 
     public List<String> renderLines() {

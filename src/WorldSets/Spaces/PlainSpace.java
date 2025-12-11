@@ -1,5 +1,6 @@
 package WorldSets.Spaces;
 
+import Entities.Hero;
 import WorldSets.Space;
 
 public class PlainSpace extends Space {
@@ -27,5 +28,15 @@ public class PlainSpace extends Space {
     @Override
     public char getSymbol() {
         return ' ';
+    }
+
+    @Override
+    public void onEnter(Hero h) {  
+        // do nothing
+    }
+
+    @Override
+    public void onLeave(Hero h) {
+        // do nothing
     }
 }

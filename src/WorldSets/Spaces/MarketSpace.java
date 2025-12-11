@@ -1,5 +1,6 @@
 package WorldSets.Spaces;
 
+import Entities.Hero;
 import WorldSets.Market;
 import WorldSets.Space;
 
@@ -18,6 +19,16 @@ public class MarketSpace extends Space {
      @Override
      public boolean canEnter() {
          return true;
+     }
+
+     @Override
+     public void onEnter(Hero h) {
+        // do nothing
+     }
+
+     @Override
+     public void onLeave(Hero h) {
+        // do nothing
      }
 
 

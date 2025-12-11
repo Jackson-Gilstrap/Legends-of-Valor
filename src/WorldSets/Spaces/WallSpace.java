@@ -1,5 +1,6 @@
 package WorldSets.Spaces;
 
+import Entities.Hero;
 import WorldSets.Space;
 
 public class WallSpace extends Space {
@@ -28,5 +29,15 @@ public class WallSpace extends Space {
         for (int i = 0; i < insideWidth; i++) {sb.append("X");}
         sb.append("|");
         return sb.toString();
+    }
+
+    @Override
+    public void onEnter(Hero h) {
+        // do nothing
+    }
+
+    @Override
+    public void onLeave(Hero h) {  
+        // do nothing
     }
 }
