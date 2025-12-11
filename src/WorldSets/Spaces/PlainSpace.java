@@ -24,5 +24,8 @@ public class PlainSpace extends Space {
         return !obstacle;
     }
 
-
+    @Override
+    public char getSymbol() {
+        return ' ';
+    }
 }

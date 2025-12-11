@@ -12,6 +12,10 @@ public class ObstacleSpace extends PlainSpace{
         return false;
     }
 
-    // NEED TO REPRESENT AT A SINGLE X OR A FEW LESS THAN THE WALL
+    @Override
+    public char getSymbol() {
+        return 'X';
+    }
+
 
 }
