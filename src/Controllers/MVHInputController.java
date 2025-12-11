@@ -31,10 +31,22 @@ public class MVHInputController {
         switch (command) {
 
             // Movement
-            case "W": return movement.move(worldMap.getPlayerParty(), Direction.UP);
-            case "S": return movement.move(worldMap.getPlayerParty(), Direction.DOWN);
-            case "A": return movement.move(worldMap.getPlayerParty(), Direction.LEFT);
-            case "D": return movement.move(worldMap.getPlayerParty(), Direction.RIGHT);
+            case "W":
+                movement.move(Direction.UP);
+                controller.checkForBattle();
+                return false;
+            case "S":
+                movement.move(Direction.DOWN);
+                controller.checkForBattle();
+                return false;
+            case "A":
+                movement.move(Direction.LEFT);
+                controller.checkForBattle();
+                return false;
+            case "D":
+                movement.move(Direction.RIGHT);
+                controller.checkForBattle();
+                return false;
 
             // Market
             case "F":
@@ -62,6 +74,7 @@ public class MVHInputController {
 
     }
 
+
     private void interactMarket() {
         if(worldMap.getSpace(worldMap.getParty_row(), worldMap.getParty_col()) instanceof MarketSpace) {
             Market market = ((MarketSpace) worldMap.getSpace(worldMap.getParty_row(), worldMap.getParty_col())).getMarket();
@@ -85,6 +98,14 @@ public class MVHInputController {
         else {
             System.out.println("Not on a market square no fast travel available");
         }
+    }
+
+    public void printValidCommands() {
+
+        System.out.println("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
+        System.out.println("┃  W/A/S/D Move | F Interact | I Info | T Travel | Q Quit   ┃");
+        System.out.println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
+
     }
 
 
