@@ -12,7 +12,7 @@ public class NexusSpace extends MarketSpace {
         HERO,
         MONSTER
     }
-    private NexusType type;
+    private final NexusType type;
 
 
     /**

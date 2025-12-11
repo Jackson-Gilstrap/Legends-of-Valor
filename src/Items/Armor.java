@@ -6,7 +6,7 @@ import Interfaces.Equipable;
 import Utility.Level;
 
 public class Armor extends Item implements Equipable {
-    private String type;
+    private final String type;
     private final double damage_reduction;
     private boolean equipped;
 

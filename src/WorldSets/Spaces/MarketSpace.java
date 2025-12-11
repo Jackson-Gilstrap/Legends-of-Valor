@@ -6,7 +6,7 @@ import WorldSets.Space;
 
 public class MarketSpace extends Space {
 
-    private Market market;
+    private final Market market;
      public MarketSpace(String name, int row, int col, Market market) {
          super(name, row, col);
          this.market = market;

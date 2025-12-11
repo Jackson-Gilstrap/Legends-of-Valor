@@ -7,8 +7,6 @@ public class KoulouSpace extends Space {
     private int buffAmount = 0;
     public KoulouSpace(String name, int row, int col){
         super(name,row,col);
-
-
     }
 
     @Override

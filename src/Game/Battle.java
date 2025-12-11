@@ -14,12 +14,12 @@ import java.util.*;
 
 
 public class Battle {
-    private Party player_party;
-    private MonsterParty monster_party;
-    private EntitySeeder entity_seeder;
-    private GameUI ui = new GameUI();
-    private Set<Monster> rewarded_monsters = new HashSet<>();
-    private Random rand = new Random();
+    private final Party player_party;
+    private final MonsterParty monster_party;
+    private final EntitySeeder entity_seeder;
+    private final GameUI ui = new GameUI();
+    private final Set<Monster> rewarded_monsters = new HashSet<>();
+    private final Random rand = new Random();
 
     public Battle(Party player_party) {
         this.player_party = player_party;
@@ -302,7 +302,6 @@ public class Battle {
 
         int mon_attack = attacking_monster.getStats().getAttack();
         double total_hero_dr = target_hero.getStats().getDamage_reduction() + target_hero.getJacket().getBuffStats().getDamage_reduction();
-                ;
         int total_attack = mon_attack - (int)(mon_attack * total_hero_dr);
 
         // Hitting calc
@@ -385,7 +384,7 @@ public class Battle {
                 default:
                     System.out.println("Invalid choice! Pick again");
                     break;
-            };
+            }
         } while (!use_turn);
     }
 

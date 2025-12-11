@@ -1,5 +1,6 @@
 package Entities;
 
+import Interfaces.Positionable;
 import Utility.Stats;
 
 /*
@@ -7,9 +8,9 @@ Monster have a level, however they don't gain experience points.
 Their level is going to be determined by the average party level
 NEXT GOAL FOCUS ON THE STAT BREAKDOWN
  */
-public abstract class Monster extends Entity {
-    private Stats stats;
-    private int gold_drop, experience_drop;
+public abstract class Monster extends Entity implements Positionable {
+    private final Stats stats;
+    private int gold_drop, experience_drop, x_pos, y_pos;
     private char symbol;
 
 
@@ -24,6 +25,8 @@ public abstract class Monster extends Entity {
         this.gold_drop = 20 * (int)(Math.pow(level, 2));
         this.experience_drop = 10 * (int) (Math.pow(level,1.5));
         this.symbol = 'M';
+        this.x_pos = 0;
+        this.y_pos = 0;
 
     }
 
@@ -32,6 +35,8 @@ public abstract class Monster extends Entity {
         this.stats = monster.stats.copy();
         this.gold_drop = monster.gold_drop;
         this.experience_drop = monster.experience_drop;
+        this.x_pos = monster.x_pos;
+        this.y_pos = monster.y_pos;
     }
 
     public Stats getStats() {
@@ -82,4 +87,20 @@ public abstract class Monster extends Entity {
         stats.setDamage_reduction(scaledDR);
     }
     public abstract Monster copy();
+
+    @Override
+    public int getCol() {
+        return y_pos;
+    }
+
+    @Override
+    public int getRow() {
+        return x_pos;
+    }
+
+    @Override
+    public void setPosition(int row, int col) {
+        x_pos = col;
+        y_pos = row;
+    }
 }

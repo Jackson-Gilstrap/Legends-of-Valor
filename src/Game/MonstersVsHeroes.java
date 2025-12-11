@@ -24,9 +24,9 @@ public class MonstersVsHeroes extends GameController {
     private final MVHInputController inputController;
     private final HeroSelectionController heroSelectionController;
     private final HeroInfoController heroInfoController;
-    private List<Hero> warriors = new ArrayList<>();
-    private List<Hero> paladins = new ArrayList<>();
-    private List<Hero> sorcerers = new ArrayList<>();
+    private final List<Hero> warriors = new ArrayList<>();
+    private final List<Hero> paladins = new ArrayList<>();
+    private final List<Hero> sorcerers = new ArrayList<>();
 
     public MonstersVsHeroes() {
         this.ui = new GameUI();
@@ -48,10 +48,7 @@ public class MonstersVsHeroes extends GameController {
     }
 
 
-
-
-
-    public void gameLoop() {
+    protected void gameLoop() {
         boolean gameOver = false;
 
         while (!gameOver) {
@@ -82,7 +79,8 @@ public class MonstersVsHeroes extends GameController {
     }
 
     // loading game
-    public void loadGameData() {
+    @Override
+    protected void loadGameData() {
 
         EntitySeeder entitySeeder = new EntitySeeder(
                 new WarriorFactory(),
@@ -99,8 +97,8 @@ public class MonstersVsHeroes extends GameController {
         sorcerers.addAll(entitySeeder.seedSorcerers("src/TextFiles/Sorcerers.txt"));
 
     }
-
-    private void introduceGame() {
+    @Override
+    protected void introduceGame() {
         try {
             System.out.println("Welcome to the world of Monsters vs Heros");
             Thread.sleep(2000);

@@ -1,6 +1,5 @@
 package Game;
 
-import java.util.ArrayList;
 import java.util.List;
 import Utility.Color;
 
@@ -9,8 +8,9 @@ import Utility.Color;
  * The Launcher lets users to choose from games.
  */
 public class Launcher {
-    private List<GameController> games = new ArrayList<>();
-    private GameUI ui = new GameUI();   // handle the prompt
+    private List<GameController> games;
+    private final GameUI ui = new GameUI();
+    private MonstersVsHeroes mvhGame;// handle the prompt
 
     /**
      * Register a game that is not already registered.
@@ -29,6 +29,8 @@ public class Launcher {
         greeting();
         int choice = askForGameIndex();
         games.get(choice).startGame();
+        mvhGame.startGame();
+
     }
 
     /**
@@ -65,43 +67,6 @@ public class Launcher {
      * @return
      */
     private int askForGameIndex(){
-        int choice;
-        do{
-            System.out.println(GameInfo());
-            System.out.print("> ");
-            choice = ui.askInt();
-        } while(
-            choice < 1 || choice > games.size()
-        );
-        return choice-1;    // coordinate with the index
+        return ui.askInt();
     }
-
-    /**
-     * Build and return a formatted introduction text for all available games.
-     * Each game shows its index and a short description.
-     * @return a multi-line string describing all games
-     */
-    private String GameInfo() {
-        StringBuilder info = new StringBuilder();
-        info.append("Here you can choose from the following games:\n\n");
-
-        int index = 1;
-        for (GameController g : games) {
-            info.append(index++)
-                .append(". ")
-                .append(g.getName())
-                .append("\n");
-
-            // if th game has some description
-            // if (g.getDescription() != null && !g.getDescription().isEmpty()) {
-            //     info.append("   → ").append(g.getDescription()).append("\n");
-            // }
-
-            info.append("\n");
-        }
-
-        info.append("Please enter the number of the game you want to play.\n");
-        return info.toString();
-    }
-
 }

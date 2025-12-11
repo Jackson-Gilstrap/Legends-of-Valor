@@ -27,12 +27,12 @@ public class World extends MapSet {
     private final Party player_party;
     private int party_row;
     private int party_col;
-    private List<Space> markets = new ArrayList<>();
-    private ItemSeeder item_seeder;
-    private List<Weapon> weapons = new ArrayList<>();
-    private List<Armor> armors = new ArrayList<>();
-    private List<Spell> spells = new ArrayList<>();
-    private List<Potion> potions = new ArrayList<>();
+    private final List<Space> markets = new ArrayList<>();
+    private final ItemSeeder item_seeder;
+    private final List<Weapon> weapons = new ArrayList<>();
+    private final List<Armor> armors = new ArrayList<>();
+    private final List<Spell> spells = new ArrayList<>();
+    private final List<Potion> potions = new ArrayList<>();
 
     public World(int rows, int cols, Party player_party) {
         super(rows, cols);
@@ -57,6 +57,7 @@ public class World extends MapSet {
         this.party_row = row;
         this.party_col = col;
     }
+
     public Party getPlayerParty() {return player_party;}
     public List<Space> getMarkets() {return markets;}
     public Space getSpace(int row, int col) {return world_map[row][col];}

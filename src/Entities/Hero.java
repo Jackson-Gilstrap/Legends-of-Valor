@@ -1,18 +1,20 @@
 package Entities;
 
 import Interfaces.Levelable;
+import Interfaces.Positionable;
 import Utility.Inventory;
 import Utility.Jacket;
 import Utility.Stats;
 import Utility.Wallet;
 
-public abstract class Hero extends Entity implements Levelable {
-    private int experience_points, to_next_level;
+public abstract class Hero extends Entity implements Levelable, Positionable {
+    private int experience_points, to_next_level, x_pos, y_pos;
     private final Inventory inventory;
     private final Stats stats;
     private final Jacket jacket;
     private final Wallet wallet;
     private final char symbol;
+
 
 
     protected Hero(String name, int health, int mana, int attack, int dexterity, double agility, double damage_reduction){
@@ -34,6 +36,8 @@ public abstract class Hero extends Entity implements Levelable {
                 .buildStats();
 
         this.symbol = 'H';
+        this.x_pos = 0;
+        this.y_pos = 0;
 
 
     }
@@ -59,6 +63,21 @@ public abstract class Hero extends Entity implements Levelable {
     public void viewStats(){
         System.out.println(stats.toString());
         jacket.viewJacket();
+    }
+
+    @Override
+    public void setPosition(int row, int col) {
+        x_pos = row;
+        y_pos = col;
+    }
+
+    @Override
+    public int getCol() {
+        return y_pos;
+    }
+    @Override
+    public int getRow() {
+        return x_pos;
     }
 
     public boolean hasSpellEquipped () {
@@ -99,7 +118,7 @@ public abstract class Hero extends Entity implements Levelable {
 
         applyLevelUpGrowth(stats);
 
-        System.out.println("Stats after level up\n" + stats.toString());
+        System.out.println("Stats after level up\n" + stats);
     }
 
     @Override

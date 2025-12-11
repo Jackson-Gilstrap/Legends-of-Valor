@@ -7,7 +7,9 @@ public abstract class GameController {
 
 
     public abstract void startGame();
-    public abstract void gameLoop();
+    protected abstract void gameLoop();
+    protected abstract void introduceGame();
+    protected abstract void loadGameData();
 
     protected boolean rollDie(int sides) {
         Random random = new Random();
