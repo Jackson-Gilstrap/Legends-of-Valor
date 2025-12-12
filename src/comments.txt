@@ -15,6 +15,5 @@ NEW IDEAS
 2. create the game controller to handle hero init and game loop
 3. movement of heroes and monsters
 4. markets - implement market as a strategy pattern, where market extends two different strategies, one for heros and monster another for legends of valor. 
-5. 
-
+5. once barebone working of both games is done we can try Implement the Strategy Pattern in Battle.java. (It is currently the most complex class and is doing too much manual type-checking.)
 
