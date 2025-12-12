@@ -3,12 +3,17 @@ package Parties;
 import Entities.Monster;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MonsterParty {
-    private final ArrayList<Monster> monsters;
+    private final List<Monster> monsters;
 
     public MonsterParty() {
         monsters = new ArrayList<>();
+    }
+
+    public MonsterParty(List<Monster> monsters){
+        this.monsters = monsters;
     }
 
     public Monster getMonsterFromParty(int index) {

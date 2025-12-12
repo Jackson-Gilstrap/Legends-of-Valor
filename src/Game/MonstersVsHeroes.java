@@ -34,7 +34,7 @@ public class MonstersVsHeroes extends GameController {
         this.world = new World(8,8, party);
         this.movementController =  new MVHMovementController(world, new PartyPositionAdapter(world), ui);
         this.inputController = new MVHInputController(ui, this, world, movementController);
-        this.heroSelectionController = new HeroSelectionController(ui, world, warriors, paladins, sorcerers);
+        this.heroSelectionController = new HeroSelectionController(ui, party, warriors, paladins, sorcerers);
         this.heroInfoController = new HeroInfoController(ui);
     }
 
@@ -162,7 +162,12 @@ public class MonstersVsHeroes extends GameController {
         return "Monsters VS Heroes";
     }
 
-
+    /**
+     * As long as the heroes are not all defeated, the game won't end.
+     */
+    public boolean isOver(){
+        return false;
+    }
 
 
 }

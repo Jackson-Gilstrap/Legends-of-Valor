@@ -2,9 +2,16 @@ package WorldSets.Maps;
 
 import Entities.Hero;
 import Game.GameUI;
+import Items.Armor;
+import Items.Potion;
+import Items.Spell;
+import Items.Weapon;
 import Parties.MonsterParty;
 import Parties.Party;
+import Seeders.ItemSeeder;
+import Utility.Inventory;
 import WorldSets.MapSet;
+import WorldSets.Market;
 import WorldSets.Space;
 import WorldSets.Spaces.*;
 
@@ -15,6 +22,13 @@ import java.util.Random;
 public class Arena extends MapSet {
     private final Space[][] arena;
     private final Party player_party;
+        // items to build a market
+    private Market globalMarket;
+    private ItemSeeder item_seeder;
+    private List<Weapon> weapons = new ArrayList<>();
+    private List<Armor> armors = new ArrayList<>();
+    private List<Spell> spells = new ArrayList<>();
+    private List<Potion> potions = new ArrayList<>();
     private final MonsterParty monster_party;
     private final GameUI ui;
 
@@ -27,8 +41,6 @@ public class Arena extends MapSet {
         build();
         spawnHeroes();
     }
-
-    public testSeedHeroes
 
     private void spawnHeroes(){
         for (int i = 0; i < player_party.getPartySize(); i++) {
@@ -110,6 +122,7 @@ public class Arena extends MapSet {
     }
 
     protected void build() {
+        globalMarket = buildMarket();
         for (int r = 0; r < getRows() ; r++) {
             for (int c = 0; c < getCols(); c++) {
 
@@ -120,12 +133,12 @@ public class Arena extends MapSet {
                 }
 
                 if(r == 0) {
-                    arena[c][r] = new NexusSpace("Nexus", r, c, NexusSpace.NexusType.MONSTER);
+                    arena[c][r] = new NexusSpace("Nexus", r, c, globalMarket, NexusSpace.NexusType.MONSTER);
                     continue;
                 }
 
                 if(r == getRows() - 1) {
-                    arena[c][r] = new NexusSpace("Nexus",r,c, NexusSpace.NexusType.HERO);
+                    arena[c][r] = new NexusSpace("Nexus",r,c, globalMarket, NexusSpace.NexusType.HERO);
                     continue;
                 }
 
@@ -189,4 +202,47 @@ public class Arena extends MapSet {
 
 
     public Space getSpaceAt(int row, int col) {return arena[col][row];}
+
+    /**
+     * Build a global market in the Nexus.
+     * @return the global market
+     */
+    private Market buildMarket(){
+        loadMarketData();
+        Inventory inventory = new Inventory();
+        for (Weapon w : weapons) inventory.addItem(w);
+        for (Armor a : armors) inventory.addItem(a);
+        for (Spell s : spells) inventory.addItem(s);
+        for (Potion p : potions) inventory.addItem(p);
+
+        return new Market(inventory);
+    }
+
+    /**
+     * Load the item data from the txt.
+     */
+    private void loadMarketData() {
+        List<Weapon> weapon_data = item_seeder.seedWeapons("src/TextFiles/Weaponry.txt");
+        for( Weapon weapon: weapon_data ) {
+            weapons.add(weapon);
+        }
+        List<Armor> armor_data = item_seeder.seedArmors("src/TextFiles/Armory.txt");
+        for( Armor armor: armor_data ) {
+            armors.add(armor);
+        }
+
+        String[] files =  {"src/TextFiles/FireSpells.txt","src/TextFiles/IceSpells.txt", "src/TextFiles/LightningSpells.txt"};
+        for (String file : files) {
+            List<Spell> spell_data = item_seeder.seedSpells(file);
+            for( Spell spell: spell_data ) {
+                spells.add(spell);
+            }
+        }
+
+        List<Potion> potion_data = item_seeder.seedPotions("src/TextFiles/Potions.txt");
+        for( Potion potion: potion_data ) {
+            potions.add(potion);
+        }
+
+    }
 }

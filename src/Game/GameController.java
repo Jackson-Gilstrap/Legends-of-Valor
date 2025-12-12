@@ -20,6 +20,11 @@ public abstract class GameController {
 
     public abstract String getName();
 
+    /**
+     * Each game should have a standard to judge whether the game is over.
+     * @return
+     */
+    public abstract boolean isOver();
 }
 
 

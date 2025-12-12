@@ -6,13 +6,13 @@ import Interfaces.Positionable;
 
 import java.util.List;
 
-public class LVinputController {
+public class LVInputController {
 
     private final GameUI ui;
     private final LVMovementController movementController;
     private final List<? extends Positionable> heroes;
 
-    public LVinputController(GameUI ui,
+    public LVInputController(GameUI ui,
                              LVMovementController movementController,
                              List<? extends Positionable> heroes) {
         this.ui = ui;
