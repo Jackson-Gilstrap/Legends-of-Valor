@@ -14,6 +14,7 @@ NEW IDEAS
 1. implement spawning of monster on an interval
 2. create the game controller to handle hero init and game loop
 3. movement of heroes and monsters
-4. markets
+4. markets - implement market as a strategy pattern, where market extends two different strategies, one for heros and monster another for legends of valor. 
+5. 
 
 
