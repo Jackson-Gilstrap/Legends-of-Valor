@@ -358,4 +358,8 @@ public class Arena extends MapSet {
             inv.addItem(item);
         }
     }
+
+    public Market getMarket(){
+        return heroNexusMarket;
+    }
 }

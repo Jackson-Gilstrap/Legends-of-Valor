@@ -1,7 +1,10 @@
 package Controllers;
 
 import Game.GameUI;
+
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import Commands.*;
@@ -38,28 +41,60 @@ public class LVInputHandler {
     }
 
     public void printValidCommands() {
-        StringBuilder sb = new StringBuilder("┃ ");
+        int commandsPerLine = 5;
+        int count = 0;
+
+        List<String> lines = new ArrayList<>();
+        StringBuilder currentLine = new StringBuilder("┃ ");
 
         for (Map.Entry<String, Command> entry : commandMap.entrySet()) {
             String key = entry.getKey();
             Command command = entry.getValue();
-            sb.append(String.format("%s (%s)", key, command.name())).append(" | ");
+
+            currentLine.append(String.format("%s (%s)", key, command.name())).append(" | ");
+            count++;
+
+            if (count % commandsPerLine == 0) {
+                currentLine.setLength(currentLine.length() - 3);
+                currentLine.append(" ┃");
+                lines.add(currentLine.toString());
+                currentLine = new StringBuilder("┃ ");
+            }
         }
 
-        if (sb.length() > 3) sb.setLength(sb.length() - 3);
-        sb.append(" ┃");
+        if (currentLine.length() > 3) {
+            currentLine.setLength(currentLine.length() - 3);
+            currentLine.append(" ┃");
+            lines.add(currentLine.toString());
+        }
 
-        int totalWidth = sb.length();
+        int maxWidth = 0;
+        for (String line : lines) {
+            if (line.length() > maxWidth) maxWidth = line.length();
+        }
 
-        String repeat = repeatChar('━', totalWidth - 2);
+        for (int i = 0; i < lines.size(); i++) {
+            String line = lines.get(i);
+            if (line.length() < maxWidth) {
+                int pad = maxWidth - line.length();
+                line = line.substring(0, line.length() - 1) + repeatChar(' ', pad) + "┃";
+                lines.set(i, line);
+            }
+        }
 
-        String top = "┏" + repeat + "┓";
-        String bottom = "┗" + repeat + "┛";
-
+        String top = "┏" + repeatChar('━', maxWidth - 2) + "┓";
         System.out.println(top);
-        System.out.println(sb);
+
+        // contents
+        for (String line : lines) {
+            System.out.println(line);
+        }
+
+        // bottom border
+        String bottom = "┗" + repeatChar('━', maxWidth - 2) + "┛";
         System.out.println(bottom);
     }
+
 
     /**
      * String.repeat()

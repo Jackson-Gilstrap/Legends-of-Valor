@@ -3,8 +3,6 @@ package Controllers;
 import Entities.Hero;
 import Game.GameUI;
 import Parties.Party;
-import WorldSets.MapSet;
-import WorldSets.Maps.World;
 
 import java.util.List;
 

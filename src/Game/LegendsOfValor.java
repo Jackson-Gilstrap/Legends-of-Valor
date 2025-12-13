@@ -81,7 +81,8 @@ public class LegendsOfValor extends GameController {
         .register("R", new Recall(actionController))
         .register("C", new ClearObstacle(actionController))
         .register("B", new EnterBattle(actionController))
-        .register("Q", new Quit(this));
+        .register("Q", new Quit(this))
+        .register("M", new EnterMarket(actionController));
     }
 
     @Override

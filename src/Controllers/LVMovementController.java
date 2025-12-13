@@ -6,9 +6,11 @@ import Entities.Entity;
 import Entities.Hero;
 import Entities.Monster;
 import Interfaces.Positionable;
+import WorldSets.Market;
 import WorldSets.Space;
 import WorldSets.Maps.Arena;
 import WorldSets.Maps.UnitToken;
+import WorldSets.Spaces.MarketSpace;
 import WorldSets.Spaces.ObstacleSpace;
 import WorldSets.Spaces.PlainSpace;
 import WorldSets.Spaces.WallSpace;
@@ -403,6 +405,14 @@ public class LVMovementController extends MovementController<Arena> {
             mapSet.remove(monster);
         }
 
+        return true;
+    }
+    
+    public boolean interactMarket(){
+        Market market = mapSet.getMarket();
+        if(mapSet.getSpace(target.getRow(), target.getCol()) instanceof MarketSpace) {
+            market.enterMarket(ui, (Hero)target);
+        }
         return true;
     }
     
