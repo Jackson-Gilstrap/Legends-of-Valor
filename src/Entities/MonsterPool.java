@@ -11,7 +11,6 @@ import Seeders.EntitySeeder;
 
 public class MonsterPool {
     private final EntitySeeder entity_seeder;
-    private List<Monster> monsters = null;
 
     public MonsterPool(){
         this.entity_seeder = new EntitySeeder(
@@ -40,29 +39,18 @@ public class MonsterPool {
         monsters.addAll(generateDragons());
         monsters.addAll(generateExoskeletons());
         monsters.addAll(generateSpirits());
+
         return monsters;
     }
 
     public Monster getRandomMonster(List<Monster> monsters) {
-        if (monsters.isEmpty()) {
+        if (monsters == null || monsters.isEmpty()) {
             return null;
         }
 
         Random random = new Random();
         int index = random.nextInt(monsters.size());
         return monsters.get(index).copy();
-    }
-
-    public Monster getRandomMonster() {
-        if (isEmpty()) {
-            monsters = generateMonsters();
-        }
-
-        return getRandomMonster(monsters);
-    }
-
-    public boolean isEmpty(){
-        return monsters == null || monsters.isEmpty();
     }
 
 }
