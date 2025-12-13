@@ -5,7 +5,6 @@ import Game.GameUI;
 import Entities.Entity;
 import Entities.Hero;
 import Entities.Monster;
-import Interfaces.HasHero;
 import Interfaces.Positionable;
 import WorldSets.Space;
 import WorldSets.Maps.Arena;
@@ -328,18 +327,7 @@ public class LVMovementController extends MovementController<Arena> {
             return false;
         }
 
-        if (!(target instanceof HasHero)) {
-            System.out.println("Cannot identify the acting hero.");
-            return false;
-        }
-
-        HasHero heroHolder = (HasHero) target;
-        Hero hero = heroHolder.getHeroEntity();
-        if (hero == null) {
-            System.out.println("No hero found on this token.");
-            return false;
-        }
-
+        Hero hero = (Hero)target;
         int currentHealth = hero.getStats().getHealth();
         if (currentHealth <= 1) {
             System.out.println("Not enough health to clear the obstacle (costs 1 HP).");
@@ -383,13 +371,8 @@ public class LVMovementController extends MovementController<Arena> {
             System.out.println("Only heroes can start battles.");
             return false;
         }
-        if (!(target instanceof HasHero)) {
-            System.out.println("Cannot identify acting hero.");
-            return false;
-        }
 
-        HasHero heroHolder = (HasHero) target;
-        Hero hero = heroHolder.getHeroEntity();
+        Hero hero = (Hero)target;
         Monster monster = candidates.get(choice);
 
         if (hero == null || monster == null) {
