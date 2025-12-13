@@ -15,6 +15,7 @@ import Factories.SorcererFactory;
 import Factories.SpiritFactory;
 import Factories.WarriorFactory;
 import Factories.WeaponFactory;
+import Parties.MonsterParty;
 import Parties.Party;
 import Seeders.EntitySeeder;
 import Utility.Color;
@@ -46,7 +47,7 @@ public class LegendsOfValor extends GameController {
 
     // generate monsters
     private final MonsterPool monsterPool;
-    private List<Monster> monsters;
+    private MonsterParty monsters;
 
     // heroes
     private Party party;
@@ -65,7 +66,8 @@ public class LegendsOfValor extends GameController {
         paladins = new ArrayList<>();
         sorcerers = new ArrayList<>();
         monsterPool = new MonsterPool();
-        monsters = new ArrayList<>();
+        monsterPool.generateMonsters();
+        monsters = new MonsterParty();
         party = new Party();
         actionController = new LVMovementController(ui, arena);
         handler = new LVInputHandler(ui);
@@ -152,17 +154,19 @@ public class LegendsOfValor extends GameController {
             System.out.println(arena.render());
             System.out.printf("---- Round %d ----%n", rounds);
 
-            List<Hero> alivHeros = party.getAliveHeroes();
-            for(Hero h: alivHeros){
+            List<Hero> aliveHeros = party.getAliveHeroes();
+            for(Hero h: aliveHeros){
                 heroTurn(h);
                 if(isOver() || isQuit()) return;
             }
             actionController.takeTurns();
 
-            for(Monster m: monsters){
-                monsterTurn(m); 
+            for (int i = 0; i < monsters.getMonsterPartySize(); i++) {
+                Monster m  = monsters.getMonsterFromParty(i);
+                monsterTurn(m);
                 if(isOver()) return;
             }
+
             actionController.takeTurns();
 
             endOfRoundRecovery();
@@ -209,14 +213,14 @@ public class LegendsOfValor extends GameController {
         System.out.println("Select difficulty: 1) Easy 2) Medium 3) Hard");
         int choice = ui.askInt();
         switch (choice) {
-            case 1:
-                spawnFrequency = 6;
+            case 2:
+                spawnFrequency = 5;
                 break;
             case 3:
-                spawnFrequency = 2;
+                spawnFrequency = 3;
                 break;
             default:
-                spawnFrequency = 4;
+                spawnFrequency = 6;
                 break;
         }
     }
@@ -255,18 +259,26 @@ public class LegendsOfValor extends GameController {
 
     private void spawnMonsters() {
         List<Lane> allLanes = arena.getAllLanes();
+        for (int i = 0; i < 3; i++) {
+           Monster m = monsterPool.getRandomMonster();
+           monsters.addMonster(m);
+        }
+        int count = 0;
         for (Lane l: allLanes) {
             int row = 0;
             int col = arena.laneToColumn(l);
             if (arena.hasMonsterAt(row, col)) {
                 continue;
             }
-            Monster monster = monsterPool.getRandomMonster();
             int avgLevel = party.getPartyLevel();
+
+
+            Monster monster = monsters.getMonsterFromParty(count);
             monster.rescaleStatsForLevel(avgLevel); // rescale the monsters
-            monsters.add(monster);
             arena.addMonster(monster, row, col);
             System.out.printf("A new %s spawns in %s.%n", monster.getName(), l.getName());
+            count++;
+
         }
     }
 

@@ -100,13 +100,14 @@ public class Battle {
 
 
     private void spawnMonsters() {
+        // modify
         MonsterPool monsterPool = new MonsterPool();
-        int num_of_monsters = player_party.getPartySize();
+        int num_of_monsters = player_party.size();
         int level_cap = player_party.getPartyLevel();
 
         for (int i = 0; i < num_of_monsters; i++) {
 
-            Monster template = monsterPool.getRandomMonster(monsterPool.generateMonsters());
+            Monster template = monsterPool.getRandomMonster();
             Monster monster = template.copy();
             monster.getLevelObj().setCurrentLevel(level_cap);
             monster.rescaleStatsForLevel();
