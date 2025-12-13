@@ -8,7 +8,7 @@ public class PlainSpace extends Space {
 
     public PlainSpace(String name, int row, int col) {
         super(name, row, col);
-        boolean obstacle = false;
+        this.obstacle = false;
 
     }
 

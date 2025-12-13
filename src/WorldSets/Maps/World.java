@@ -61,6 +61,10 @@ public class World extends MapSet {
     public Party getPlayerParty() {return player_party;}
     public List<Space> getMarkets() {return markets;}
     public Space getSpace(int row, int col) {return world_map[row][col];}
+    @Override
+    public void setSpace(int row, int col, Space space) {
+        world_map[row][col] = space;
+    }
 
 
 

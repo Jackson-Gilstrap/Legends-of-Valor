@@ -5,6 +5,7 @@ package Utility;
  */
 public enum Color {
     RED("\u001B[31m"),
+    LIGHTRED("\u001B[91m"),
     BLUE("\u001B[34m"),
     GREEN("\u001B[32m"),
     LIGHTGREEN("\u001B[92m"),

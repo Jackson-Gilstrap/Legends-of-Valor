@@ -14,6 +14,7 @@ public abstract class MapSet {
     protected abstract void build();
     public abstract String render();
     public abstract Space getSpace(int row, int col);
+    public abstract void setSpace(int row, int col, Space space);
 
     public boolean inBounds(int row, int col){
         return row >= 0 && row < rows && col >= 0 && col < cols;
