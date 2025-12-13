@@ -8,9 +8,9 @@ Monster have a level, however they don't gain experience points.
 Their level is going to be determined by the average party level
 NEXT GOAL FOCUS ON THE STAT BREAKDOWN
  */
-public abstract class Monster extends Entity implements Positionable {
+public abstract class Monster extends Entity{
     private final Stats stats;
-    private int gold_drop, experience_drop, x_pos, y_pos;
+    private int gold_drop, experience_drop;
     private char symbol;
 
 
@@ -25,9 +25,6 @@ public abstract class Monster extends Entity implements Positionable {
         this.gold_drop = 20 * (int)(Math.pow(level, 2));
         this.experience_drop = 10 * (int) (Math.pow(level,1.5));
         this.symbol = 'M';
-        this.x_pos = 0;
-        this.y_pos = 0;
-
     }
 
     protected Monster(Monster monster) {
@@ -35,8 +32,6 @@ public abstract class Monster extends Entity implements Positionable {
         this.stats = monster.stats.copy();
         this.gold_drop = monster.gold_drop;
         this.experience_drop = monster.experience_drop;
-        this.x_pos = monster.x_pos;
-        this.y_pos = monster.y_pos;
     }
 
     public Stats getStats() {
@@ -60,8 +55,8 @@ public abstract class Monster extends Entity implements Positionable {
     protected double maxAgilityCap()       { return 0.75; }
     protected double maxDamageReductionCap(){ return 0.60; }
 
-    public void rescaleStatsForLevel() {
-        int level = getLevelObj().getCurrentLevel();
+    public void rescaleStatsForLevel(int level) {
+        setCurrentLevel(level);
         int levelDelta = Math.max(0, level - 1);
 
         double hp_growth = hpGrowthPerLevel();
@@ -86,21 +81,12 @@ public abstract class Monster extends Entity implements Positionable {
         stats.setAgility(scaledAgility);
         stats.setDamage_reduction(scaledDR);
     }
+
+    public void rescaleStatsForLevel() {
+        int level = getLevelObj().getCurrentLevel();
+        rescaleStatsForLevel(level);
+    }
+
     public abstract Monster copy();
-
-    @Override
-    public int getCol() {
-        return y_pos;
-    }
-
-    @Override
-    public int getRow() {
-        return x_pos;
-    }
-
-    @Override
-    public void setPosition(int row, int col) {
-        x_pos = col;
-        y_pos = row;
-    }
+    
 }

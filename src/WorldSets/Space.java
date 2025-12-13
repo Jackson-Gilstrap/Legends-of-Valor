@@ -2,6 +2,7 @@ package WorldSets;
 
 import Entities.Hero;
 import Entities.Monster;
+import Utility.Color;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +18,7 @@ public abstract class Space {
 
     protected static final int SPACE_ROWS = 3;
     protected static final int SPACE_COLS = 3;
+    private static final int INNER_WIDTH = 9;
 
     public Space(String name, int row, int col) {
         this.name = name;
@@ -42,18 +44,7 @@ public abstract class Space {
     public boolean hasMonster() {return monster != null;}
 
     public abstract boolean canEnter();
-
-    /**
-     * The effect the space will do on the hero 
-     * (heroes only for now, maybe in the future we will do some effect on monsters)
-     * @param h The hero on the space
-     */
     public abstract void onEnter(Hero h);
-
-    /**
-     * Same as above. The effet whe leaving.
-     * @param h
-     */
     public abstract void onLeave(Hero h);
 
     public void setPosition(int row, int col){
@@ -77,46 +68,62 @@ public abstract class Space {
     }
 
     // helpful render methods
-
     protected String buildHorizontal() {
-        StringBuilder sb = new StringBuilder();
+        String line = "+" + repeat("-", INNER_WIDTH) + "+";
+        return applyColor(line);
+    }
+    protected String buildMiddle(boolean heroPresent, boolean monsterPresent) {
+        Color heroColor = Color.LIGHTGREEN;
+        Color monsterColor = Color.LIGHTRED;
+        String bg = bgCodeForSpace();
 
-        for (int c = 0; c < SPACE_COLS; c++) {
-            sb.append(symbol);
-            if (c < SPACE_COLS - 1) {sb.append(" - ");}
+        StringBuilder sb = new StringBuilder();
+        sb.append(bg);
+        sb.append("| ");
+
+        if (heroPresent) {
+            sb.append(heroColor.getAnsiCode()).append("H").append(bg);
+        } else {
+            sb.append(" ");
         }
 
+        sb.append("  ").append(symbol).append("  ");
+
+        if (monsterPresent) {
+            sb.append(monsterColor.getAnsiCode()).append("M").append(bg);
+        } else {
+            sb.append(" ");
+        }
+
+        sb.append(" |").append(Color.reset());
         return sb.toString();
     }
-    protected String buildMiddle() {
-
-        StringBuilder sb = new StringBuilder();
-
-        String leftSpace = hasHero() ? "H" : " ";
-        String rightSpace = hasMonster() ? "M" : " ";
-
-        int insideWidth = (SPACE_COLS - 1)* 4 -1;
-        int gap = insideWidth - 2;
-
-        sb.append("|");
-        sb.append(leftSpace);
-        for (int i = 0; i < gap; i++) {sb.append(" ");}
-        sb.append(rightSpace);
-        sb.append("|");
-
-        return sb.toString();
-    }
-
-
-
 
     public List<String> renderLines() {
+        return renderLinesWithOccupants(hasHero(), hasMonster());
+    }
+
+    public List<String> renderLinesWithOccupants(boolean heroPresent, boolean monsterPresent) {
         List<String> lines = new ArrayList<>();
         lines.add(buildHorizontal());
-        lines.add(buildMiddle());
+        lines.add(buildMiddle(heroPresent || hasHero(), monsterPresent || hasMonster()));
         lines.add(buildHorizontal());
         return lines;
     }
 
+    private String repeat(String s, int count) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < count; i++) {
+            sb.append(s);
+        }
+        return sb.toString();
+    }
 
+    protected String applyColor(String text) {
+        return bgCodeForSpace() + text + Color.reset();
+    }
+
+    protected abstract Color colorForSpace();
+
+    protected abstract String bgCodeForSpace();
 }

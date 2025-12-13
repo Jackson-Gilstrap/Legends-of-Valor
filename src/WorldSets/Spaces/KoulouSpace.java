@@ -1,6 +1,7 @@
 package WorldSets.Spaces;
 
 import Entities.Hero;
+import Utility.Color;
 import WorldSets.Space;
 
 public class KoulouSpace extends Space {
@@ -27,4 +28,16 @@ public class KoulouSpace extends Space {
     public void onLeave(Hero h) {
         h.getStats().setAttack(h.getStats().getAttack()-buffAmount);
     }
+
+    @Override
+    protected Color colorForSpace() {
+            return Color.YELLOW;
+
+    }
+
+    @Override
+    public String bgCodeForSpace() {
+        return Color.YELLOW.getBgAnsiCode();
+    }
+
 }

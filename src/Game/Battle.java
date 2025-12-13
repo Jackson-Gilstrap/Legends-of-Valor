@@ -30,8 +30,8 @@ public class Battle {
         System.out.println("Battle started!");
         System.out.println("Your party walks up to the monsters");
         //apply all the buffs from the player's equipment before the first moves are made
-        for(int i = 0; i < player_party.getPartySize(); i++) {
-            player_party.getHeroFromParty(i).getJacket().updateBuffStats();
+        for(int i = 0; i < player_party.size(); i++) {
+            player_party.get(i).getJacket().updateBuffStats();
         }
 
         while(true) {

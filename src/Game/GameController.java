@@ -4,13 +4,16 @@ package Game;
 import java.util.Random;
 
 public abstract class GameController {
-
+    private boolean quit = false;
 
     public abstract void startGame();
     protected abstract void gameLoop();
     protected abstract void introduceGame();
     protected abstract void loadGameData();
-
+    protected abstract boolean isOver();
+    public void quit(){
+        quit = true;
+    }
     protected boolean rollDie(int sides) {
         Random random = new Random();
         int die1 = random.nextInt(sides);
@@ -19,12 +22,9 @@ public abstract class GameController {
     }
 
     public abstract String getName();
-
-    /**
-     * Each game should have a standard to judge whether the game is over.
-     * @return
-     */
-    public abstract boolean isOver();
+    public boolean isQuit(){
+        return quit;
+    }
 }
 
 

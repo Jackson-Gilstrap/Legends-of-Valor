@@ -1,6 +1,7 @@
 package WorldSets.Spaces;
 
 import Entities.Hero;
+import Utility.Color;
 import WorldSets.Space;
 
 public class WallSpace extends Space {
@@ -21,14 +22,14 @@ public class WallSpace extends Space {
     }
 
     @Override
-    protected String buildMiddle() {
+    protected String buildMiddle(boolean heroPresent, boolean monsterPresent) {
         StringBuilder sb = new StringBuilder();
-
         sb.append("|");
-        int insideWidth = (SPACE_COLS -1) * 4 -1;
-        for (int i = 0; i < insideWidth; i++) {sb.append("X");}
+        for (int i = 0; i < 9; i++) {
+            sb.append("X");
+        }
         sb.append("|");
-        return sb.toString();
+        return applyColor(sb.toString());
     }
 
     @Override
@@ -40,4 +41,16 @@ public class WallSpace extends Space {
     public void onLeave(Hero h) {  
         // do nothing
     }
+
+
+    @Override
+    protected Color colorForSpace() {
+        return Color.WHITE;
+    }
+
+    @Override
+    public String bgCodeForSpace() {
+        return Color.WHITE.getBgAnsiCode();
+    }
+
 }

@@ -20,6 +20,7 @@ public class MonstersVsHeroes extends GameController {
 
     private final GameUI ui;
     private final World world;
+    private Party party;
     private final MVHMovementController movementController;
     private final MVHInputController inputController;
     private final HeroSelectionController heroSelectionController;
@@ -27,10 +28,11 @@ public class MonstersVsHeroes extends GameController {
     private final List<Hero> warriors = new ArrayList<>();
     private final List<Hero> paladins = new ArrayList<>();
     private final List<Hero> sorcerers = new ArrayList<>();
-
+    // constants
+    private final int MAX_HEROES = 3;
     public MonstersVsHeroes() {
         this.ui = new GameUI();
-        Party party = new Party();
+        this.party = new Party();
         this.world = new World(8,8, party);
         this.movementController =  new MVHMovementController(world, new PartyPositionAdapter(world), ui);
         this.inputController = new MVHInputController(ui, this, world, movementController);
@@ -69,12 +71,12 @@ public class MonstersVsHeroes extends GameController {
         System.out.print("Select a hero by number: ");
         int choice = ui.askInt() - 1;
 
-        if (choice < 0 || choice >= world.getPlayerParty().getPartySize()) {
+        if (choice < 0 || choice >= world.getPlayerParty().size()) {
             System.out.println("Invalid hero selection.");
             return;
         }
 
-        Hero hero = world.getPlayerParty().getHeroFromParty(choice);
+        Hero hero = world.getPlayerParty().get(choice);
         heroInfoController.showHeroDetails(hero);
     }
 
@@ -124,7 +126,30 @@ public class MonstersVsHeroes extends GameController {
     }
 
     public void partySelection() {
-        heroSelectionController.startSelectionMenu();
+        while(party.size()<MAX_HEROES){
+            Hero h = heroSelectionController.select();
+            if(h == null && party.size()<1){
+                // if the party is empty but the player want to start
+                System.out.println("You need at least one hero in your party.");
+            } else if(h==null){
+                // if the player did not choose a hero but hero is enough
+                break; 
+            } else{
+                // if the player choose a hero
+                party.add(h);
+            }
+
+        }
+        // start the game
+        party.getPartyInfo();
+        String confirm = ui.askOneWord("Start the game? (yes/no): ");
+
+        if (confirm.toLowerCase().startsWith("y")) {
+            System.out.println("Starting game!");
+            return;
+        }
+        // if u say no we still start the game, just enjoy it! :)
+        // TODO: just kdding, implement the give up logic some day
     }
 
 

@@ -1,5 +1,7 @@
 package WorldSets.Spaces;
 
+import Utility.Color;
+
 public class ObstacleSpace extends PlainSpace{
 
     public ObstacleSpace(String name, int row, int col) {
@@ -17,5 +19,15 @@ public class ObstacleSpace extends PlainSpace{
         return 'X';
     }
 
+    @Override
+    protected Color colorForSpace() {
+            return Color.RED;
+
+    }
+
+    @Override
+    public String bgCodeForSpace() {
+        return Color.LIGHTRED.getBgAnsiCode();
+    }
 
 }

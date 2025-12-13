@@ -1,16 +1,14 @@
 package Parties;
 
 import Entities.Hero;
-import Interfaces.Positionable;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 
-public class Party {
+public class Party implements Iterable<Hero>{
 
     private final ArrayList<Hero> hero_party;
-    private int row;
-    private int col;
 
     public Party() {
         hero_party = new ArrayList<>();
@@ -18,19 +16,19 @@ public class Party {
     }
 
 
-    public void addHeroToParty(Hero entity) {
+    public void add(Hero entity) {
         hero_party.add(entity);
     }
 
-    public void removeHeroFromParty(Hero hero){
+    public void remove(Hero hero){
         hero_party.remove(hero);
     }
 
-    public Hero getHeroFromParty(int slot){
+    public Hero get(int slot){
         return hero_party.get(slot);
     }
 
-    public int getPartySize() {
+    public int size() {
         return hero_party.size();
     }
 
@@ -55,10 +53,10 @@ public class Party {
     public ArrayList<Hero> getDeadHeroes(){
         ArrayList<Hero> dead_heroes = new ArrayList<>();
         for(Hero hero : hero_party){
-            if(hero.getStats().getHealth() >= 0){
+            if(hero.getStats().getHealth() <= 0){
                 hero.getStats().setHealth(0);
+                dead_heroes.add(hero);
             }
-            dead_heroes.add(hero);
         }
         return dead_heroes;
     }
@@ -77,6 +75,12 @@ public class Party {
 
         System.out.println("===== END OF PARTY =====");
         System.out.println("\n");
+    }
+
+
+    @Override
+    public Iterator<Hero> iterator() {
+        return hero_party.iterator();
     }
 
 }

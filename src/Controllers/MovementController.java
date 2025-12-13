@@ -5,16 +5,12 @@ import Interfaces.Positionable;
 import WorldSets.MapSet;
 import WorldSets.Space;
 
-/**
- * MovementController is responsible for controlling a movable object on a map.
- * It specify the rules for movement, allowing some action and denying other.
- */
-public abstract class MovementController {
+public abstract class MovementController<M extends MapSet> {
 
-    protected final MapSet mapSet;
-    protected final Positionable target;
+    protected final M mapSet;
+    protected Positionable target;
 
-    protected MovementController(MapSet mapSet, Positionable target) {
+    protected MovementController(M mapSet, Positionable target) {
         this.mapSet = mapSet;
         this.target = target;
     }
@@ -24,7 +20,7 @@ public abstract class MovementController {
      * @param direction - Direction that target is moving in
      * @return - true or false move has been successful
      */
-    public abstract void move(Direction direction);
+    public abstract boolean move(Direction direction);
 
     /**
      *
@@ -34,7 +30,7 @@ public abstract class MovementController {
     protected abstract void onOutOfBounds(int row, int col);
 
     /**
-     * Reponse to the movement that is refused.
+     *
      * @param space The target space the target is being blocked by
      */
     protected abstract void onBlocked(Space space);
