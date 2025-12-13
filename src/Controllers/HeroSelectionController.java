@@ -3,31 +3,32 @@ package Controllers;
 import Entities.Hero;
 import Game.GameUI;
 import Parties.Party;
+import WorldSets.Maps.World;
 
 import java.util.List;
 
-/**
- * This class receive lists of heroes and let the player to choose some of them.
- */
 public class HeroSelectionController {
 
     private final GameUI ui;
-    private final Party party;
+    private final World worldMap;
+
     private final List<Hero> warriors;
     private final List<Hero> paladins;
     private final List<Hero> sorcerers;
 
     private static final int PARTY_CAPACITY = 3;
 
-    public HeroSelectionController(GameUI ui, Party party, List<Hero> warriors, List<Hero> paladins, List<Hero> sorcerers) {
+    public HeroSelectionController(GameUI ui, World worldMap, List<Hero> warriors, List<Hero> paladins, List<Hero> sorcerers) {
         this.ui = ui;
-        this.party = party;
+        this.worldMap = worldMap;
         this.warriors = warriors;
         this.paladins = paladins;
         this.sorcerers = sorcerers;
     }
 
     public void startSelectionMenu() {
+
+        Party party = worldMap.getPlayerParty();
 
         System.out.println("MAX PARTY SIZE = " + PARTY_CAPACITY);
 
@@ -96,7 +97,7 @@ public class HeroSelectionController {
             System.out.println("Invalid choice.");
             return;
         }
-        party.addHeroToParty(list.get(index));
+        worldMap.getPlayerParty().addHeroToParty(list.get(index));
         System.out.println(list.get(index).getName() + " has been added to the party");
         System.out.println();
         list.remove(index);

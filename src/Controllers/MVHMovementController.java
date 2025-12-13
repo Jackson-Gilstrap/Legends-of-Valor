@@ -7,9 +7,7 @@ import Interfaces.Positionable;
 import WorldSets.MapSet;
 import WorldSets.Space;
 import WorldSets.Spaces.ObstacleSpace;
-/**
- * MVHMovementController controls the movement of the party of heroes in the RPG game in our project.
- */
+
 public class MVHMovementController extends MovementController {
 
     private final GameUI ui;

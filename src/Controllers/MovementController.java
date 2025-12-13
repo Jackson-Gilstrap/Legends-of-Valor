@@ -4,11 +4,8 @@ import Enums.Direction;
 import Interfaces.Positionable;
 import WorldSets.MapSet;
 import WorldSets.Space;
+import WorldSets.Spaces.ObstacleSpace;
 
-/**
- * MovementController is responsible for controlling a movable object on a map.
- * It specify the rules for movement, allowing some action and denying other.
- */
 public abstract class MovementController {
 
     protected final MapSet mapSet;
@@ -34,7 +31,7 @@ public abstract class MovementController {
     protected abstract void onOutOfBounds(int row, int col);
 
     /**
-     * Reponse to the movement that is refused.
+     *
      * @param space The target space the target is being blocked by
      */
     protected abstract void onBlocked(Space space);

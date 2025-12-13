@@ -13,7 +13,6 @@ public enum Color {
     MAGENTA("\u001B[35m"),
     WHITE("\u001B[37m"),
     BLACK("\u001B[30m"),
-    PURPLE("\u001B[95m"),
     NONE(""),
     RESET("\u001B[0m"); // used to reset color
 
