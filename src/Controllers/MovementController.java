@@ -4,14 +4,13 @@ import Enums.Direction;
 import Interfaces.Positionable;
 import WorldSets.MapSet;
 import WorldSets.Space;
-import WorldSets.Spaces.ObstacleSpace;
 
-public abstract class MovementController {
+public abstract class MovementController<M extends MapSet> {
 
-    protected final MapSet mapSet;
-    protected final Positionable target;
+    protected final M mapSet;
+    protected Positionable target;
 
-    protected MovementController(MapSet mapSet, Positionable target) {
+    protected MovementController(M mapSet, Positionable target) {
         this.mapSet = mapSet;
         this.target = target;
     }
@@ -21,7 +20,7 @@ public abstract class MovementController {
      * @param direction - Direction that target is moving in
      * @return - true or false move has been successful
      */
-    public abstract void move(Direction direction);
+    public abstract boolean move(Direction direction);
 
     /**
      *

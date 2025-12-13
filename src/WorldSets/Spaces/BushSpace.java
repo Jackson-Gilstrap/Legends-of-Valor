@@ -1,6 +1,7 @@
 package WorldSets.Spaces;
 
 import Entities.Hero;
+import Utility.Color;
 import WorldSets.Space;
 
 public class BushSpace extends Space {
@@ -29,4 +30,15 @@ public class BushSpace extends Space {
     public void onLeave(Hero h) {
         h.getStats().setDexterity(h.getStats().getDexterity()-buffAmount);
     }
+
+    @Override
+    protected Color colorForSpace() {
+        return Color.GREEN;
+    }
+
+    @Override
+    public String bgCodeForSpace() {
+        return Color.LIGHTGREEN.getBgAnsiCode();
+    }
+
 }

@@ -123,55 +123,7 @@ public abstract class Space {
         return bgCodeForSpace() + text + Color.reset();
     }
 
-    protected Color colorForSpace() {
-        if (this instanceof WorldSets.Spaces.NexusSpace) {
-            WorldSets.Spaces.NexusSpace nexus = (WorldSets.Spaces.NexusSpace) this;
-            return nexus.getType() == WorldSets.Spaces.NexusSpace.NexusType.HERO ? Color.CYAN : Color.RED;
-        }
-        if (this instanceof WorldSets.Spaces.WallSpace) {
-            return Color.WHITE;
-        }
-        if (this instanceof WorldSets.Spaces.ObstacleSpace) {
-            return Color.RED;
-        }
-        if (this instanceof WorldSets.Spaces.KoulouSpace) {
-            return Color.YELLOW;
-        }
-        if (this instanceof WorldSets.Spaces.CaveSpace) {
-            return Color.BLUE;
-        }
-        if (this instanceof WorldSets.Spaces.BushSpace) {
-            return Color.GREEN;
-        }
-        if (this instanceof WorldSets.Spaces.MarketSpace) {
-            return Color.MAGENTA;
-        }
-        return Color.WHITE;
-    }
+    protected abstract Color colorForSpace();
 
-    private String bgCodeForSpace() {
-        if (this instanceof WorldSets.Spaces.NexusSpace) {
-            WorldSets.Spaces.NexusSpace nexus = (WorldSets.Spaces.NexusSpace) this;
-            return nexus.getType() == WorldSets.Spaces.NexusSpace.NexusType.HERO ? "\u001B[46m" : "\u001B[41m";
-        }
-        if (this instanceof WorldSets.Spaces.WallSpace) {
-            return "\u001B[47m";
-        }
-        if (this instanceof WorldSets.Spaces.ObstacleSpace) {
-            return "\u001B[101m";
-        }
-        if (this instanceof WorldSets.Spaces.KoulouSpace) {
-            return "\u001B[43m";
-        }
-        if (this instanceof WorldSets.Spaces.CaveSpace) {
-            return "\u001B[44m";
-        }
-        if (this instanceof WorldSets.Spaces.BushSpace) {
-            return "\u001B[42m";
-        }
-        if (this instanceof WorldSets.Spaces.MarketSpace) {
-            return "\u001B[45m";
-        }
-        return "\u001B[100m";
-    }
+    protected abstract String bgCodeForSpace();
 }

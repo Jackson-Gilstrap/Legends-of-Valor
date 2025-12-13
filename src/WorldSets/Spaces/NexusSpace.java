@@ -1,6 +1,7 @@
 package WorldSets.Spaces;
 
 import Entities.Hero;
+import Utility.Color;
 import WorldSets.Market;
 import WorldSets.Space;
 
@@ -30,6 +31,16 @@ public class NexusSpace extends MarketSpace {
 
     public NexusType getType() {
         return type;
+    }
+
+    @Override
+    protected Color colorForSpace() {
+        return Color.GREEN;
+    }
+
+    @Override
+    public String bgCodeForSpace() {
+        return type == NexusType.HERO ? Color.CYAN.getBgAnsiCode() : Color.RED.getBgAnsiCode();
     }
 
 }

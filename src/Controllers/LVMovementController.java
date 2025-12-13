@@ -1,55 +1,43 @@
 package Controllers;
 
 import Enums.Direction;
+import Game.GameUI;
+import Entities.Entity;
 import Entities.Hero;
 import Entities.Monster;
-import Interfaces.HasHero;
-import Interfaces.HasMonster;
-import Interfaces.HasSpawnPosition;
 import Interfaces.Positionable;
-import WorldSets.MapSet;
+import WorldSets.Market;
 import WorldSets.Space;
+import WorldSets.Maps.Arena;
+import WorldSets.Maps.UnitToken;
+import WorldSets.Spaces.MarketSpace;
 import WorldSets.Spaces.ObstacleSpace;
 import WorldSets.Spaces.PlainSpace;
 import WorldSets.Spaces.WallSpace;
 
 import java.util.List;
-import java.util.Collections;
 import java.util.Arrays;
-import java.util.ArrayList;
 
-public class LVMovementController extends MovementController {
+public class LVMovementController extends MovementController<Arena> {
+    private boolean isHero;
+    private final GameUI ui;
+    
+    public LVMovementController(GameUI ui, Arena map) {
+        super(map, null);
+        this.ui = ui;
+        isHero = true;
+    }
 
-    private final List<? extends Positionable> heroes;
-    private final List<? extends Positionable> monsters;
-    private final boolean isHero;
-    private final int spawnRow;
-    private final int spawnCol;
+    public void setTarget(Entity e){
+        target = e;
+    }
 
-    public LVMovementController(MapSet mapSet,
-                                Positionable target,
-                                List<? extends Positionable> heroes,
-                                List<? extends Positionable> monsters,
-                                boolean isHero) {
-        super(mapSet, target);
-        this.heroes = heroes == null ? Collections.emptyList() : heroes;
-        this.monsters = monsters == null ? Collections.emptyList() : monsters;
-        this.isHero = isHero;
-        if (target instanceof HasSpawnPosition) {
-            this.spawnRow = ((HasSpawnPosition) target).getSpawnRow();
-            this.spawnCol = ((HasSpawnPosition) target).getSpawnCol();
-        } else {
-            this.spawnRow = target.getRow();
-            this.spawnCol = target.getCol();
-        }
+    public void takeTurns(){
+        isHero = !isHero;
     }
 
     @Override
-    public void move(Direction direction) {
-        attemptMove(direction);
-    }
-
-    public boolean attemptMove(Direction direction) {
+    public boolean move(Direction direction) {
         int targetRow = target.getRow() + direction.dRow();
         int targetCol = target.getCol() + direction.dCol();
 
@@ -59,19 +47,19 @@ public class LVMovementController extends MovementController {
         }
 
         Space destination = mapSet.getSpace(targetRow, targetCol);
-        if (destination instanceof WallSpace || !destination.canEnter()) {
+        if (!destination.canEnter()) {
             if (isHero) {
                 onBlocked(destination);
             }
             return false;
         }
 
-        if (isHero && isHeroOccupied(targetRow, targetCol)) {
+        if (isHero && mapSet.hasHeroAt(targetRow, targetCol)) {
             System.out.println("Another hero already occupies that space.");
             return false;
         }
 
-        if (isHero && isMonsterOccupied(targetRow, targetCol)) {
+        if (isHero && mapSet.hasMonsterAt(targetRow, targetCol)) {
             System.out.println("A monster is blocking that space. Defeat it before advancing.");
             return false;
         }
@@ -81,20 +69,61 @@ public class LVMovementController extends MovementController {
             return false;
         }
 
-        if (!isHero && isMonsterOccupied(targetRow, targetCol)) {
+        if (!isHero && mapSet.hasMonsterAt(targetRow, targetCol)) {
             System.out.println("Another monster already occupies that space.");
             return false;
         }
 
-        if (!isHero && isHeroOccupied(targetRow, targetCol)) {
+        if (!isHero && mapSet.hasHeroAt(targetRow, targetCol)) {
             System.out.println("The path is blocked by a hero.");
             return false;
         }
 
-        target.setPosition(targetRow, targetCol);
-        return true;
+        return mapSet.move(target, targetRow, targetCol);
     }
 
+    public boolean teleport(){
+        Positionable actingHero = getTarget();
+
+        // all the heroes on the map
+        List<Hero> heroes = mapSet.getHeros();
+
+        if (heroes == null || heroes.size() < 2) {
+            System.out.println("No other heroes available to teleport to.");
+            return false;
+        }
+
+        System.out.println("Teleport mode: (A) Adjacent | (B) Behind");
+        String mode = ui.askOneWord("Choose mode: ").toUpperCase();
+
+        System.out.println("Select a hero to teleport next to:");
+        for (int i = 0; i < heroes.size(); i++) {
+            Positionable hero = heroes.get(i);
+            String label = (hero == actingHero) ? " (you)" : "";
+            System.out.printf("%d) Hero at (%d,%d)%s%n", i + 1, hero.getRow(), hero.getCol(), label);
+        }
+
+        int selection = ui.askInt() - 1;
+        if (selection < 0 || selection >= heroes.size()) {
+            System.out.println("Invalid hero selection.");
+            return false;
+        }
+
+        Positionable targetHero = heroes.get(selection);
+        if (targetHero == actingHero) {
+            System.out.println("You cannot teleport to yourself.");
+            return false;
+        }
+
+        boolean success = "B".equals(mode)
+                ? teleportBehindHero(targetHero)
+                : teleportToHero(targetHero);
+
+        if (!success) {
+            System.out.println("Teleport failed. Try a different mode or target.");
+        }
+        return success;
+    }
     /**
      * Teleport adjacent to a target hero while observing Legends of Valor lane rules.
      *
@@ -147,7 +176,7 @@ public class LVMovementController extends MovementController {
                 continue;
             }
 
-            if (isHeroOccupied(row, col)) {
+            if (mapSet.hasHeroAt(row, col)) {
                 continue;
             }
 
@@ -155,7 +184,7 @@ public class LVMovementController extends MovementController {
                 continue;
             }
 
-            target.setPosition(row, col);
+            mapSet.move(target, row, col);
             return true;
         }
 
@@ -193,7 +222,7 @@ public class LVMovementController extends MovementController {
             return false;
         }
 
-        if (isHeroOccupied(row, col)) {
+        if (mapSet.hasHeroAt(row, col)) {
             System.out.println("Another hero already occupies that space.");
             return false;
         }
@@ -203,7 +232,7 @@ public class LVMovementController extends MovementController {
             return false;
         }
 
-        target.setPosition(row, col);
+        mapSet.move(target, row, col);
         return true;
     }
 
@@ -218,71 +247,25 @@ public class LVMovementController extends MovementController {
             return false;
         }
 
-        if (!mapSet.inBounds(spawnRow, spawnCol)) {
-            System.out.println("Your nexus cannot be located on the map.");
-            return false;
-        }
-
-        Space destination = mapSet.getSpace(spawnRow, spawnCol);
-        if (destination instanceof WallSpace || !destination.canEnter()) {
-            System.out.println("Your nexus space is blocked.");
-            return false;
-        }
-
-        if (isHeroOccupied(spawnRow, spawnCol)) {
+        UnitToken spawnPos = mapSet.getSpawnPosition((Hero)target);
+        if (mapSet.hasHeroAt(spawnPos.getRow(), spawnPos.getCol())) {
             System.out.println("Another hero is occupying your nexus.");
             return false;
         }
 
-        if (isMonsterOccupied(spawnRow, spawnCol)) {
+        if (mapSet.hasMonsterAt(spawnPos.getRow(), spawnPos.getCol())) {
             System.out.println("A monster is occupying your nexus. Clear it before recalling.");
             return false;
         }
 
-        target.setPosition(spawnRow, spawnCol);
-        System.out.printf("You have been recalled to your nexus at (%d,%d).%n", spawnRow, spawnCol);
+        mapSet.move(target, spawnPos.getRow(), spawnPos.getCol());
+        System.out.printf("You have been recalled to your nexus at (%d,%d).%n", spawnPos.getRow(), spawnPos.getCol());
         return true;
     }
 
-    private boolean isHeroOccupied(int row, int col) {
-        for (Positionable hero : heroes) {
-            if (hero == null || hero == target) {
-                continue;
-            }
-            if (hero.getRow() == row && hero.getCol() == col) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private boolean isMonsterOccupied(int row, int col) {
-        for (Positionable monster : monsters) {
-            if (monster == null || monster == target) {
-                continue;
-            }
-            if (monster.getRow() == row && monster.getCol() == col) {
-                return true;
-            }
-        }
-        return false;
-    }
 
     private boolean isBlockedByMonsterAhead(int targetRow, int targetCol) {
-        int lane = laneOf(targetCol);
-        for (Positionable monster : monsters) {
-            if (monster == null) {
-                continue;
-            }
-            if (laneOf(monster.getCol()) != lane) {
-                continue;
-            }
-            // heroes advance upward, so a smaller row index is "ahead"
-            if (targetRow < monster.getRow()) {
-                return true;
-            }
-        }
-        return false;
+        return mapSet.hasMonsterInSameRow(target);
     }
 
     private int laneOf(int col) {
@@ -303,12 +286,35 @@ public class LVMovementController extends MovementController {
     /**
      * Clear an adjacent obstacle, converting it to plain space for 1 HP.
      */
-    public boolean clearObstacle(Direction direction) {
+    public boolean clearObstacle() {
         if (!isHero) {
             System.out.println("Only heroes can clear obstacles.");
             return false;
         }
 
+        // ask for the specific direction
+        String dirInput;
+        Direction direction = null;
+        while(direction == null){
+            dirInput = ui.askOneWord("Choose direction to clear obstacle (W/A/S/D): ").toUpperCase();
+            switch (dirInput) {
+                case "W":
+                    direction = Direction.UP;
+                    break;
+                case "S":
+                    direction = Direction.DOWN;
+                    break;
+                case "A":
+                    direction = Direction.LEFT;
+                    break;
+                case "D":
+                    direction = Direction.RIGHT;
+                    break;
+                default:
+                    System.out.println("Invalid direction. Please enter again.");
+            }
+        }
+        
         int targetRow = target.getRow() + direction.dRow();
         int targetCol = target.getCol() + direction.dCol();
 
@@ -323,18 +329,7 @@ public class LVMovementController extends MovementController {
             return false;
         }
 
-        if (!(target instanceof HasHero)) {
-            System.out.println("Cannot identify the acting hero.");
-            return false;
-        }
-
-        HasHero heroHolder = (HasHero) target;
-        Hero hero = heroHolder.getHeroEntity();
-        if (hero == null) {
-            System.out.println("No hero found on this token.");
-            return false;
-        }
-
+        Hero hero = (Hero)target;
         int currentHealth = hero.getStats().getHealth();
         if (currentHealth <= 1) {
             System.out.println("Not enough health to clear the obstacle (costs 1 HP).");
@@ -348,44 +343,39 @@ public class LVMovementController extends MovementController {
     }
 
     /**
-     * Monsters in orthogonal/diagonal range (or same cell).
-     */
-    public List<Positionable> monstersInRange() {
-        List<Positionable> inRange = new ArrayList<Positionable>();
-        for (Positionable m : monsters) {
-            if (m == null) {
-                continue;
-            }
-            int dr = Math.abs(m.getRow() - target.getRow());
-            int dc = Math.abs(m.getCol() - target.getCol());
-            if (dr <= 1 && dc <= 1) {
-                inRange.add(m);
-            }
-        }
-        return inRange;
-    }
-
-    /**
      * Simple one-round battle between acting hero and selected monster.
      */
-    public boolean battleMonster(Positionable monsterPos) {
+    public boolean battleMonster() {
+        List<Monster> candidates = mapSet.getMonstersInRange(target, 1);
+        if (candidates.isEmpty()) {
+            System.out.println("No monsters in battle range.");
+            return false;
+        }
+
+        int choice;
+        if(candidates.size() <=1){
+            // enter the battle directly
+            choice = 0;
+        } else{
+            System.out.println("Choose a monster to battle:");
+            for (int i = 0; i < candidates.size(); i++) {
+                Positionable m = candidates.get(i);
+                System.out.printf("%d) Monster at (%d,%d)%n", i + 1, m.getRow(), m.getCol());
+            }
+            choice = ui.askInt() - 1;
+            while (choice < 0 || choice >= candidates.size()) {
+                System.out.println("Invalid monster selection.");
+                choice = ui.askInt() - 1;
+            }
+        }
+
         if (!isHero) {
             System.out.println("Only heroes can start battles.");
             return false;
         }
-        if (!(target instanceof HasHero)) {
-            System.out.println("Cannot identify acting hero.");
-            return false;
-        }
-        if (!(monsterPos instanceof HasMonster)) {
-            System.out.println("That target is not a monster.");
-            return false;
-        }
 
-        HasHero heroHolder = (HasHero) target;
-        HasMonster monsterHolder = (HasMonster) monsterPos;
-        Hero hero = heroHolder.getHeroEntity();
-        Monster monster = monsterHolder.getMonsterEntity();
+        Hero hero = (Hero)target;
+        Monster monster = candidates.get(choice);
 
         if (hero == null || monster == null) {
             System.out.println("Could not resolve hero or monster for battle.");
@@ -412,11 +402,20 @@ public class LVMovementController extends MovementController {
         }
 
         if (monster.getStats().getHealth() <= 0) {
-            monsters.remove(monsterPos);
+            mapSet.remove(monster);
         }
 
         return true;
     }
+    
+    public boolean interactMarket(){
+        Market market = mapSet.getMarket();
+        if(mapSet.getSpace(target.getRow(), target.getCol()) instanceof MarketSpace) {
+            market.enterMarket(ui, (Hero)target);
+        } else{return false;}
+        return true;
+    }
+    
     @Override
     protected void onOutOfBounds(int row, int col) {
         System.out.println("That move would leave the arena bounds.");

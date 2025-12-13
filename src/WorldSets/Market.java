@@ -34,23 +34,102 @@ public class Market{
         return item.getPrice();
     }
 
+    public void enterMarket(GameUI ui, Hero trader){
+        System.out.println("Welcome to the Market, "+trader.getName()+".");
+        boolean exit = false;
+        while (!exit) {
+
+            System.out.println("Current gold: " + trader.getWallet().getCurrent_gold());
+            System.out.println("Choose and action");
+            showMarketMenu();
+
+            int market_choice = ui.askInt();
+
+            if(market_choice > 4 || market_choice < 1){
+                System.out.println("Invalid choice");
+                continue;
+            }
+
+            switch(market_choice) {
+                case 1: // buy
+                    if (market_inventory.getInventorySize() < 1) {
+                        System.out.println("There are no more items to buy from this market");
+                        exit = true;
+                        break;
+                    }
+                    System.out.println("What item would you like to buy?");
+                    viewMarketItems();
+                    int item_choice = ui.askInt();
+                    if(item_choice >= market_inventory.getInventorySize()) {
+                        System.out.println("Invalid item choice");
+                        continue;
+                    }
+
+                    Item buy_item = market_inventory.getItem(item_choice);
+                    if(trader.getWallet().canMakePurchase(buy_item.getPrice())) {
+                        int sell_price = sellItem(market_inventory.getItem(item_choice));
+                        trader.getWallet().makeTransaction(sell_price);
+                        trader.getInventory().addItem(buy_item);
+                        System.out.println("Hero " + trader.getName() + " has bought " + buy_item.getName());
+                        break;
+                    }
+                    System.out.println("Hero " + trader.getName() + " does not have enough money to buy " + buy_item.getName());
+                    break;
+
+
+                case 2: //sell
+                    if(trader.getInventory().getInventorySize() < 1){
+                        System.out.println(trader.getName() + " has no items to sell choose another trader");
+                        continue;
+                    }
+
+                    System.out.println("What item would you like to sell?");
+                    trader.getInventory().viewInventory();
+
+                    int item_choice2 = ui.askInt();
+                    if(item_choice2 >= trader.getInventory().getInventorySize()) {
+                        System.out.println("Invalid item choice");
+                        continue;
+                    }
+
+                    Item sell_item = trader.getInventory().getItem(item_choice2);
+                    int buy_price = buyItem(sell_item);
+                    trader.getInventory().removeItem(sell_item);
+                    trader.getWallet().addGold(buy_price);
+                    System.out.println("Hero " + trader.getName() + " has sold " + sell_item.getName());
+                    break;
+                case 3: // pick new hero
+                    System.out.println("Returning back to hero selection");
+                    continue;
+                case 4: //exit
+                    System.out.println("The market will refresh once you leave...\nLeaving market...");
+
+                    exit = true;
+                    break;
+                default:
+                    System.out.println("Invalid choice. Try again.");
+            }
+
+        }
+    }
+    
     public void enterMarket(GameUI ui, Party player_party) {
         System.out.println("Welcome to the Market");
         boolean exit = false;
         while (!exit) {
 
             System.out.println("Pick a hero to enter the market");
-            for (int i  = 0 ; i < player_party.getPartySize(); i++) {
-                System.out.println("Hero " + (i+1) + ": " + player_party.getHeroFromParty(i).getName());
+            for (int i  = 0 ; i < player_party.size(); i++) {
+                System.out.println("Hero " + (i+1) + ": " + player_party.get(i).getName());
             }
 
             int hero_choice = ui.askInt();
-            if(hero_choice <= 0 || hero_choice > player_party.getPartySize()) {
+            if(hero_choice <= 0 || hero_choice > player_party.size()) {
                 System.out.println("Invalid choice");
                 continue;
             }
 
-            Hero hero = player_party.getHeroFromParty(hero_choice - 1);
+            Hero hero = player_party.get(hero_choice - 1);
 
 
             System.out.println("Current gold: " + hero.getWallet().getCurrent_gold());
