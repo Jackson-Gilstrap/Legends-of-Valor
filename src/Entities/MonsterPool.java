@@ -7,10 +7,13 @@ import java.util.Random;
 import Factories.DragonFactory;
 import Factories.ExoskeletonFactory;
 import Factories.SpiritFactory;
+import Parties.MonsterParty;
 import Seeders.EntitySeeder;
 
 public class MonsterPool {
     private final EntitySeeder entity_seeder;
+
+    private final ArrayList<Monster> pool = new ArrayList<>();
 
     public MonsterPool(){
         this.entity_seeder = new EntitySeeder(
@@ -33,24 +36,22 @@ public class MonsterPool {
         return entity_seeder.seedSpirits("src/TextFiles/Spirits.txt");
     }
 
-    public List<Monster> generateMonsters() {
-        List<Monster> monsters = new ArrayList<>();
-
-        monsters.addAll(generateDragons());
-        monsters.addAll(generateExoskeletons());
-        monsters.addAll(generateSpirits());
-
-        return monsters;
+    public void generateMonsters() {
+        pool.addAll(generateDragons());
+        pool.addAll(generateExoskeletons());
+        pool.addAll(generateSpirits());
     }
 
-    public Monster getRandomMonster(List<Monster> monsters) {
-        if (monsters == null || monsters.isEmpty()) {
+    public Monster getRandomMonster() {
+        if (pool.isEmpty()) {
             return null;
         }
 
         Random random = new Random();
-        int index = random.nextInt(monsters.size());
-        return monsters.get(index).copy();
+        int index = random.nextInt(pool.size());
+        return pool.get(index).copy();
     }
+
+
 
 }

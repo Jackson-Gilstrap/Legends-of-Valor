@@ -52,7 +52,7 @@ public abstract class Space {
         this.col = col;
     }
 
-    public void  setHero(Hero hero) {
+    public void setHero(Hero hero) {
         this.hero = hero;
     }
     public void setMonster(Monster monster) {

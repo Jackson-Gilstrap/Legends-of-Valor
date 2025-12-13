@@ -3,6 +3,8 @@ package Parties;
 import Entities.Monster;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class MonsterParty {
     private final ArrayList<Monster> monsters;
@@ -12,7 +14,7 @@ public class MonsterParty {
     }
 
     public Monster getMonsterFromParty(int index) {
-        return monsters.get(index);
+        return monsters.get(index).copy();
     }
 
     public void addMonster(Monster monster){
@@ -47,6 +49,8 @@ public class MonsterParty {
         }
         return dead;
     }
+
+
 
     public boolean isEmpty() {
         return monsters.isEmpty();
