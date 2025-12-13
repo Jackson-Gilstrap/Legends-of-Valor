@@ -69,12 +69,12 @@ public class MonstersVsHeroes extends GameController {
         System.out.print("Select a hero by number: ");
         int choice = ui.askInt() - 1;
 
-        if (choice < 0 || choice >= world.getPlayerParty().getPartySize()) {
+        if (choice < 0 || choice >= world.getPlayerParty().size()) {
             System.out.println("Invalid hero selection.");
             return;
         }
 
-        Hero hero = world.getPlayerParty().getHeroFromParty(choice);
+        Hero hero = world.getPlayerParty().get(choice);
         heroInfoController.showHeroDetails(hero);
     }
 

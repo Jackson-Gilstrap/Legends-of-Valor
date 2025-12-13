@@ -34,7 +34,7 @@ public class HeroSelectionController {
 
         while (true) {
 
-            if (party.getPartySize() >= PARTY_CAPACITY) {
+            if (party.size() >= PARTY_CAPACITY) {
                 System.out.println("Party is full. Starting game...\n");
                 return;
             }
@@ -59,7 +59,7 @@ public class HeroSelectionController {
                     break;
 
                 case 0:
-                    if (party.getPartySize() == 0) {
+                    if (party.size() == 0) {
                         System.out.println("You need at least one hero in your party.");
                         break;
                     }
@@ -97,7 +97,7 @@ public class HeroSelectionController {
             System.out.println("Invalid choice.");
             return;
         }
-        worldMap.getPlayerParty().addHeroToParty(list.get(index));
+        worldMap.getPlayerParty().add(list.get(index));
         System.out.println(list.get(index).getName() + " has been added to the party");
         System.out.println();
         list.remove(index);

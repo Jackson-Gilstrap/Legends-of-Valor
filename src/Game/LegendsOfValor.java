@@ -2,10 +2,9 @@ package Game;
 
 import Controllers.LVinputController;
 import Controllers.LVMovementController;
-import Entities.Dragon;
 import Entities.Hero;
 import Entities.Monster;
-import Enums.Direction;
+import Entities.MonsterPool;
 import Factories.ArmorFactory;
 import Factories.DragonFactory;
 import Factories.ExoskeletonFactory;
@@ -14,19 +13,14 @@ import Factories.SorcererFactory;
 import Factories.SpiritFactory;
 import Factories.WarriorFactory;
 import Factories.WeaponFactory;
-import Interfaces.Positionable;
-import Interfaces.HasHero;
-import Interfaces.HasMonster;
-import Interfaces.HasSpawnPosition;
 import Seeders.EntitySeeder;
+import Utility.Color;
 import Utility.Stats;
 import WorldSets.Maps.Arena;
-import WorldSets.Space;
+import WorldSets.Maps.UnitToken;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 
 /**
  * Legends of Valor main game loop.
@@ -44,89 +38,17 @@ public class LegendsOfValor extends GameController {
     private final List<Hero> warriors = new ArrayList<>();
     private final List<Hero> paladins = new ArrayList<>();
     private final List<Hero> sorcerers = new ArrayList<>();
-    private final List<Monster> monsterTemplates = new ArrayList<>();
+
+    // generate monsters
+    private final MonsterPool monsterPool = new MonsterPool();
 
     private final List<UnitToken> heroTokens = new ArrayList<>();
     private final List<UnitToken> monsterTokens = new ArrayList<>();
 
-    private int round = 1;
+    private int rounds = 1;
     private int spawnFrequency = 4;
 
-    private static class UnitToken implements Positionable, HasHero, HasMonster, HasSpawnPosition {
-        private final Hero hero;
-        private final Monster monster;
-        private final int spawnRow;
-        private final int spawnCol;
-        private int row;
-        private int col;
-
-        UnitToken(Hero hero, int row, int col) {
-            this.hero = hero;
-            this.monster = null;
-            this.row = row;
-            this.col = col;
-            this.spawnRow = row;
-            this.spawnCol = col;
-        }
-
-        UnitToken(Monster monster, int row, int col) {
-            this.hero = null;
-            this.monster = monster;
-            this.row = row;
-            this.col = col;
-            this.spawnRow = row;
-            this.spawnCol = col;
-        }
-
-        public boolean isHero() {
-            return hero != null;
-        }
-
-        public Hero getHero() {
-            return hero;
-        }
-
-        public Monster getMonster() {
-            return monster;
-        }
-
-        @Override
-        public Hero getHeroEntity() {
-            return hero;
-        }
-
-        @Override
-        public Monster getMonsterEntity() {
-            return monster;
-        }
-
-        @Override
-        public int getSpawnRow() {
-            return spawnRow;
-        }
-
-        @Override
-        public int getSpawnCol() {
-            return spawnCol;
-        }
-
-        @Override
-        public int getRow() {
-            return row;
-        }
-
-        @Override
-        public int getCol() {
-            return col;
-        }
-
-        @Override
-        public void setPosition(int row, int col) {
-            this.row = row;
-            this.col = col;
-        }
-    }
-
+    
     @Override
     public void startGame() {
         introduceGame();
@@ -143,7 +65,7 @@ public class LegendsOfValor extends GameController {
 
         while (!gameOver) {
             System.out.println(renderBoard());
-            System.out.printf("---- Round %d ----%n", round);
+            System.out.printf("---- Round %d ----%n", rounds);
 
             gameOver = heroesTurn();
             if (gameOver) {
@@ -153,7 +75,7 @@ public class LegendsOfValor extends GameController {
             endOfRoundRecovery();
             respawnFallenHeroes();
             spawnNewMonstersIfNeeded();
-            round++;
+            rounds++;
         }
 
         System.out.println("Game over");
@@ -347,7 +269,7 @@ public class LegendsOfValor extends GameController {
     }
 
     private void spawnNewMonstersIfNeeded() {
-        if (round == 0 || round % spawnFrequency != 0) {
+        if (rounds == 0 || rounds % spawnFrequency != 0) {
             return;
         }
 
@@ -386,9 +308,6 @@ public class LegendsOfValor extends GameController {
         return arena.render(heroTokens, monsterTokens);
     }
 
-    private boolean inBounds(int row, int col) {
-        return row >= 0 && row < ARENA_ROWS && col >= 0 && col < ARENA_COLS;
-    }
 
     private boolean isMonsterOccupied(int row, int col) {
         for (UnitToken token : monsterTokens) {
@@ -400,13 +319,8 @@ public class LegendsOfValor extends GameController {
     }
 
     private Monster createMonsterForLane() {
-        if (monsterTemplates.isEmpty()) {
-            // fallback stub
-            return new Dragon("DefaultDragon", 100, 50, 0.2, 0.1, 1);
-        }
-        Monster template = monsterTemplates.get(new Random().nextInt(monsterTemplates.size()));
-        Monster monster = template.copy();
-
+        Monster monster = monsterPool.getRandomMonster();
+        // set the level of the monster
         int avgHeroLevel = averageHeroLevel();
         monster.getLevelObj().setCurrentLevel(avgHeroLevel);
         monster.rescaleStatsForLevel();
@@ -434,10 +348,54 @@ public class LegendsOfValor extends GameController {
 
     @Override
     protected void introduceGame() {
-        System.out.println("Welcome to Legends of Valor!");
-        System.out.println("Guide your three heroes up the lanes and reach the monster nexus.");
+        // clear the screen
+        GameUI.clearScreen();
+
+        System.out.println(Color.colorize("===============================================", Color.CYAN));
+        System.out.println(Color.colorize("           ✦✦  LEGENDS OF VALOR  ✦✦", Color.PURPLE));
+        System.out.println(Color.colorize("===============================================\n", Color.CYAN));
+
+        System.out.println(Color.colorize("Welcome to ", Color.YELLOW) +
+                        Color.colorize("Legends of Valor", Color.RED) +
+                        Color.colorize("!", Color.YELLOW));
+        System.out.println("A thrilling MOBA-style strategy game where heroes and monsters clash for glory.\n");
+
+        System.out.println(Color.colorize("▸ Story:", Color.GREEN));
+        System.out.println(
+            "In the realm of Valor, chaos reigns between two mighty forces — the valiant Heroes\n" +
+            "and the relentless Monsters. Each side guards their sacred Nexus, the source of their power.\n" +
+            "Your duty as the Commander of the Heroes is to lead your team of three champions into battle,\n" +
+            "break through enemy lines, and destroy the Monsters’ Nexus before they reach yours!\n"
+        );
+
+        System.out.println(Color.colorize("▸ Gameplay:", Color.BLUE));
+        System.out.println(
+            "• Control a team of " + Color.colorize("three unique heroes", Color.CYAN) + ".\n" +
+            "• Fight your way through lanes guarded by monsters.\n" +
+            "• Earn " + Color.colorize("gold and experience", Color.YELLOW) + " by defeating enemies.\n" +
+            "• Buy items, grow stronger, and push toward the enemy Nexus.\n" +
+            "• " + Color.colorize("Victory", Color.RED) + " — if any hero reaches the Monsters’ Nexus.\n" +
+            "• " + Color.colorize("Defeat", Color.RED) + " — if any monster reaches yours.\n"
+        );
+
+        System.out.println(Color.colorize("▸ Shared Universe:", Color.PURPLE));
+        System.out.println(
+            "This world shares its roots with " + Color.colorize("Monsters and Heroes", Color.GREEN) + ".\n" +
+            "All items, monsters, and damage systems remain the same — but teamwork is now the key.\n"
+        );
+
+        System.out.println(Color.colorize("Prepare your heroes. Defend your Nexus. Claim the Valor!\n", Color.CYAN));
+        System.out.println(Color.colorize("Press ENTER to continue...", Color.YELLOW));
+
+        try {
+            System.in.read();
+        } catch (Exception ignored) {}
     }
 
+
+    /**
+     * This function load heroes' data from the text files.
+     */
     @Override
     protected void loadGameData() {
         EntitySeeder seeder = new EntitySeeder(
@@ -454,13 +412,6 @@ public class LegendsOfValor extends GameController {
         warriors.addAll(seeder.seedWarriors("src/TextFiles/warriors.txt"));
         paladins.addAll(seeder.seedPaladins("src/TextFiles/Paladins.txt"));
         sorcerers.addAll(seeder.seedSorcerers("src/TextFiles/Sorcerers.txt"));
-
-        monsterTemplates.addAll(seeder.seedDragons("src/TextFiles/Dragons.txt"));
-        monsterTemplates.addAll(seeder.seedExoSkeletons("src/TextFiles/Exoskeletons.txt"));
-        monsterTemplates.addAll(seeder.seedSpirits("src/TextFiles/Spirits.txt"));
-
-        // Shuffle to give variety in the spawn order
-        Collections.shuffle(monsterTemplates);
     }
 
     @Override

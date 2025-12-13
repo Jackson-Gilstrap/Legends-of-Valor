@@ -40,8 +40,8 @@ public class Battle {
         System.out.println("Battle started!");
         System.out.println("Your party walks up to the monsters");
         //apply all the buffs from the player's equipment before the first moves are made
-        for(int i = 0; i < player_party.getPartySize(); i++) {
-            player_party.getHeroFromParty(i).getJacket().updateBuffStats();
+        for(int i = 0; i < player_party.size(); i++) {
+            player_party.get(i).getJacket().updateBuffStats();
         }
 
         while(true) {
@@ -124,7 +124,7 @@ public class Battle {
     }
 
     private void spawnMonsters() {
-        int num_of_monsters = player_party.getPartySize();
+        int num_of_monsters = player_party.size();
         int level_cap = player_party.getPartyLevel();
 
         List<Monster> all_monsters = generateMonsters();

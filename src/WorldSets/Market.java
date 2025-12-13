@@ -40,17 +40,17 @@ public class Market{
         while (!exit) {
 
             System.out.println("Pick a hero to enter the market");
-            for (int i  = 0 ; i < player_party.getPartySize(); i++) {
-                System.out.println("Hero " + (i+1) + ": " + player_party.getHeroFromParty(i).getName());
+            for (int i  = 0 ; i < player_party.size(); i++) {
+                System.out.println("Hero " + (i+1) + ": " + player_party.get(i).getName());
             }
 
             int hero_choice = ui.askInt();
-            if(hero_choice <= 0 || hero_choice > player_party.getPartySize()) {
+            if(hero_choice <= 0 || hero_choice > player_party.size()) {
                 System.out.println("Invalid choice");
                 continue;
             }
 
-            Hero hero = player_party.getHeroFromParty(hero_choice - 1);
+            Hero hero = player_party.get(hero_choice - 1);
 
 
             System.out.println("Current gold: " + hero.getWallet().getCurrent_gold());
