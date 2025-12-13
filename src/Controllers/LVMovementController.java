@@ -412,7 +412,7 @@ public class LVMovementController extends MovementController<Arena> {
         Market market = mapSet.getMarket();
         if(mapSet.getSpace(target.getRow(), target.getCol()) instanceof MarketSpace) {
             market.enterMarket(ui, (Hero)target);
-        }
+        } else{return false;}
         return true;
     }
     
