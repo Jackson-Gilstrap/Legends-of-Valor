@@ -1,24 +1,24 @@
 package Game;
 
+import java.util.ArrayList;
 import java.util.List;
-import Utility.Color;
 
 /**
  * The Launcher class is responsible for a initial flow of the game center.
- * The Launcher lets users to choose from games.
+ * The Launcher lets users choose from games.
  */
 public class Launcher {
-    private List<GameController> games;
+    private final List<GameController> games = new ArrayList<GameController>();
     private final GameUI ui = new GameUI();
-    private MonstersVsHeroes mvhGame;// handle the prompt
+    private final AsciiArt asciiArt = new AsciiArt();
 
     /**
      * Register a game that is not already registered.
-     * @param game
-     * @return
      */
     public Launcher register(GameController game){
-        if(!games.contains(game)) games.add(game);
+        if (game != null && !games.contains(game)) {
+            games.add(game);
+        }
         return this;
     }
 
@@ -26,47 +26,46 @@ public class Launcher {
      * Some UI design that immerse users.
      */
     public void start(){
-        greeting();
-        int choice = askForGameIndex();
-        games.get(choice).startGame();
-        mvhGame.startGame();
+        asciiArt.printGreeting();
+        boolean keepPlaying = true;
+        while (keepPlaying) {
+            int choice = askForGameIndex();
+            GameController selected = games.get(choice);
+            System.out.println("Launching: " + selected.getName());
+            selected.startGame();
 
+            asciiArt.printGameOver();
+            System.out.print("Play another game? (y/n): ");
+            String again = ui.askOneWord("").trim().toLowerCase();
+            keepPlaying = again.startsWith("y");
+        }
+        System.out.println("Thanks for visiting the Legends Center!");
     }
 
-    /**
-     * A greeting of the Legends Center with art design and color print based on the terminal.
-     */
-    public static void greeting() {
-        String logo =
-                "██╗     ███████╗ ██████╗ ███████╗███╗   ██╗██████╗ ███████╗\n" +
-                "██║     ██╔════╝██╔════╝ ██╔════╝████╗  ██║██╔══██╗██╔════╝\n" +
-                "██║     █████╗  ██║  ███╗█████╗  ██╔██╗ ██║██║  ██║███████╗\n" +
-                "██║     ██╔══╝  ██║   ██║██╔══╝  ██║╚██╗██║██║  ██║╚════██║\n" +
-                "███████╗███████╗╚██████╔╝███████╗██║ ╚████║██████╔╝███████║\n" +
-                "╚══════╝╚══════╝ ╚═════╝ ╚══════╝╚═╝  ╚═══╝╚═════╝ ╚══════╝\n";
-
-        System.out.println(Color.colorize(logo, Color.YELLOW));
-        System.out.println(Color.colorize("Welcome to the Legends Center", Color.CYAN));
-        System.out.println(Color.colorize("Where Heroes and Monsters share the same destiny...", Color.LIGHTGREEN));
-        System.out.println();
-
-        System.out.println(Color.colorize("Two worlds await your command:", Color.WHITE));
-        System.out.println("  " + Color.colorize("[1] RPG Realm", Color.GREEN) + "  —  Embark on an epic adventure as a hero of light.");
-        System.out.println("  " + Color.colorize("[2] MOBA Arena", Color.MAGENTA) + " —  Test your might against legends from across realms.");
-        System.out.println();
-
-        System.out.println(Color.colorize("Your progress, your heroes, one legend.", Color.LIGHTGREEN));
-        System.out.println(Color.colorize("──────────────────────────────────────────────", Color.BLUE));
-        System.out.println(Color.colorize("Version 1.0.0  |  © 2025 Legends Studio", Color.WHITE));
-        System.out.println(Color.reset());
-    }
-
-    
     /**
      * Ask the player for the index of the game they want to play.
-     * @return
      */
     private int askForGameIndex(){
-        return ui.askInt();
+        if (games.isEmpty()) {
+            throw new IllegalStateException("No games registered with the launcher.");
+        }
+
+        System.out.println("Choose a game to play:");
+        for (int i = 0; i < games.size(); i++) {
+            System.out.printf("[%d] %s%n", i + 1, games.get(i).getName());
+        }
+
+        int choice = -1;
+        while (choice < 0 || choice >= games.size()) {
+            System.out.print("Enter choice: ");
+            int input = ui.askInt() - 1;
+            if (input >= 0 && input < games.size()) {
+                choice = input;
+            } else {
+                System.out.println("Invalid selection. Try again.");
+            }
+        }
+
+        return choice;
     }
 }
