@@ -2,13 +2,12 @@ package Game;
 
 import Entities.Hero;
 import Entities.Monster;
+import Entities.MonsterPool;
 import Enums.PotionType;
 import Items.Potion;
 import Items.Spell;
 import Parties.MonsterParty;
 import Parties.Party;
-import Seeders.EntitySeeder;
-import Factories.*;
 
 import java.util.*;
 
@@ -16,7 +15,6 @@ import java.util.*;
 public class Battle {
     private final Party player_party;
     private final MonsterParty monster_party;
-    private final EntitySeeder entity_seeder;
     private final GameUI ui = new GameUI();
     private final Set<Monster> rewarded_monsters = new HashSet<>();
     private final Random rand = new Random();
@@ -24,14 +22,6 @@ public class Battle {
     public Battle(Party player_party) {
         this.player_party = player_party;
         this.monster_party = new MonsterParty();
-        this.entity_seeder = new EntitySeeder(
-                new DragonFactory(),
-                new ExoskeletonFactory(),
-                new SpiritFactory()
-
-        );
-
-
     }
 
     public boolean battle() {
@@ -109,30 +99,14 @@ public class Battle {
     }
 
 
-
-    private List<Monster> generateMonsters() {
-        List<Monster> monsters = new ArrayList<>();
-        List<Monster> dragons = generateDragons();
-        List<Monster> exoskeletons = generateExoskeletons();
-        List<Monster> spirits = generateSpirits();
-        monsters.addAll(dragons);
-        monsters.addAll(exoskeletons);
-        monsters.addAll(spirits);
-
-        Collections.shuffle(monsters);
-        return monsters;
-    }
-
     private void spawnMonsters() {
+        MonsterPool monsterPool = new MonsterPool();
         int num_of_monsters = player_party.getPartySize();
         int level_cap = player_party.getPartyLevel();
 
-        List<Monster> all_monsters = generateMonsters();
-
         for (int i = 0; i < num_of_monsters; i++) {
 
-            Monster template = all_monsters.get(generateRandomInt(all_monsters.size()));
-
+            Monster template = monsterPool.getRandomMonster(monsterPool.generateMonsters());
             Monster monster = template.copy();
             monster.getLevelObj().setCurrentLevel(level_cap);
             monster.rescaleStatsForLevel();
@@ -394,22 +368,7 @@ public class Battle {
         return attack_roll <= hitting_chance;
     }
 
-    private List<Monster> generateDragons() {
-        return  entity_seeder.seedDragons("src/TextFiles/Dragons.txt");
-    }
-
-    private List<Monster> generateExoskeletons() {
-        return entity_seeder.seedExoSkeletons("src/TextFiles/Exoskeletons.txt");
-    }
-
-    private List<Monster> generateSpirits() {
-        return entity_seeder.seedSpirits("src/TextFiles/Spirits.txt");
-    }
-
-    private int generateRandomInt(int max) {
-        return rand.nextInt(max);
-
-    }
+    
 
     private void rewardNewlyDeadMonsters() {
         ArrayList<Monster> dead_monsters = monster_party.getDeadMonsters();
