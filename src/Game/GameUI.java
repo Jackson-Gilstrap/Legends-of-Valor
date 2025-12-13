@@ -33,6 +33,16 @@ public class GameUI {
         }
     }
 
+    /**
+     * Helper function : sleep for a while
+     */
+    public static void sleep(long millis) {
+        try {
+            Thread.sleep(millis);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+    }
 
 
 

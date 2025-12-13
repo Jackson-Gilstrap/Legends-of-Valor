@@ -7,8 +7,8 @@ import Utility.Jacket;
 import Utility.Stats;
 import Utility.Wallet;
 
-public abstract class Hero extends Entity implements Levelable, Positionable {
-    private int experience_points, to_next_level, x_pos, y_pos;
+public abstract class Hero extends Entity implements Levelable{
+    private int experience_points, to_next_level;
     private final Inventory inventory;
     private final Stats stats;
     private final Jacket jacket;
@@ -36,10 +36,6 @@ public abstract class Hero extends Entity implements Levelable, Positionable {
                 .buildStats();
 
         this.symbol = 'H';
-        this.x_pos = 0;
-        this.y_pos = 0;
-
-
     }
 
     protected abstract void applyLevelUpGrowth(Stats stats);
@@ -63,21 +59,6 @@ public abstract class Hero extends Entity implements Levelable, Positionable {
     public void viewStats(){
         System.out.println(stats.toString());
         jacket.viewJacket();
-    }
-
-    @Override
-    public void setPosition(int row, int col) {
-        x_pos = row;
-        y_pos = col;
-    }
-
-    @Override
-    public int getCol() {
-        return y_pos;
-    }
-    @Override
-    public int getRow() {
-        return x_pos;
     }
 
     public boolean hasSpellEquipped () {
@@ -125,6 +106,5 @@ public abstract class Hero extends Entity implements Levelable, Positionable {
     public boolean canLevelUp(int experience_points) {
         return this.experience_points >= to_next_level;
     }
-
 
 }

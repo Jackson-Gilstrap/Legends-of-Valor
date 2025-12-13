@@ -1,10 +1,12 @@
 package Game;
 
-import Controllers.LVinputController;
+import Controllers.HeroSelectionController;
+import Controllers.LVInputHandler;
 import Controllers.LVMovementController;
 import Entities.Hero;
 import Entities.Monster;
 import Entities.MonsterPool;
+import Enums.Direction;
 import Factories.ArmorFactory;
 import Factories.DragonFactory;
 import Factories.ExoskeletonFactory;
@@ -13,14 +15,17 @@ import Factories.SorcererFactory;
 import Factories.SpiritFactory;
 import Factories.WarriorFactory;
 import Factories.WeaponFactory;
+import Parties.Party;
 import Seeders.EntitySeeder;
 import Utility.Color;
 import Utility.Stats;
 import WorldSets.Maps.Arena;
-import WorldSets.Maps.UnitToken;
+import WorldSets.Maps.Lane;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import Commands.*;
 
 /**
  * Legends of Valor main game loop.
@@ -32,318 +37,60 @@ public class LegendsOfValor extends GameController {
     private static final int ARENA_ROWS = 8;
     private static final int ARENA_COLS = 8;
 
-    private final GameUI ui = new GameUI();
-    private final Arena arena = new Arena(ARENA_ROWS, ARENA_COLS);
+    private final GameUI ui;
+    private final Arena arena;
 
-    private final List<Hero> warriors = new ArrayList<>();
-    private final List<Hero> paladins = new ArrayList<>();
-    private final List<Hero> sorcerers = new ArrayList<>();
+    private final List<Hero> warriors;
+    private final List<Hero> paladins;
+    private final List<Hero> sorcerers;
 
     // generate monsters
-    private final MonsterPool monsterPool = new MonsterPool();
+    private final MonsterPool monsterPool;
+    private List<Monster> monsters;
 
-    private final List<UnitToken> heroTokens = new ArrayList<>();
-    private final List<UnitToken> monsterTokens = new ArrayList<>();
+    // heroes
+    private Party party;
 
-    private int rounds = 1;
+    private int rounds = 0;
     private int spawnFrequency = 4;
 
+    // handler
+    private LVMovementController actionController;
+    private LVInputHandler handler;
+
+    public LegendsOfValor(){
+        ui = new GameUI();
+        arena = new Arena(ARENA_ROWS, ARENA_COLS);
+        warriors = new ArrayList<>();
+        paladins = new ArrayList<>();
+        sorcerers = new ArrayList<>();
+        monsterPool = new MonsterPool();
+        monsters = new ArrayList<>();
+        party = new Party();
+        actionController = new LVMovementController(ui, arena);
+        handler = new LVInputHandler(ui);
+        registerCmds();
+    }
     
+    private void registerCmds(){
+        handler.register("W", new Move(actionController, Direction.UP))
+        .register("S", new Move(actionController, Direction.DOWN))
+        .register("A", new Move(actionController, Direction.LEFT))
+        .register("D", new Move(actionController, Direction.RIGHT))
+        .register("TP", new Teleport(actionController))
+        .register("R", new Recall(actionController))
+        .register("C", new ClearObstacle(actionController))
+        .register("B", new EnterBattle(actionController))
+        .register("Q", new Quit(this));
+    }
+
     @Override
     public void startGame() {
         introduceGame();
         loadGameData();
         selectDifficulty();
-        chooseHeroesAndLanes();
-        spawnInitialMonsters();
+        partySelection();
         gameLoop();
-    }
-
-    @Override
-    protected void gameLoop() {
-        boolean gameOver = false;
-
-        while (!gameOver) {
-            System.out.println(renderBoard());
-            System.out.printf("---- Round %d ----%n", rounds);
-
-            gameOver = heroesTurn();
-            if (gameOver) {
-                break;
-            }
-
-            endOfRoundRecovery();
-            respawnFallenHeroes();
-            spawnNewMonstersIfNeeded();
-            rounds++;
-        }
-
-        System.out.println("Game over");
-    }
-
-    private void selectDifficulty() {
-        System.out.println("Select difficulty: 1) Easy 2) Medium 3) Hard");
-        int choice = ui.askInt();
-        switch (choice) {
-            case 1:
-                spawnFrequency = 6;
-                break;
-            case 3:
-                spawnFrequency = 2;
-                break;
-            default:
-                spawnFrequency = 4;
-                break;
-        }
-    }
-
-    private void chooseHeroesAndLanes() {
-        List<Hero> pool = new ArrayList<>();
-        pool.addAll(warriors);
-        pool.addAll(paladins);
-        pool.addAll(sorcerers);
-
-        boolean[] laneTaken = new boolean[]{false, false, false};
-
-        for (int pick = 0; pick < 3; pick++) {
-            System.out.println("Choose 3 heroes (hero# lane#). Lanes: 1=Top, 2=Mid, 3=Bottom.");
-            for (int i = 0; i < pool.size(); i++) {
-                Hero hero = pool.get(i);
-                System.out.printf("%d) %s%n", i + 1, hero.getName());
-            }
-
-            System.out.printf("Select hero %d and lane (e.g., 2 1): ", pick + 1);
-            int heroIndex = ui.askInt() - 1;
-            int lane = ui.askInt() - 1;
-
-            if (heroIndex < 0 || heroIndex >= pool.size()) {
-                System.out.println("Invalid hero selection, try again.");
-                pick--;
-                continue;
-            }
-
-            if (lane < 0 || lane > 2) {
-                System.out.println("Invalid lane number, try again.");
-                pick--;
-                continue;
-            }
-
-            if (laneTaken[lane]) {
-                System.out.println("Lane already has a hero. Pick another lane.");
-                pick--;
-                continue;
-            }
-
-            Hero chosen = pool.remove(heroIndex);
-            laneTaken[lane] = true;
-
-            int col = laneToColumn(lane);
-            int row = ARENA_ROWS - 1; // hero nexus row
-            UnitToken token = new UnitToken(chosen, row, col);
-            heroTokens.add(token);
-        }
-    }
-
-    private void spawnInitialMonsters() {
-        for (int lane = 0; lane < 3; lane++) {
-            Monster monster = createMonsterForLane();
-            int row = 0; // monster nexus row
-            int col = laneToColumn(lane);
-            monsterTokens.add(new UnitToken(monster, row, col));
-        }
-    }
-
-    private boolean heroesTurn() {
-        for (UnitToken heroToken : heroTokens) {
-            if (heroToken.getHero().getStats().getHealth() <= 0) {
-                continue; // waits for respawn
-            }
-
-            LVMovementController movementController = new LVMovementController(
-                    arena,
-                    heroToken,
-                    heroTokens,
-                    monsterTokens,
-                    true
-            );
-
-            LVinputController inputController = new LVinputController(ui, movementController, heroTokens);
-
-            boolean turnDone = false;
-            while (!turnDone) {
-                System.out.printf("Hero turn: %s at (%d,%d)%n",
-                        heroToken.getHero().getName(), heroToken.getRow(), heroToken.getCol());
-                inputController.printValidCommands();
-                String command = inputController.getInput();
-                LVinputController.TurnStatus status = inputController.handleCommand(command);
-                System.out.println(renderBoard());
-
-                if (status == LVinputController.TurnStatus.QUIT) {
-                    return true;
-                }
-                if (status == LVinputController.TurnStatus.CONSUMED) {
-                    turnDone = true;
-                } else {
-                    System.out.println("Try a different action.");
-                }
-            }
-
-            if (heroReachedMonsterNexus()) {
-                System.out.println("Heroes reached the monster nexus. You win!");
-                return true;
-            }
-
-            monstersTurn();
-            if (monsterReachedHeroNexus()) {
-                System.out.println("A monster reached the hero nexus. Monsters win!");
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private void monstersTurn() {
-        for (UnitToken monsterToken : new ArrayList<UnitToken>(monsterTokens)) {
-            LVMovementController movementController = new LVMovementController(
-                    arena,
-                    monsterToken,
-                    heroTokens,
-                    monsterTokens,
-                    false
-            );
-
-            // If a hero is adjacent, pause movement to simulate an attack opportunity
-            UnitToken adjacentHero = findAdjacentHero(monsterToken);
-            if (adjacentHero != null) {
-                System.out.printf("%s engages %s near (%d,%d)%n",
-                        monsterToken.getMonster().getName(),
-                        adjacentHero.getHero().getName(),
-                        monsterToken.getRow(),
-                        monsterToken.getCol());
-                continue;
-            }
-
-            movementController.move(Enums.Direction.DOWN);
-        }
-    }
-
-    private UnitToken findAdjacentHero(UnitToken monsterToken) {
-        for (UnitToken hero : heroTokens) {
-            if (hero.getHero().getStats().getHealth() <= 0) {
-                continue;
-            }
-            int dr = Math.abs(hero.getRow() - monsterToken.getRow());
-            int dc = Math.abs(hero.getCol() - monsterToken.getCol());
-            if (dr + dc == 1) {
-                return hero;
-            }
-        }
-        return null;
-    }
-
-    private void endOfRoundRecovery() {
-        for (UnitToken heroToken : heroTokens) {
-            Stats stats = heroToken.getHero().getStats();
-            if (stats.getHealth() <= 0) {
-                continue;
-            }
-            int heal = (int) Math.max(1, Math.floor(stats.getMax_health() * 0.10));
-            int mana = (int) Math.max(1, Math.floor(stats.getMax_mana() * 0.10));
-            stats.setHealth(stats.getHealth() + heal);
-            stats.setMana(stats.getMana() + mana);
-        }
-    }
-
-    private void respawnFallenHeroes() {
-        for (UnitToken heroToken : heroTokens) {
-            Stats stats = heroToken.getHero().getStats();
-            if (stats.getHealth() > 0) {
-                continue;
-            }
-
-            stats.setHealth(stats.getMax_health());
-            stats.setMana(stats.getMax_mana());
-            heroToken.setPosition(heroToken.getSpawnRow(), heroToken.getSpawnCol());
-            System.out.printf("%s has respawned at their nexus.%n", heroToken.getHero().getName());
-        }
-    }
-
-    private void spawnNewMonstersIfNeeded() {
-        if (rounds == 0 || rounds % spawnFrequency != 0) {
-            return;
-        }
-
-        for (int lane = 0; lane < 3; lane++) {
-            int row = 0;
-            int col = laneToColumn(lane);
-            if (isMonsterOccupied(row, col)) {
-                continue;
-            }
-            Monster monster = createMonsterForLane();
-            UnitToken token = new UnitToken(monster, row, col);
-            monsterTokens.add(token);
-            System.out.printf("A new %s spawns in lane %d.%n", monster.getName(), lane + 1);
-        }
-    }
-
-    private boolean heroReachedMonsterNexus() {
-        for (UnitToken heroToken : heroTokens) {
-            if (heroToken.getRow() == 0) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private boolean monsterReachedHeroNexus() {
-        for (UnitToken monsterToken : monsterTokens) {
-            if (monsterToken.getRow() == ARENA_ROWS - 1) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private String renderBoard() {
-        return arena.render(heroTokens, monsterTokens);
-    }
-
-
-    private boolean isMonsterOccupied(int row, int col) {
-        for (UnitToken token : monsterTokens) {
-            if (token.getRow() == row && token.getCol() == col) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private Monster createMonsterForLane() {
-        Monster monster = monsterPool.getRandomMonster();
-        // set the level of the monster
-        int avgHeroLevel = averageHeroLevel();
-        monster.getLevelObj().setCurrentLevel(avgHeroLevel);
-        monster.rescaleStatsForLevel();
-        return monster;
-    }
-
-    private int averageHeroLevel() {
-        int total = 0;
-        for (UnitToken heroToken : heroTokens) {
-            total += heroToken.getHero().getLevelObj().getCurrentLevel();
-        }
-        return heroTokens.isEmpty() ? 1 : Math.max(1, total / heroTokens.size());
-    }
-
-    private int laneToColumn(int laneIndex) {
-        switch (laneIndex) {
-            case 0:
-                return 0;
-            case 1:
-                return 3;
-            default:
-                return 6;
-        }
     }
 
     @Override
@@ -392,6 +139,48 @@ public class LegendsOfValor extends GameController {
         } catch (Exception ignored) {}
     }
 
+    @Override
+    protected void gameLoop() {
+
+        while (!isOver() && !isQuit()) {
+            // spawn the monsters if needed
+            if(rounds % spawnFrequency == 0){
+                spawnMonsters();
+            }
+
+            System.out.println(arena.render());
+            System.out.printf("---- Round %d ----%n", rounds);
+
+            List<Hero> alivHeros = party.getAliveHeroes();
+            for(Hero h: alivHeros){
+                heroTurn(h);
+                if(isOver() || isQuit()) return;
+            }
+            actionController.takeTurns();
+
+            for(Monster m: monsters){
+                monsterTurn(m); 
+                if(isOver()) return;
+            }
+            actionController.takeTurns();
+
+            endOfRoundRecovery();
+            respawnFallenHeroes();
+            rounds++;
+        }
+
+        System.out.println("Game over");
+    }
+
+    @Override
+    protected boolean isOver(){
+        return arena.isHeroNexusInvaded() || arena.isMonsterNexusInvaded();
+    }
+
+    @Override
+    public String getName() {
+        return "Legends of Valor";
+    }
 
     /**
      * This function load heroes' data from the text files.
@@ -412,10 +201,151 @@ public class LegendsOfValor extends GameController {
         warriors.addAll(seeder.seedWarriors("src/TextFiles/warriors.txt"));
         paladins.addAll(seeder.seedPaladins("src/TextFiles/Paladins.txt"));
         sorcerers.addAll(seeder.seedSorcerers("src/TextFiles/Sorcerers.txt"));
+
     }
 
-    @Override
-    public String getName() {
-        return "Legends of Valor";
+    private void selectDifficulty() {
+        System.out.println("Select difficulty: 1) Easy 2) Medium 3) Hard");
+        int choice = ui.askInt();
+        switch (choice) {
+            case 1:
+                spawnFrequency = 6;
+                break;
+            case 3:
+                spawnFrequency = 2;
+                break;
+            default:
+                spawnFrequency = 4;
+                break;
+        }
     }
+
+    private void partySelection() {
+        HeroSelectionController selector = new HeroSelectionController(ui, party, warriors, paladins, sorcerers);
+
+        List<Lane> lanes = arena.getAllLanes();
+
+        for (Lane l:lanes) {
+            while(l.isEmpty()){
+                // get the hero
+                System.out.printf(Color.colorize("Choose a hero for %s.%n", Color.GREEN),l.getName());
+                Hero chosen = selector.select();
+                if(chosen != null){
+                    party.add(chosen);
+                    // add the hero position to the map
+                    arena.addHero(chosen, ARENA_ROWS-1, arena.laneToColumn(l));
+                    l.addHero(chosen);
+                }
+                else{
+                    System.out.println("Please choose your hero for each lane before the game starts.");
+                }
+            }
+        }
+
+        // start the game
+        party.getPartyInfo();
+        String confirm = ui.askOneWord("Start the game? (yes/no): ");
+
+        if (confirm.toLowerCase().startsWith("y")) {
+            System.out.println("Starting game!");
+            return;
+        }
+    }
+
+    private void spawnMonsters() {
+        List<Lane> allLanes = arena.getAllLanes();
+        for (Lane l: allLanes) {
+            int row = 0;
+            int col = arena.laneToColumn(l);
+            if (arena.hasMonsterAt(row, col)) {
+                continue;
+            }
+            Monster monster = monsterPool.getRandomMonster();
+            int avgLevel = party.getPartyLevel();
+            monster.rescaleStatsForLevel(avgLevel); // rescale the monsters
+            monsters.add(monster);
+            arena.addMonster(monster, row, col);
+            System.out.printf("A new %s spawns in %s.%n", monster.getName(), l.getName());
+        }
+    }
+
+    private void heroTurn(Hero h) {
+        if (h.getStats().getHealth() <= 0) {
+            return;
+        }
+
+        actionController.setTarget(h);
+
+        boolean turnDone = false;
+        while (!turnDone) {
+            System.out.printf("Hero turn: %s at (%d,%d)%n",
+                    h.getName(), h.getRow(), h.getCol());
+            handler.printValidCommands();
+            String command = handler.getInput();
+            turnDone = handler.handleCommand(command);
+            System.out.println(arena.render());
+        }
+
+        if (arena.isMonsterNexusInvaded()) {
+            System.out.println("Heroes reached the monster nexus. You win!");
+        }
+
+    }
+
+    private void monsterTurn(Monster m) {
+        actionController.setTarget(m);
+
+        // thinking...
+        ui.sleep(500); // 
+
+        // if there is a hero next
+        Hero adjacentHero = arena.findAdjacentHero(m);
+        if (adjacentHero != null) {
+            System.out.printf("%s engages %s near (%d,%d)%n",
+                    m.getName(),
+                    adjacentHero.getName(),
+                    m.getRow(),
+                    m.getCol());
+            ui.sleep(800);
+
+            return;
+        }
+
+        // move down
+        System.out.printf("%s moves down...%n", m.getName());
+        ui.sleep(600);
+
+        handler.handleCommand("S");
+        System.out.println(arena.render());
+
+        ui.sleep(400);
+
+        if (arena.isMonsterNexusInvaded()) {
+            System.out.println("A monster reached the hero nexus. Monsters win!");
+        }
+    }
+
+    private void endOfRoundRecovery() {
+        for (Hero h: party) {
+            Stats stats = h.getStats();
+            if (stats.getHealth() <= 0) {
+                continue;
+            }
+            int heal = (int) Math.max(1, Math.floor(stats.getMax_health() * 0.10));
+            int mana = (int) Math.max(1, Math.floor(stats.getMax_mana() * 0.10));
+            stats.setHealth(stats.getHealth() + heal);
+            stats.setMana(stats.getMana() + mana);
+        }
+    }
+
+    private void respawnFallenHeroes() {
+        for (Hero h: party.getDeadHeroes()) {
+            Stats stats = h.getStats();
+            stats.setHealth(stats.getMax_health());
+            stats.setMana(stats.getMax_mana());
+            arena.respawn(h);
+            System.out.printf("%s has respawned at their nexus.%n", h);
+        }
+    }
+
 }

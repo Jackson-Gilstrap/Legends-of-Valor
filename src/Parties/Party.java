@@ -53,10 +53,10 @@ public class Party implements Iterable<Hero>{
     public ArrayList<Hero> getDeadHeroes(){
         ArrayList<Hero> dead_heroes = new ArrayList<>();
         for(Hero hero : hero_party){
-            if(hero.getStats().getHealth() >= 0){
+            if(hero.getStats().getHealth() <= 0){
                 hero.getStats().setHealth(0);
+                dead_heroes.add(hero);
             }
-            dead_heroes.add(hero);
         }
         return dead_heroes;
     }

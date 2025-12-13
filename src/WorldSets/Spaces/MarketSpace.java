@@ -1,6 +1,7 @@
 package WorldSets.Spaces;
 
 import Entities.Hero;
+import Utility.Color;
 import WorldSets.Market;
 import WorldSets.Space;
 
@@ -30,6 +31,17 @@ public class MarketSpace extends Space {
      public void onLeave(Hero h) {
         // do nothing
      }
+
+    @Override
+    protected Color colorForSpace() {
+            return Color.MAGENTA;
+    }
+
+    @Override
+    public String bgCodeForSpace() {
+        return Color.MAGENTA.getBgAnsiCode();
+    }
+
 
 
 

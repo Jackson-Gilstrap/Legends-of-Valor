@@ -17,4 +17,15 @@ public enum Direction {
 
     public int dRow() { return dRow; }
     public int dCol() { return dCol; }
+
+    @Override
+    public String toString() {
+        switch (this) {
+            case UP: return "Up";
+            case DOWN: return "Down";
+            case LEFT: return "Left";
+            case RIGHT: return "Right";
+            default: throw new IllegalStateException("Unexpected value: " + this);
+        }
+    }
 }

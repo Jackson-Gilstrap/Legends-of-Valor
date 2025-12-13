@@ -1,6 +1,7 @@
 package WorldSets.Spaces;
 
 import Entities.Hero;
+import Utility.Color;
 import WorldSets.Space;
 
 public class CaveSpace extends Space {
@@ -27,5 +28,17 @@ public class CaveSpace extends Space {
     public void onLeave(Hero h) {
         h.getStats().setAgility(h.getStats().getAgility()-buffAmount);
     }
+
+    @Override
+    protected Color colorForSpace() {
+            return Color.BLUE;
+
+    }
+
+    @Override
+    public String bgCodeForSpace() {
+        return Color.BLUE.getBgAnsiCode();
+    }
+
 
 }

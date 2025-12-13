@@ -1,6 +1,7 @@
 package WorldSets.Spaces;
 
 import Entities.Hero;
+import Utility.Color;
 import WorldSets.Space;
 
 public class WallSpace extends Space {
@@ -40,4 +41,16 @@ public class WallSpace extends Space {
     public void onLeave(Hero h) {  
         // do nothing
     }
+
+
+    @Override
+    protected Color colorForSpace() {
+        return Color.WHITE;
+    }
+
+    @Override
+    public String bgCodeForSpace() {
+        return Color.WHITE.getBgAnsiCode();
+    }
+
 }

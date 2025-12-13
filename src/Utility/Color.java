@@ -4,40 +4,40 @@ package Utility;
  * Represents player colors with their ANSI escape codes for console output.
  */
 public enum Color {
-    RED("\u001B[31m"),
-    LIGHTRED("\u001B[91m"),
-    BLUE("\u001B[34m"),
-    GREEN("\u001B[32m"),
-    LIGHTGREEN("\u001B[92m"),
-    YELLOW("\u001B[33m"),
-    CYAN("\u001B[36m"),
-    MAGENTA("\u001B[35m"),
-    WHITE("\u001B[37m"),
-    BLACK("\u001B[30m"),
-    PURPLE("\u001B[95m"),
-    NONE(""),
-    RESET("\u001B[0m"); // used to reset color
+    RED("\u001B[31m", "\u001B[41m"),
+    LIGHTRED("\u001B[91m", "\u001B[101m"),
+    BLUE("\u001B[34m", "\u001B[44m"),
+    LIGHTGREEN("\u001B[92m", "\u001B[102m"),
+    GREEN("\u001B[32m", "\u001B[42m"),
+    YELLOW("\u001B[33m", "\u001B[43m"),
+    CYAN("\u001B[36m", "\u001B[46m"),
+    MAGENTA("\u001B[35m", "\u001B[45m"),
+    WHITE("\u001B[37m", "\u001B[47m"),
+    BLACK("\u001B[30m", "\u001B[40m"),
+    PURPLE("\u001B[95m", "\u001B[105m"),
+    LIGHTGRAY("\u001B[37m", "\u001B[47m"),
+    NONE("", ""),
+    RESET("\u001B[0m", "\u001B[0m"); // used to reset color
 
     private final String ansiCode;
+    private final String bgAnsiCode;
 
-    Color(String ansiCode) {
+    Color(String ansiCode, String bgAnsiCode) {
         this.ansiCode = ansiCode;
+        this.bgAnsiCode = bgAnsiCode;
     }
 
-    /**
-     * Get ANSI color code for this color.
-     */
     public String getAnsiCode() {
         return ansiCode;
     }
 
-    /**
-     * Reset ANSI code (useful for restoring default console color).
-     */
+    public String getBgAnsiCode() {
+        return bgAnsiCode;
+    }
+
     public static String reset() {
         return RESET.ansiCode;
     }
-
     /**
      * Check whether the given string corresponds to a valid Color name.
      */

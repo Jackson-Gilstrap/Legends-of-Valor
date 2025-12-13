@@ -4,20 +4,17 @@ package Controllers;
 import Enums.Direction;
 import Game.GameUI;
 import Interfaces.Positionable;
-import WorldSets.MapSet;
 import WorldSets.Space;
+import WorldSets.Maps.World;
 import WorldSets.Spaces.ObstacleSpace;
 
-public class MVHMovementController extends MovementController {
+public class MVHMovementController extends MovementController<World> {
 
-    private final GameUI ui;
-    public MVHMovementController(MapSet world_map, Positionable movable, GameUI ui) {
+    public MVHMovementController(World world_map, Positionable movable, GameUI ui) {
         super(world_map, movable);
-        this.ui = ui;
-
     }
     @Override
-    public void move(Direction direction) {
+    public boolean move(Direction direction) {
         int current_row = target.getRow();
         int current_col = target.getCol();
 
@@ -26,17 +23,17 @@ public class MVHMovementController extends MovementController {
 
         if(!mapSet.inBounds(target_row, target_col)) {
             onOutOfBounds(target_row,target_col);
-            return;
+            return false;
         }
 
         Space destination = mapSet.getSpace(target_row, target_col);
         if(destination instanceof ObstacleSpace) {
             onBlocked(mapSet.getSpace(target_row, target_col));
-            return;
+            return false;
         }
 
         target.setPosition(target_row, target_col);
-
+        return true;
     }
 
     @Override
