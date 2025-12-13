@@ -49,7 +49,8 @@ public class MonsterPool {
 
         Random random = new Random();
         int index = random.nextInt(pool.size());
-        return pool.get(index);
+        Monster m = pool.get(index);
+        return m.copy();
     }
 
 

@@ -14,7 +14,7 @@ public class MonsterParty {
     }
 
     public Monster getMonsterFromParty(int index) {
-        return monsters.get(index).copy();
+        return monsters.get(index);
     }
 
     public void addMonster(Monster monster){
