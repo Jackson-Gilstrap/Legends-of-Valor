@@ -16,7 +16,7 @@ public class Attack implements Command{
 
     @Override
     public String name() {
-        return "BATTLE";
+        return "ATTACK";
     }
     
 }

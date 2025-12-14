@@ -93,9 +93,6 @@ public class LVMovementController extends MovementController<Arena, Entity> {
             return false;
         }
 
-        System.out.println("Teleport mode: (A) Adjacent | (B) Behind");
-        String mode = ui.askOneWord("Choose mode: ").toUpperCase();
-
         System.out.println("Select a hero to teleport next to:");
         for (int i = 0; i < heroes.size(); i++) {
             Positionable hero = heroes.get(i);
@@ -115,6 +112,9 @@ public class LVMovementController extends MovementController<Arena, Entity> {
             return false;
         }
 
+        System.out.println("Teleport mode: (A) Adjacent | (B) Behind");
+        String mode = ui.askOneWord("Choose mode: ").toUpperCase();
+
         boolean success = "B".equals(mode)
                 ? teleportBehindHero(targetHero)
                 : teleportToHero(targetHero);
@@ -124,6 +124,7 @@ public class LVMovementController extends MovementController<Arena, Entity> {
         }
         return success;
     }
+
     /**
      * Teleport adjacent to a target hero while observing Legends of Valor lane rules.
      *
@@ -248,18 +249,20 @@ public class LVMovementController extends MovementController<Arena, Entity> {
         }
 
         UnitToken spawnPos = mapSet.getSpawnPosition((Hero)target);
-        if (mapSet.hasHeroAt(spawnPos.getRow(), spawnPos.getCol())) {
+        int spawnRow = spawnPos.getSpawnRow();
+        int spawnCol = spawnPos.getSpawnCol();
+        if (mapSet.hasHeroAt(spawnRow, spawnCol)) {
             System.out.println("Another hero is occupying your nexus.");
             return false;
         }
 
-        if (mapSet.hasMonsterAt(spawnPos.getRow(), spawnPos.getCol())) {
+        if (mapSet.hasMonsterAt(spawnRow, spawnCol)) {
             System.out.println("A monster is occupying your nexus. Clear it before recalling.");
             return false;
         }
 
-        mapSet.move(target, spawnPos.getRow(), spawnPos.getCol());
-        System.out.printf("You have been recalled to your nexus at (%d,%d).%n", spawnPos.getRow(), spawnPos.getCol());
+        mapSet.move(target, spawnRow, spawnCol);
+        System.out.printf("You have been recalled to your nexus at (%d,%d).%n", spawnRow, spawnCol);
         return true;
     }
 
