@@ -1,5 +1,7 @@
 package Entities;
 
+import java.util.Random;
+
 import Interfaces.Positionable;
 import Utility.Stats;
 
@@ -88,5 +90,30 @@ public abstract class Monster extends Entity{
     }
 
     public abstract Monster copy();
+
+    public int attack(Entity e){
+        int ATK = getStats().getAttack();
+        System.out.printf("%s strikes %s for %d damage.%n", getName(), e.getName(), ATK);
+        e.takeAttack(ATK);
+        return ATK;
+    }
+
+    public int takeAttack(int damage){
+        // dodge
+        // double dodgeChance = getStats().getDodge();
+        // if (Math.random() < dodgeChance) {
+        //     System.out.println(getName() + " dodged the attack!");
+        //     return 0;
+        // }
+
+        int dr = (int) (damage * getStats().getDamage_reduction());
+        int dmg = Math.max(1, damage - dr);
+
+        int HP = getStats().getHealth();
+        getStats().setHealth(HP-dmg);
+        System.out.printf("%s receives %d damage and defense it!\n", getName(), damage);
+        System.out.printf("%s loses %d HP!\n", getName(), dmg);
+        return dmg;
+    }
     
 }

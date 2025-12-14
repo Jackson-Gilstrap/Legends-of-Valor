@@ -2,21 +2,21 @@ package Commands;
 
 import Controllers.MovementController;
 
-public class EnterMarket implements Command{
+public class Info implements Command{
     private MovementController<?,?> controller;
 
-    public EnterMarket(MovementController<?,?> controller){
+    public Info(MovementController<?,?> controller){
         this.controller = controller;
     }
-
     @Override
     public boolean execute() {
-        return controller.interactMarket();
+        controller.getHeroInfo();
+        return false;
     }
 
     @Override
     public String name() {
-        return "MARKET";
+        return "INFO";
     }
     
 }

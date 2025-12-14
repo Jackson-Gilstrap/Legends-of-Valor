@@ -5,6 +5,7 @@ import Factories.PotionFactory;
 import Factories.SpellFactory;
 import Factories.WeaponFactory;
 import Items.Item;
+import Parties.Party;
 import Seeders.ItemSeeder;
 import Utility.Inventory;
 import Interfaces.Positionable;
@@ -34,7 +35,7 @@ public class Arena extends MapSet {
     private final List<UnitToken> heroTokens = new ArrayList<>();
     private final List<UnitToken> monsterTokens = new ArrayList<>();
 
-    private final List<Hero> heroes = new ArrayList<>();
+    private final Party heroes = new Party();
     private final List<Monster> monsters = new ArrayList<>();
 
     public Arena(int rows, int cols) {
@@ -174,7 +175,7 @@ public class Arena extends MapSet {
     }
 
     public boolean hasMonsterInSameRow(Positionable center) {
-        for (Positionable m : monsters) {
+        for (Monster m : monsters) {
             if (m != null && m.getRow() == center.getRow() 
                 && Math.abs(m.getCol() - center.getCol()) <=1 ) {
                 return true;
@@ -212,7 +213,7 @@ public class Arena extends MapSet {
         move(h, row, col);
     }
 
-    public List<Hero> getHeros(){
+    public Party getHeros(){
         return heroes;
     }
 

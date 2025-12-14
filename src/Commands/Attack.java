@@ -2,21 +2,21 @@ package Commands;
 
 import Controllers.LVMovementController;
 
-public class EnterBattle implements Command{
+public class Attack implements Command{
     private LVMovementController controller;
 
-    public EnterBattle(LVMovementController controller){
+    public Attack(LVMovementController controller){
         this.controller = controller;
     }
     
     @Override
     public boolean execute() {
-        return controller.battleMonster();
+        return controller.attackMonster();
     }
 
     @Override
     public String name() {
-        return "BATTLE";
+        return "ATTACK";
     }
     
 }

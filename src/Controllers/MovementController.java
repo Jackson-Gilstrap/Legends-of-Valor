@@ -5,12 +5,12 @@ import Interfaces.Positionable;
 import WorldSets.MapSet;
 import WorldSets.Space;
 
-public abstract class MovementController<M extends MapSet> {
+public abstract class MovementController<M extends MapSet, P extends Positionable> {
 
     protected final M mapSet;
-    protected Positionable target;
+    protected P target;
 
-    protected MovementController(M mapSet, Positionable target) {
+    protected MovementController(M mapSet, P target) {
         this.mapSet = mapSet;
         this.target = target;
     }
@@ -22,6 +22,10 @@ public abstract class MovementController<M extends MapSet> {
      */
     public abstract boolean move(Direction direction);
 
+    public abstract boolean interactMarket();
+    
+    public abstract void getHeroInfo();
+    
     /**
      *
      * @param row x pos of the target space

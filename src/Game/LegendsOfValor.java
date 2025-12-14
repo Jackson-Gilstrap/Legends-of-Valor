@@ -1,7 +1,7 @@
 package Game;
 
 import Controllers.HeroSelectionController;
-import Controllers.LVInputHandler;
+import Controllers.InputHandler;
 import Controllers.LVMovementController;
 import Entities.Hero;
 import Entities.Monster;
@@ -57,7 +57,7 @@ public class LegendsOfValor extends GameController {
 
     // handler
     private LVMovementController actionController;
-    private LVInputHandler handler;
+    private InputHandler handler;
 
     public LegendsOfValor(){
         ui = new GameUI();
@@ -66,11 +66,10 @@ public class LegendsOfValor extends GameController {
         paladins = new ArrayList<>();
         sorcerers = new ArrayList<>();
         monsterPool = new MonsterPool();
-        monsterPool.generateMonsters();
         monsters = new MonsterParty();
         party = new Party();
         actionController = new LVMovementController(ui, arena);
-        handler = new LVInputHandler(ui);
+        handler = new InputHandler(ui);
         registerCmds();
     }
     
@@ -82,9 +81,10 @@ public class LegendsOfValor extends GameController {
         .register("TP", new Teleport(actionController))
         .register("R", new Recall(actionController))
         .register("C", new ClearObstacle(actionController))
-        .register("B", new EnterBattle(actionController))
+        .register("ATK", new Attack(actionController))
         .register("Q", new Quit(this))
-        .register("M", new EnterMarket(actionController));
+        .register("M", new EnterMarket(actionController))
+        .register("I", new Info(actionController));
     }
 
     @Override
@@ -178,9 +178,30 @@ public class LegendsOfValor extends GameController {
     }
 
     @Override
-    protected boolean isOver(){
-        return arena.isHeroNexusInvaded() || arena.isMonsterNexusInvaded();
+    protected boolean isOver() {
+        if (arena.isHeroNexusInvaded()) {
+            System.out.println(Color.RED +
+                "\n┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓\n" +
+                "┃            GAME OVER :(.             ┃\n" +
+                "┃   Monsters have invaded your Nexus!  ┃\n" +
+                "┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛\n" +
+                Color.RESET);
+            return true;
+        }
+
+        if (arena.isMonsterNexusInvaded()) {
+            System.out.println(Color.GREEN +
+                "\n┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓\n" +
+                "┃            YOU WIN! :)               ┃\n" +
+                "┃   Heroes conquered the Monster Nexus!┃\n" +
+                "┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛\n" +
+                Color.RESET);
+            return true;
+        }
+
+        return false;
     }
+
 
     @Override
     public String getName() {
@@ -259,25 +280,18 @@ public class LegendsOfValor extends GameController {
 
     private void spawnMonsters() {
         List<Lane> allLanes = arena.getAllLanes();
-        for (int i = 0; i < 3; i++) {
-           Monster m = monsterPool.getRandomMonster();
-           monsters.addMonster(m);
-        }
-        int count = 0;
         for (Lane l: allLanes) {
             int row = 0;
             int col = arena.laneToColumn(l);
             if (arena.hasMonsterAt(row, col)) {
                 continue;
             }
+
+            Monster monster = monsterPool.getRandomMonster();
             int avgLevel = party.getPartyLevel();
-
-
-            Monster monster = monsters.getMonsterFromParty(count);
             monster.rescaleStatsForLevel(avgLevel); // rescale the monsters
             arena.addMonster(monster, row, col);
             System.out.printf("A new %s spawns in %s.%n", monster.getName(), l.getName());
-            count++;
 
         }
     }
@@ -319,6 +333,7 @@ public class LegendsOfValor extends GameController {
                     adjacentHero.getName(),
                     m.getRow(),
                     m.getCol());
+            m.attack(adjacentHero);
             ui.sleep(800);
 
             return;
