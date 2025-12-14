@@ -6,6 +6,7 @@ import Entities.Entity;
 import Entities.Hero;
 import Entities.Monster;
 import Interfaces.Positionable;
+import Parties.Party;
 import WorldSets.Market;
 import WorldSets.Space;
 import WorldSets.Maps.Arena;
@@ -86,7 +87,7 @@ public class LVMovementController extends MovementController<Arena, Entity> {
         Positionable actingHero = getTarget();
 
         // all the heroes on the map
-        List<Hero> heroes = mapSet.getHeros();
+        Party heroes = mapSet.getHeros();
 
         if (heroes == null || heroes.size() < 2) {
             System.out.println("No other heroes available to teleport to.");
@@ -415,5 +416,22 @@ public class LVMovementController extends MovementController<Arena, Entity> {
             return;
         }
         System.out.println("You cannot move onto that space.");
+    }
+
+    public void getHeroInfo() {
+        mapSet.getHeros().getPartyInfo();
+
+        System.out.print("Select a hero by number: ");
+        int choice = ui.askInt() - 1;
+
+        if (choice < 0 || choice >= mapSet.getHeros().size()) {
+            System.out.println("Invalid hero selection.");
+            return;
+        }
+
+        Hero hero = mapSet.getHeros().get(choice);
+
+        HeroInfoController infoController = new HeroInfoController(ui);
+        infoController.showHeroDetails(hero);
     }
 }
