@@ -20,8 +20,8 @@ public class MonsterPool {
                 new DragonFactory(),
                 new ExoskeletonFactory(),
                 new SpiritFactory()
-
         );
+        generateMonsters();
     }
 
     public List<Monster> generateDragons() {
@@ -36,7 +36,7 @@ public class MonsterPool {
         return entity_seeder.seedSpirits("src/TextFiles/Spirits.txt");
     }
 
-    public void generateMonsters() {
+    private void generateMonsters() {
         pool.addAll(generateDragons());
         pool.addAll(generateExoskeletons());
         pool.addAll(generateSpirits());

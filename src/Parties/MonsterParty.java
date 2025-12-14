@@ -3,8 +3,6 @@ package Parties;
 import Entities.Monster;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 
 public class MonsterParty {
     private final ArrayList<Monster> monsters;

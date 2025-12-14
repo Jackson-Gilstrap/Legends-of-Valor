@@ -396,6 +396,7 @@ public class LVMovementController extends MovementController<Arena, Entity> {
         return true;
     }
     
+    @Override
     public boolean interactMarket(){
         Market market = mapSet.getMarket();
         if(mapSet.getSpace(target.getRow(), target.getCol()) instanceof MarketSpace) {
@@ -418,6 +419,7 @@ public class LVMovementController extends MovementController<Arena, Entity> {
         System.out.println("You cannot move onto that space.");
     }
 
+    @Override
     public void getHeroInfo() {
         mapSet.getHeros().getPartyInfo();
 

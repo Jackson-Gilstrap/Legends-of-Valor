@@ -1,11 +1,11 @@
 package Commands;
 
-import Controllers.LVMovementController;
+import Controllers.MovementController;
 
 public class Info implements Command{
-    private LVMovementController controller;
+    private MovementController<?,?> controller;
 
-    public Info(LVMovementController controller){
+    public Info(MovementController<?,?> controller){
         this.controller = controller;
     }
     @Override

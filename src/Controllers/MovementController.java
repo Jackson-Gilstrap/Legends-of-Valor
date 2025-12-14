@@ -22,6 +22,10 @@ public abstract class MovementController<M extends MapSet, P extends Positionabl
      */
     public abstract boolean move(Direction direction);
 
+    public abstract boolean interactMarket();
+    
+    public abstract void getHeroInfo();
+    
     /**
      *
      * @param row x pos of the target space

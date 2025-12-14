@@ -1,11 +1,11 @@
 package Commands;
 
-import Controllers.LVMovementController;
+import Controllers.MovementController;
 
 public class EnterMarket implements Command{
-    private LVMovementController controller;
+    private MovementController<?,?> controller;
 
-    public EnterMarket(LVMovementController controller){
+    public EnterMarket(MovementController<?,?> controller){
         this.controller = controller;
     }
 

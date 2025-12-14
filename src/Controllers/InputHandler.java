@@ -9,15 +9,15 @@ import java.util.Map;
 
 import Commands.*;
 
-public class LVInputHandler {
+public class InputHandler {
     private final Map<String, Command> commandMap = new HashMap<>();    // the commands map
     private final GameUI ui;
 
-    public LVInputHandler(GameUI ui) {
+    public InputHandler(GameUI ui) {
         this.ui = ui;
     }
 
-    public LVInputHandler register(String key, Command cmd) {
+    public InputHandler register(String key, Command cmd) {
         key = key.toUpperCase();
         if (commandMap.containsKey(key)) {
             throw new IllegalArgumentException("Command for key '" + key + "' is already registered.");

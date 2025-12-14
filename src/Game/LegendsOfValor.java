@@ -1,7 +1,7 @@
 package Game;
 
 import Controllers.HeroSelectionController;
-import Controllers.LVInputHandler;
+import Controllers.InputHandler;
 import Controllers.LVMovementController;
 import Entities.Hero;
 import Entities.Monster;
@@ -57,7 +57,7 @@ public class LegendsOfValor extends GameController {
 
     // handler
     private LVMovementController actionController;
-    private LVInputHandler handler;
+    private InputHandler handler;
 
     public LegendsOfValor(){
         ui = new GameUI();
@@ -66,11 +66,10 @@ public class LegendsOfValor extends GameController {
         paladins = new ArrayList<>();
         sorcerers = new ArrayList<>();
         monsterPool = new MonsterPool();
-        monsterPool.generateMonsters();
         monsters = new MonsterParty();
         party = new Party();
         actionController = new LVMovementController(ui, arena);
-        handler = new LVInputHandler(ui);
+        handler = new InputHandler(ui);
         registerCmds();
     }
     
