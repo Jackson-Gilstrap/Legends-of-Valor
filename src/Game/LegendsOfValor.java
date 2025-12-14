@@ -259,25 +259,18 @@ public class LegendsOfValor extends GameController {
 
     private void spawnMonsters() {
         List<Lane> allLanes = arena.getAllLanes();
-        for (int i = 0; i < 3; i++) {
-           Monster m = monsterPool.getRandomMonster();
-           monsters.addMonster(m);
-        }
-        int count = 0;
         for (Lane l: allLanes) {
             int row = 0;
             int col = arena.laneToColumn(l);
             if (arena.hasMonsterAt(row, col)) {
                 continue;
             }
+
+            Monster monster = monsterPool.getRandomMonster();
             int avgLevel = party.getPartyLevel();
-
-
-            Monster monster = monsters.getMonsterFromParty(count);
             monster.rescaleStatsForLevel(avgLevel); // rescale the monsters
             arena.addMonster(monster, row, col);
             System.out.printf("A new %s spawns in %s.%n", monster.getName(), l.getName());
-            count++;
 
         }
     }
