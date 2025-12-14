@@ -178,9 +178,30 @@ public class LegendsOfValor extends GameController {
     }
 
     @Override
-    protected boolean isOver(){
-        return arena.isHeroNexusInvaded() || arena.isMonsterNexusInvaded();
+    protected boolean isOver() {
+        if (arena.isHeroNexusInvaded()) {
+            System.out.println(Color.RED +
+                "\n┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓\n" +
+                "┃            GAME OVER :(.             ┃\n" +
+                "┃   Monsters have invaded your Nexus!  ┃\n" +
+                "┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛\n" +
+                Color.RESET);
+            return true;
+        }
+
+        if (arena.isMonsterNexusInvaded()) {
+            System.out.println(Color.GREEN +
+                "\n┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓\n" +
+                "┃            YOU WIN! :)               ┃\n" +
+                "┃   Heroes conquered the Monster Nexus!┃\n" +
+                "┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛\n" +
+                Color.RESET);
+            return true;
+        }
+
+        return false;
     }
+
 
     @Override
     public String getName() {
