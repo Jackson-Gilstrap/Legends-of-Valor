@@ -5,12 +5,12 @@ import Interfaces.Positionable;
 import WorldSets.MapSet;
 import WorldSets.Space;
 
-public abstract class MovementController<M extends MapSet> {
+public abstract class MovementController<M extends MapSet, P extends Positionable> {
 
     protected final M mapSet;
-    protected Positionable target;
+    protected P target;
 
-    protected MovementController(M mapSet, Positionable target) {
+    protected MovementController(M mapSet, P target) {
         this.mapSet = mapSet;
         this.target = target;
     }

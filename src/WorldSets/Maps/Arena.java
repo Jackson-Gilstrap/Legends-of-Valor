@@ -174,7 +174,7 @@ public class Arena extends MapSet {
     }
 
     public boolean hasMonsterInSameRow(Positionable center) {
-        for (Positionable m : monsters) {
+        for (Monster m : monsters) {
             if (m != null && m.getRow() == center.getRow() 
                 && Math.abs(m.getCol() - center.getCol()) <=1 ) {
                 return true;

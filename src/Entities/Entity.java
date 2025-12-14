@@ -43,4 +43,21 @@ public abstract class Entity implements Positionable{
         this.col = col;
     }  
 
+    /**
+     * Performs an attack on the specified entity.
+     *
+     * @param e the target entity being attacked
+     * @return the amount of damage dealt to the target
+     */
+    public abstract int attack(Entity e);
+
+    /**
+     * Handles receiving an attack and applies the given damage to this entity.
+     *
+     * @param damage the amount of damage inflicted
+     * @return the remaining health (or other relevant value) of this entity after taking damage
+     */
+    public abstract int takeAttack(int damage);
+
+
 }

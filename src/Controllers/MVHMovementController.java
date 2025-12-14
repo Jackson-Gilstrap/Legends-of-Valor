@@ -1,18 +1,19 @@
 package Controllers;
 
 
+import Adapters.PartyPositionAdapter;
 import Enums.Direction;
 import Game.GameUI;
-import Interfaces.Positionable;
 import WorldSets.Space;
 import WorldSets.Maps.World;
 import WorldSets.Spaces.ObstacleSpace;
 
-public class MVHMovementController extends MovementController<World> {
+public class MVHMovementController extends MovementController<World, PartyPositionAdapter> {
 
-    public MVHMovementController(World world_map, Positionable movable, GameUI ui) {
+    public MVHMovementController(World world_map, PartyPositionAdapter movable, GameUI ui) {
         super(world_map, movable);
     }
+
     @Override
     public boolean move(Direction direction) {
         int current_row = target.getRow();

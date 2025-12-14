@@ -18,7 +18,7 @@ import WorldSets.Spaces.WallSpace;
 import java.util.List;
 import java.util.Arrays;
 
-public class LVMovementController extends MovementController<Arena> {
+public class LVMovementController extends MovementController<Arena, Entity> {
     private boolean isHero;
     private final GameUI ui;
     
@@ -64,7 +64,7 @@ public class LVMovementController extends MovementController<Arena> {
             return false;
         }
 
-        if (isHero && isBlockedByMonsterAhead(targetRow, targetCol)) {
+        if (isHero && mapSet.hasMonsterInSameRow(target) && direction.equals(Direction.UP)) {
             System.out.println("You cannot advance past an enemy monster in this lane.");
             return false;
         }
@@ -345,7 +345,7 @@ public class LVMovementController extends MovementController<Arena> {
     /**
      * Simple one-round battle between acting hero and selected monster.
      */
-    public boolean battleMonster() {
+    public boolean attackMonster() {
         List<Monster> candidates = mapSet.getMonstersInRange(target, 1);
         if (candidates.isEmpty()) {
             System.out.println("No monsters in battle range.");
@@ -354,7 +354,7 @@ public class LVMovementController extends MovementController<Arena> {
 
         int choice;
         if(candidates.size() <=1){
-            // enter the battle directly
+            // attack directly
             choice = 0;
         } else{
             System.out.println("Choose a monster to battle:");
@@ -382,27 +382,11 @@ public class LVMovementController extends MovementController<Arena> {
             return false;
         }
 
-        int heroAtk = hero.getStats().getAttack();
-        int monsterDr = (int) (heroAtk * monster.getStats().getDamage_reduction());
-        int dmgToMonster = Math.max(1, heroAtk - monsterDr);
-
-        int monsterAtk = monster.getStats().getAttack();
-        int heroDr = (int) (monsterAtk * hero.getStats().getDamage_reduction());
-        int dmgToHero = Math.max(1, monsterAtk - heroDr);
-
-        System.out.printf("%s strikes %s for %d damage.%n", hero.getName(), monster.getName(), dmgToMonster);
-        monster.getStats().setHealth(monster.getStats().getHealth() - dmgToMonster);
-
-        if (monster.getStats().getHealth() > 0) {
-            System.out.printf("%s counterattacks %s for %d damage.%n", monster.getName(), hero.getName(), dmgToHero);
-            int newHp = Math.max(0, hero.getStats().getHealth() - dmgToHero);
-            hero.getStats().setHealth(newHp);
-        } else {
-            System.out.printf("%s is defeated!%n", monster.getName());
-        }
+        hero.attack(monster);
 
         if (monster.getStats().getHealth() <= 0) {
             mapSet.remove(monster);
+            System.out.printf("%s is defeated!%n", monster.getName());
         }
 
         return true;

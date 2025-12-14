@@ -1,7 +1,6 @@
 package Game;
 
 import java.util.ArrayList;
-import java.util.ArrayList;
 import java.util.List;
 
 import Utility.Color;

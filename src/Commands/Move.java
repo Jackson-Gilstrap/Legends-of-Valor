@@ -4,10 +4,10 @@ import Controllers.MovementController;
 import Enums.Direction;
 
 public class Move implements Command {
-    private final MovementController<?> movementController;
+    private final MovementController<?,?> movementController;
     private final Direction direction;
 
-    public Move(MovementController<?> controller, Direction dir) {
+    public Move(MovementController<?,?> controller, Direction dir) {
         this.movementController = controller;
         this.direction = dir;
     }

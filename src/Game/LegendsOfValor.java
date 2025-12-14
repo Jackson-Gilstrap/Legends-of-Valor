@@ -82,7 +82,7 @@ public class LegendsOfValor extends GameController {
         .register("TP", new Teleport(actionController))
         .register("R", new Recall(actionController))
         .register("C", new ClearObstacle(actionController))
-        .register("B", new EnterBattle(actionController))
+        .register("B", new Attack(actionController))
         .register("Q", new Quit(this))
         .register("M", new EnterMarket(actionController));
     }
@@ -319,6 +319,7 @@ public class LegendsOfValor extends GameController {
                     adjacentHero.getName(),
                     m.getRow(),
                     m.getCol());
+            m.attack(adjacentHero);
             ui.sleep(800);
 
             return;
