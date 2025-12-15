@@ -62,7 +62,7 @@ public class KoulouSpace extends Space {
 
     @Override
     public String bgCodeForSpace() {
-        return Color.YELLOW.getBgAnsiCode();
+        return Color.WHITE.getBgAnsiCode();
     }
 
 }

@@ -62,7 +62,7 @@ public class CaveSpace extends Space {
 
     @Override
     public String bgCodeForSpace() {
-        return Color.BLUE.getBgAnsiCode();
+        return Color.WHITE.getBgAnsiCode();
     }
 
 
