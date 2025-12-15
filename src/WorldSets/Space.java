@@ -73,8 +73,8 @@ public abstract class Space {
         return applyColor(line);
     }
     protected String buildMiddle(boolean heroPresent, boolean monsterPresent) {
-        Color heroColor = Color.LIGHTGREEN;
-        Color monsterColor = Color.LIGHTRED;
+        Color heroColor = Color.PURPLE;
+        Color monsterColor = Color.GREEN;
         String bg = bgCodeForSpace();
 
         StringBuilder sb = new StringBuilder();

@@ -38,7 +38,7 @@ public class BushSpace extends Space {
 
     @Override
     public String bgCodeForSpace() {
-        return Color.LIGHTGREEN.getBgAnsiCode();
+        return Color.WHITE.getBgAnsiCode();
     }
 
 }
