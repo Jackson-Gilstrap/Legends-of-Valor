@@ -3,7 +3,6 @@ package Commands;
 import Game.GameContext;
 import Market.MarketInteractionController;
 import Controllers.MovementController;
-import Market.MarketVisitor;
 
 public class EnterMarket implements Command{
     private MovementController<?,?> controller;

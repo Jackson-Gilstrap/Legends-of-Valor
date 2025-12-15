@@ -88,7 +88,7 @@ public class LVMovementController extends MovementController<Arena, Entity> {
         Positionable actingHero = getTarget();
 
         // all the heroes on the map
-        Party heroes = mapSet.getHeros();
+        Party heroes = mapSet.getHeroes();
 
         if (heroes == null || heroes.size() < 2) {
             System.out.println("No other heroes available to teleport to.");
@@ -390,7 +390,7 @@ public class LVMovementController extends MovementController<Arena, Entity> {
         hero.attack(monster);
 
         if (monster.getStats().getHealth() <= 0) {
-            mapSet.remove(monster);
+            mapSet.removeMonster(monster);
             System.out.printf("%s is defeated!%n", monster.getName());
         }
 
@@ -414,17 +414,17 @@ public class LVMovementController extends MovementController<Arena, Entity> {
 
     @Override
     public void getHeroInfo() {
-        mapSet.getHeros().getPartyInfo();
+        mapSet.getHeroes().getPartyInfo();
 
         System.out.print("Select a hero by number: ");
         int choice = ui.askInt() - 1;
 
-        if (choice < 0 || choice >= mapSet.getHeros().size()) {
+        if (choice < 0 || choice >= mapSet.getHeroes().size()) {
             System.out.println("Invalid hero selection.");
             return;
         }
 
-        Hero hero = mapSet.getHeros().get(choice);
+        Hero hero = mapSet.getHeroes().get(choice);
 
         HeroInfoController infoController = new HeroInfoController(ui);
         infoController.showHeroDetails(hero);
