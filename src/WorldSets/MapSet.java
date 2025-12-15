@@ -13,6 +13,8 @@
 
 package WorldSets;
 
+import Parties.Party;
+
 public abstract class MapSet {
 
     // Basic map dimensions

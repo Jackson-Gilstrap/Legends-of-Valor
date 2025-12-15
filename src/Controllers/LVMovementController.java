@@ -7,7 +7,7 @@ import Entities.Hero;
 import Entities.Monster;
 import Interfaces.Positionable;
 import Parties.Party;
-import WorldSets.Market;
+import Market.Market;
 import WorldSets.Space;
 import WorldSets.Maps.Arena;
 import WorldSets.Maps.UnitToken;
@@ -82,6 +82,7 @@ public class LVMovementController extends MovementController<Arena, Entity> {
 
         return mapSet.move(target, targetRow, targetCol);
     }
+
 
     public boolean teleport(){
         Positionable actingHero = getTarget();
@@ -395,15 +396,7 @@ public class LVMovementController extends MovementController<Arena, Entity> {
 
         return true;
     }
-    
-    @Override
-    public boolean interactMarket(){
-        Market market = mapSet.getMarket();
-        if(mapSet.getSpace(target.getRow(), target.getCol()) instanceof MarketSpace) {
-            market.enterMarket(ui, (Hero)target);
-        } else{return false;}
-        return true;
-    }
+
     
     @Override
     protected void onOutOfBounds(int row, int col) {

@@ -10,7 +10,7 @@ import Seeders.ItemSeeder;
 import Utility.Inventory;
 import Interfaces.Positionable;
 import WorldSets.MapSet;
-import WorldSets.Market;
+import Market.Market;
 import WorldSets.Space;
 import WorldSets.Spaces.*;
 

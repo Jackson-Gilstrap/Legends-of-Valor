@@ -1,12 +1,15 @@
 package Parties;
 
+import Market.MarketController;
 import Entities.Hero;
+import Market.Market;
+import Market.MarketVisitor;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 
 
-public class Party implements Iterable<Hero>{
+public class Party implements Iterable<Hero>, MarketVisitor {
 
     private final ArrayList<Hero> hero_party;
 
@@ -83,4 +86,12 @@ public class Party implements Iterable<Hero>{
         return hero_party.iterator();
     }
 
+    @Override
+    public void visit(Market market,  MarketController marketController) {
+        boolean exit = false;
+        while (!exit) {
+            Hero hero = marketController.pickHero(this);
+            exit = !marketController.displayMarket(market, hero);
+        }
+    }
 }

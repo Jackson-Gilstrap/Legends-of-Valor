@@ -10,6 +10,7 @@ Fire deals with Defense, Ice is for damage and lighting is dodge chance
 
  */
 
+import Enums.ItemType;
 import Enums.SpellType;
 import Interfaces.Consumable;
 import Utility.Level;
@@ -25,7 +26,7 @@ public class Spell extends Item implements Consumable {
 
 
     public Spell(String name, int price, int level, int damage, int mana_cost, SpellType type) {
-        super(name,price,level);
+        super(name,price,level, ItemType.SPELL);
         this.damage = damage;
         this.mana_cost = mana_cost;
         this.consumed = false;

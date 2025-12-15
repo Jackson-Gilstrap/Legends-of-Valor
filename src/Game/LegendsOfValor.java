@@ -15,6 +15,9 @@ import Factories.SorcererFactory;
 import Factories.SpiritFactory;
 import Factories.WarriorFactory;
 import Factories.WeaponFactory;
+import Market.FilteredMarketDisplay;
+import Market.MarketController;
+import Market.MarketInteractionController;
 import Parties.MonsterParty;
 import Parties.Party;
 import Seeders.EntitySeeder;
@@ -58,6 +61,11 @@ public class LegendsOfValor extends GameController {
     // handler
     private LVMovementController actionController;
     private InputHandler handler;
+    private MarketController marketController;
+    private MarketInteractionController mIController;
+
+    //context
+    private LOVGameContext lovContext;
 
     public LegendsOfValor(){
         ui = new GameUI();
@@ -69,7 +77,11 @@ public class LegendsOfValor extends GameController {
         monsters = new MonsterParty();
         party = new Party();
         actionController = new LVMovementController(ui, arena);
+        lovContext = new LOVGameContext();
         handler = new InputHandler(ui);
+        marketController = new MarketController(ui);
+        mIController = new MarketInteractionController(marketController);
+        marketController.setMarketDisplayStrategy(new FilteredMarketDisplay());
         registerCmds();
     }
     
@@ -83,7 +95,7 @@ public class LegendsOfValor extends GameController {
         .register("C", new ClearObstacle(actionController))
         .register("ATK", new Attack(actionController))
         .register("Q", new Quit(this))
-        .register("M", new EnterMarket(actionController))
+        .register("M", new EnterMarket(actionController, mIController, lovContext))
         .register("I", new Info(actionController));
     }
 
@@ -156,6 +168,7 @@ public class LegendsOfValor extends GameController {
 
             List<Hero> aliveHeros = party.getAliveHeroes();
             for(Hero h: aliveHeros){
+                lovContext.setActiveHero(h);
                 heroTurn(h);
                 if(isOver() || isQuit()) return;
             }
@@ -270,12 +283,17 @@ public class LegendsOfValor extends GameController {
 
         // start the game
         party.getPartyInfo();
-        String confirm = ui.askOneWord("Start the game? (yes/no): ");
+        String confirmPlay = "";
+        while (!confirmPlay.equals("yes")) {
+            confirmPlay = ui.askOneWord("Start the game? (yes/no): ").toLowerCase().trim();
+            if (confirmPlay.equals("no")) {
+                System.exit(0);
+            }
 
-        if (confirm.toLowerCase().startsWith("y")) {
-            System.out.println("Starting game!");
-            return;
         }
+            System.out.println("Starting game!");
+
+
     }
 
     private void spawnMonsters() {

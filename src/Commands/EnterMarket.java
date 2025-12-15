@@ -1,17 +1,26 @@
 package Commands;
 
+import Game.GameContext;
+import Market.MarketInteractionController;
 import Controllers.MovementController;
+import Market.MarketVisitor;
 
 public class EnterMarket implements Command{
     private MovementController<?,?> controller;
+    private MarketInteractionController interaction;
+    private GameContext gameContext;
 
-    public EnterMarket(MovementController<?,?> controller){
+    public EnterMarket(MovementController<?,?> controller, MarketInteractionController interaction,GameContext gameContext) {
         this.controller = controller;
+        this.interaction = interaction;
+        this.gameContext = gameContext;
     }
 
     @Override
     public boolean execute() {
-        return controller.interactMarket();
+        interaction.interactMarket(controller.getCurrentSpace(), gameContext.getMarketVisitor());
+        return false;
+
     }
 
     @Override

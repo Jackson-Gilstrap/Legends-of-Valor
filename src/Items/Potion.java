@@ -1,5 +1,6 @@
 package Items;
 
+import Enums.ItemType;
 import Enums.PotionType;
 import Interfaces.Consumable;
 import Utility.Level;
@@ -15,7 +16,7 @@ public class Potion extends Item implements Consumable {
     private boolean consumed;
 
     public Potion(String name, int price, int level, PotionType type) {
-        super(name, price, level);
+        super(name, price, level, ItemType.POTION);
         this.effect_amount = 0;
         this.type = type;
         this.consumed = false;

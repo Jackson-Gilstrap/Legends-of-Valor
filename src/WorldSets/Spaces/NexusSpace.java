@@ -1,9 +1,7 @@
 package WorldSets.Spaces;
 
-import Entities.Hero;
 import Utility.Color;
-import WorldSets.Market;
-import WorldSets.Space;
+import Market.Market;
 
 public class NexusSpace extends MarketSpace {
     // needs to hold state of either a Monster or Hero
