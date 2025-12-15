@@ -290,6 +290,7 @@ public class LegendsOfValor extends GameController {
             Monster monster = monsterPool.getRandomMonster();
             int avgLevel = party.getPartyLevel();
             monster.rescaleStatsForLevel(avgLevel); // rescale the monsters
+            monsters.addMonster(monster);
             arena.addMonster(monster, row, col);
             System.out.printf("A new %s spawns in %s.%n", monster.getName(), l.getName());
 
