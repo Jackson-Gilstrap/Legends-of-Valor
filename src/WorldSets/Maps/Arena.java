@@ -5,12 +5,13 @@ import Factories.PotionFactory;
 import Factories.SpellFactory;
 import Factories.WeaponFactory;
 import Items.Item;
-import Parties.Party;
 import Seeders.ItemSeeder;
 import Utility.Inventory;
 import Interfaces.Positionable;
 import WorldSets.MapSet;
 import Market.Market;
+import Parties.MonsterParty;
+import Parties.Party;
 import WorldSets.Space;
 import WorldSets.Spaces.*;
 
@@ -35,12 +36,16 @@ public class Arena extends MapSet {
     private final List<UnitToken> heroTokens = new ArrayList<>();
     private final List<UnitToken> monsterTokens = new ArrayList<>();
 
-    private final Party heroes = new Party();
-    private final List<Monster> monsters = new ArrayList<>();
-
-    public Arena(int rows, int cols) {
+    // monsters and heroes, read only
+    private Party heroes;
+    private MonsterParty monsters;
+    
+    public Arena(int rows, int cols, Party heroes, MonsterParty monsters) {
         super(rows, cols);
+
         allLanes = Arrays.asList(Lane.values());
+        this.heroes = heroes;
+        this.monsters = monsters;
 
         this.heroNexusMarket = new Market(buildMarketInventory());
         this.monsterNexusMarket = new Market(new Inventory());
@@ -96,8 +101,8 @@ public class Arena extends MapSet {
 
             for (int c = 0; c < getCols(); c++) {
                 Space space = grids[c][r];
-                boolean heroHere = isOccupied(heroTokens, r, c);
-                boolean monsterHere = isOccupied(monsterTokens, r, c);
+                boolean heroHere = hasHeroAt(r, c);
+                boolean monsterHere = hasMonsterAt(r, c);
                 List<String> lines = space.renderLinesWithOccupants(heroHere, monsterHere);
 
                 for (int i = 0; i < lines.size(); i++) {
@@ -163,19 +168,18 @@ public class Arena extends MapSet {
 
     public List<Monster> getMonstersInRange(Positionable center, int range) {
         List<Monster> inRange = new ArrayList<>();
-        for (Monster m : monsters) {
-            if (m == null) continue;
-            int dr = Math.abs(m.getRow() - center.getRow());
-            int dc = Math.abs(m.getCol() - center.getCol());
+        for (UnitToken mToken : monsterTokens) {
+            int dr = Math.abs(mToken.getRow() - center.getRow());
+            int dc = Math.abs(mToken.getCol() - center.getCol());
             if (dr <= range && dc <= range) {
-                inRange.add(m);
+                inRange.add((Monster)mToken.getOccupant());
             }
         }
         return inRange;
     }
 
     public boolean hasMonsterInSameRow(Positionable center) {
-        for (Monster m : monsters) {
+        for (UnitToken m : monsterTokens) {
             if (m != null && m.getRow() == center.getRow() 
                 && Math.abs(m.getCol() - center.getCol()) <=1 ) {
                 return true;
@@ -183,8 +187,6 @@ public class Arena extends MapSet {
         }
         return false;
     }
-
-
 
     public int laneToColumn(Lane l) {
         switch (l.getId()) {
@@ -197,24 +199,12 @@ public class Arena extends MapSet {
         }
     }
 
-    public void addMonster(Monster m, int row, int col){
-        monsters.add(m);
+    public void spawnMonster(Monster m, int row, int col){
         monsterTokens.add(new UnitToken(m, row, col));
-        move(m, row, col);
     }
 
-    public void remove(Monster m){
-        monsters.remove(m);
-    }
-
-    public void addHero(Hero h, int row, int col){
-        heroes.add(h);
+    public void spawnHero(Hero h, int row, int col){
         heroTokens.add(new UnitToken(h, row, col));
-        move(h, row, col);
-    }
-
-    public Party getHeros(){
-        return heroes;
     }
 
     /**
@@ -274,14 +264,15 @@ public class Arena extends MapSet {
     }
 
     public Hero findAdjacentHero(Positionable p) {
-        for (Hero h : heroes) {
-            if (h.getStats().getHealth() <= 0) {
+        for (UnitToken h : heroTokens) {
+            Hero hero = (Hero)h.getOccupant();
+            if (hero.getStats().getHealth() <= 0) {
                 continue;
             }
             int dr = Math.abs(h.getRow() - p.getRow());
             int dc = Math.abs(h.getCol() - p.getCol());
             if (dr + dc == 1) {
-                return h;
+                return hero;
             }
         }
         return null;
@@ -311,18 +302,6 @@ public class Arena extends MapSet {
 
     public Space getSpaceAt(int row, int col) {
         return grids[col][row];
-    }
-
-    private boolean isOccupied(List<? extends Positionable> units, int row, int col) {
-        if (units == null) {
-            return false;
-        }
-        for (Positionable p : units) {
-            if (p != null && p.getRow() == row && p.getCol() == col) {
-                return true;
-            }
-        }
-        return false;
     }
 
     private String repeat(String s, int count) {
@@ -362,5 +341,23 @@ public class Arena extends MapSet {
 
     public Market getMarket(){
         return heroNexusMarket;
+    }
+
+    public Party getHeroes(){
+        return heroes;
+    }
+
+    /**
+     * remove the monster that is off the map(Usually dead)
+     * @param m
+     */
+    public void removeMonster(Monster m){
+        monsters.remove(m);
+        for(UnitToken mToken: monsterTokens){
+            if(((Monster)mToken.getOccupant()).equals(m)){
+                monsterTokens.remove(mToken);
+                break;
+            }
+        }
     }
 }

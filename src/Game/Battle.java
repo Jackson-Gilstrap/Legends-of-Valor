@@ -114,7 +114,7 @@ public class Battle {
             monster.setGoldDrop();
             monster.setExperienceDrop();
 
-            monster_party.addMonster(monster);
+            monster_party.add(monster);
         }
 
     }

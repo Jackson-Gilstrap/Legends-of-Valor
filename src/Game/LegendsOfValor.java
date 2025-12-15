@@ -69,19 +69,25 @@ public class LegendsOfValor extends GameController {
 
     public LegendsOfValor(){
         ui = new GameUI();
-        arena = new Arena(ARENA_ROWS, ARENA_COLS);
+        
+        // entity set
         warriors = new ArrayList<>();
         paladins = new ArrayList<>();
         sorcerers = new ArrayList<>();
         monsterPool = new MonsterPool();
         monsters = new MonsterParty();
         party = new Party();
+        arena = new Arena(ARENA_ROWS, ARENA_COLS, party, monsters);
+
+        // controllers
         actionController = new LVMovementController(ui, arena);
         lovContext = new LOVGameContext();
         handler = new InputHandler(ui);
         marketController = new MarketController(ui);
         mIController = new MarketInteractionController(marketController);
         marketController.setMarketDisplayStrategy(new FilteredMarketDisplay());
+
+        // cmds
         registerCmds();
     }
     
@@ -174,8 +180,8 @@ public class LegendsOfValor extends GameController {
             }
             actionController.takeTurns();
 
-            for (int i = 0; i < monsters.getMonsterPartySize(); i++) {
-                Monster m  = monsters.getMonsterFromParty(i);
+            for (int i = 0; i < monsters.size(); i++) {
+                Monster m  = monsters.get(i);
                 monsterTurn(m);
                 if(isOver()) return;
             }
@@ -272,7 +278,7 @@ public class LegendsOfValor extends GameController {
                 if(chosen != null){
                     party.add(chosen);
                     // add the hero position to the map
-                    arena.addHero(chosen, ARENA_ROWS-1, arena.laneToColumn(l));
+                    arena.spawnHero(chosen, ARENA_ROWS-1, arena.laneToColumn(l));
                     l.addHero(chosen);
                 }
                 else{
@@ -308,8 +314,8 @@ public class LegendsOfValor extends GameController {
             Monster monster = monsterPool.getRandomMonster();
             int avgLevel = party.getPartyLevel();
             monster.rescaleStatsForLevel(avgLevel); // rescale the monsters
-            monsters.addMonster(monster);
-            arena.addMonster(monster, row, col);
+            monsters.add(monster);
+            arena.spawnMonster(monster, row, col);
             System.out.printf("A new %s spawns in %s.%n", monster.getName(), l.getName());
 
         }
@@ -329,6 +335,7 @@ public class LegendsOfValor extends GameController {
             handler.printValidCommands();
             String command = handler.getInput();
             turnDone = handler.handleCommand(command);
+            
             System.out.println(arena.render());
         }
 
@@ -342,7 +349,7 @@ public class LegendsOfValor extends GameController {
         actionController.setTarget(m);
 
         // thinking...
-        ui.sleep(500); // 
+        GameUI.sleep(500); // 
 
         // if there is a hero next
         Hero adjacentHero = arena.findAdjacentHero(m);
@@ -353,19 +360,19 @@ public class LegendsOfValor extends GameController {
                     m.getRow(),
                     m.getCol());
             m.attack(adjacentHero);
-            ui.sleep(800);
+            GameUI.sleep(800);
 
             return;
         }
 
         // move down
         System.out.printf("%s moves down...%n", m.getName());
-        ui.sleep(600);
+        GameUI.sleep(600);
 
         handler.handleCommand("S");
         System.out.println(arena.render());
 
-        ui.sleep(400);
+        GameUI.sleep(400);
 
         if (arena.isMonsterNexusInvaded()) {
             System.out.println("A monster reached the hero nexus. Monsters win!");
