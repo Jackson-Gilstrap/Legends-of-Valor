@@ -150,8 +150,6 @@ public class LVMovementController extends MovementController<Arena, Entity> {
         }
 
         List<int[]> candidates = Arrays.asList(
-                new int[]{targetHero.getRow() - 1, targetHero.getCol()},
-                new int[]{targetHero.getRow() + 1, targetHero.getCol()},
                 new int[]{targetHero.getRow(), targetHero.getCol() - 1},
                 new int[]{targetHero.getRow(), targetHero.getCol() + 1}
         );
