@@ -1,15 +1,21 @@
 package WorldSets.Spaces;
 
 import Entities.Hero;
+import Game.GameUI;
 import Utility.Color;
 import WorldSets.Space;
 
+/**
+ * BushSpace:
+ * A terrain that boosts a hero's Dexterity by 10% when entered,
+ * and removes the buff when left.
+ */
 public class BushSpace extends Space {
+
     private int buffAmount = 0;
 
     public BushSpace(String name, int row, int col) {
         super(name, row, col);
-
     }
 
     @Override
@@ -18,27 +24,56 @@ public class BushSpace extends Space {
     }
 
     /**
-     * When a hero enters a Bush space, the space will increase his dexeterity ny 10%.
+     * When a hero enters a Bush space, increase Dexterity by 10%.
      */
     @Override
     public void onEnter(Hero h) {
-        buffAmount = (int)(0.1*h.getStats().getDexterity());
-        h.getStats().setDexterity(h.getStats().getDexterity()+buffAmount);
+        int originalDex = h.getStats().getDexterity();
+        buffAmount = (int) (0.1 * originalDex);
+        h.getStats().setDexterity(originalDex + buffAmount);
+        String message = String.format(
+                "%s enters %s. Dexterity increased by %d → %d",
+                h.getName(), getName(), buffAmount, h.getStats().getDexterity()
+        );
+        System.out.println(Color.colorize(message, colorForSpace()));
+        GameUI.sleep();
+
     }
 
+    /**
+     * When a hero leaves the Bush space, remove the Dexterity buff.
+     */
     @Override
     public void onLeave(Hero h) {
-        h.getStats().setDexterity(h.getStats().getDexterity()-buffAmount);
+        if (buffAmount > 0) {
+            int newDex = h.getStats().getDexterity() - buffAmount;
+            h.getStats().setDexterity(newDex);
+
+            String message = String.format(
+                    "%s leaves %s. Dexterity buff removed → %d",
+                    h.getName(), getName(), newDex
+            );
+            System.out.println(Color.colorize(message, colorForSpace()));
+
+            buffAmount = 0; // 防止重复减属性
+            GameUI.sleep();
+
+        }
     }
 
+    /**
+     * Foreground color used for rendering Bush space.
+     */
     @Override
     protected Color colorForSpace() {
         return Color.GREEN;
     }
 
+    /**
+     * Background color ANSI code for Bush space.
+     */
     @Override
     public String bgCodeForSpace() {
         return Color.LIGHTGREEN.getBgAnsiCode();
     }
-
 }

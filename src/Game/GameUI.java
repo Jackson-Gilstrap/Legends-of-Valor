@@ -44,6 +44,17 @@ public class GameUI {
         }
     }
 
+    /**
+     * Helper function : sleep for a while
+     */
+    public static void sleep() {
+        sleep(800);
+    }
+
+    public static void println(String s){
+        System.out.println(s);
+        sleep();
+    }
 
 
 }

@@ -4,7 +4,6 @@ import Entities.Hero;
 import Game.GameUI;
 import Items.Item;
 import Utility.Inventory;
-import org.jcp.xml.dsig.internal.dom.DOMSubTreeData;
 
 public class SimpleMarketDisplay implements MarketDisplayStrategy {
 
