@@ -2,7 +2,7 @@ package WorldSets.Spaces;
 
 import Entities.Hero;
 import Utility.Color;
-import WorldSets.Market;
+import Market.Market;
 import WorldSets.Space;
 
 public class MarketSpace extends Space {

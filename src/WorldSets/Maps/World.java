@@ -12,7 +12,7 @@ import Parties.Party;
 import Seeders.ItemSeeder;
 import Utility.Inventory;
 import WorldSets.MapSet;
-import WorldSets.Market;
+import Market.Market;
 import WorldSets.Space;
 import WorldSets.Spaces.MarketSpace;
 import WorldSets.Spaces.ObstacleSpace;
@@ -82,34 +82,6 @@ public class World extends MapSet {
                 return;
             }
         }
-    }
-
-
-    public void moveParty(int delta_row, int delta_col){
-
-        int new_row = party_row + delta_row;
-        int new_col = party_col + delta_col;
-
-        if(delta_row != 0 && delta_col != 0){
-            System.out.println("No diagonal moves");
-        }
-
-        if(!inBounds(new_row, new_col)){
-            System.out.println("You stop in tracks and look over at the hazy fog with no ground in sight... ");
-            System.out.println("You decide that its best not to proceed.");
-        }
-
-        if(world_map[new_row][new_col] instanceof ObstacleSpace){
-            System.out.println("There appears to be a massive rock formation blocking you path...");
-            System.out.println("You imagine there is some way around it.");
-        }
-
-        if(world_map[new_row][new_col] instanceof MarketSpace) {
-            System.out.println("You have reached a market... Press f to enter or t to traval to another market");
-        }
-
-        party_row = new_row;
-        party_col = new_col;
     }
 
 

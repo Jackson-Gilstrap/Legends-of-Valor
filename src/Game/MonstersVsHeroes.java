@@ -5,9 +5,12 @@ import Commands.*;
 import Controllers.HeroSelectionController;
 import Controllers.InputHandler;
 import Controllers.MVHMovementController;
+import Market.MarketController;
 import Entities.Hero;
 import Enums.Direction;
 import Factories.*;
+import Market.MarketInteractionController;
+import Market.SimpleMarketDisplay;
 import Parties.Party;
 import Seeders.EntitySeeder;
 import WorldSets.Maps.World;
@@ -24,6 +27,10 @@ public class MonstersVsHeroes extends GameController {
     private final MVHMovementController actionController;
     private final InputHandler inputHandler;
     private final HeroSelectionController heroSelectionController;
+    private final MarketController marketController;
+    private final MarketInteractionController mIController;
+    private final GameContext gameContext;
+    private PartyPositionAdapter partyPositionAdapter;
     private final List<Hero> warriors = new ArrayList<>();
     private final List<Hero> paladins = new ArrayList<>();
     private final List<Hero> sorcerers = new ArrayList<>();
@@ -35,7 +42,14 @@ public class MonstersVsHeroes extends GameController {
         this.world = new World(8,8, party);
         this.actionController =  new MVHMovementController(world, new PartyPositionAdapter(world), ui);
         this.inputHandler = new InputHandler(ui);
+        this.gameContext = new MVHGameContext(party, new PartyPositionAdapter(world));
         this.heroSelectionController = new HeroSelectionController(ui, party, warriors, paladins, sorcerers);
+        this.marketController = new MarketController(ui);
+        marketController.setMarketDisplayStrategy(new SimpleMarketDisplay());
+        mIController = new MarketInteractionController(marketController);
+
+
+
         registerCmds();
 
     }
@@ -46,7 +60,7 @@ public class MonstersVsHeroes extends GameController {
         .register("A", new Move(actionController, Direction.LEFT))
         .register("D", new Move(actionController, Direction.RIGHT))
         .register("Q", new Quit(this))
-        .register("F", new EnterMarket(actionController))
+        .register("F", new EnterMarket(actionController, mIController, gameContext))
         .register("I", new Info(actionController))
         .register("T", new FastTravel(actionController));
     }
@@ -134,14 +148,14 @@ public class MonstersVsHeroes extends GameController {
         }
         // start the game
         party.getPartyInfo();
-        String confirm = ui.askOneWord("Start the game? (yes/no): ");
-
-        if (confirm.toLowerCase().startsWith("y")) {
-            System.out.println("Starting game!");
-            return;
+        String confirmPlay = "";
+        while(!confirmPlay.equals("yes")) {
+            confirmPlay = ui.askOneWord("Start the game? (yes/no): ").toLowerCase().trim();
+            if (confirmPlay.equals("no")) {
+                System.exit(0);
+            }
         }
-        // if u say no we still start the game, just enjoy it! :)
-        // TODO: just kdding, implement the give up logic some day
+        System.out.println("Starting Monsters vs Heroes");
     }
 
 

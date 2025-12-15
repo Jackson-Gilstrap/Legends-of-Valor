@@ -9,7 +9,6 @@ import Enums.Direction;
 import Game.Battle;
 import Game.GameUI;
 import Utility.RollDie;
-import WorldSets.Market;
 import WorldSets.Space;
 import WorldSets.Maps.World;
 import WorldSets.Spaces.MarketSpace;
@@ -24,7 +23,7 @@ public class MVHMovementController extends MovementController<World, PartyPositi
 
     @Override
     public boolean move(Direction direction) {
-        
+
         int current_row = target.getRow();
         int current_col = target.getCol();
 
@@ -69,7 +68,7 @@ public class MVHMovementController extends MovementController<World, PartyPositi
             Scanner scanner = new Scanner(System.in);
             int row = scanner.nextInt();
             int col = scanner.nextInt();
-            scanner.close();
+//            scanner.close();
 
             System.out.println("fast traveling to next location");
             mapSet.fastTravel(row, col);
@@ -81,14 +80,10 @@ public class MVHMovementController extends MovementController<World, PartyPositi
         }
     }
 
-    @Override
-    public boolean interactMarket() {
-        if(mapSet.getSpace(mapSet.getParty_row(), mapSet.getParty_col()) instanceof MarketSpace) {
-            Market market = ((MarketSpace) mapSet.getSpace(mapSet.getParty_row(), mapSet.getParty_col())).getMarket();
-            market.enterMarket(new GameUI(), mapSet.getPlayerParty());
-        }
-        return true;
+    public PartyPositionAdapter getTarget() {
+        return target;
     }
+
 
     @Override
     public void getHeroInfo() {

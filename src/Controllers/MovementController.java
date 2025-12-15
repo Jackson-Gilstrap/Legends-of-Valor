@@ -15,6 +15,13 @@ public abstract class MovementController<M extends MapSet, P extends Positionabl
         this.target = target;
     }
 
+    public Space getCurrentSpace() {
+
+        return mapSet.getSpace(target.getRow(),  target.getCol());
+    }
+
+
+
     /**
      *
      * @param direction - Direction that target is moving in
@@ -22,10 +29,10 @@ public abstract class MovementController<M extends MapSet, P extends Positionabl
      */
     public abstract boolean move(Direction direction);
 
-    public abstract boolean interactMarket();
     
     public abstract void getHeroInfo();
-    
+
+
     /**
      *
      * @param row x pos of the target space

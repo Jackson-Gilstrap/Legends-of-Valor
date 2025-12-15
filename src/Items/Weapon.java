@@ -1,6 +1,7 @@
 package Items;
 
 import Entities.Hero;
+import Enums.ItemType;
 import Interfaces.Equipable;
 import Utility.Level;
 /*
@@ -12,7 +13,7 @@ public class Weapon extends Item implements Equipable {
     private boolean equipped;
 
     public Weapon(String name, int price, int attack, int level, int number_of_hands) {
-        super(name, price, level);
+        super(name, price, level, ItemType.WEAPON);
         this.attack = attack;
         this.number_of_hands = number_of_hands;
         this.equipped = false;

@@ -1,13 +1,15 @@
 package Entities;
 
+import Market.MarketController;
 import Interfaces.Levelable;
-import Interfaces.Positionable;
+import Market.Market;
+import Market.MarketVisitor;
 import Utility.Inventory;
 import Utility.Jacket;
 import Utility.Stats;
 import Utility.Wallet;
 
-public abstract class Hero extends Entity implements Levelable{
+public abstract class Hero extends Entity implements Levelable, MarketVisitor {
     private int experience_points, to_next_level;
     private final Inventory inventory;
     private final Stats stats;
@@ -112,6 +114,14 @@ public abstract class Hero extends Entity implements Levelable{
         System.out.printf("%s strikes %s for %d damage.%n", getName(), e.getName(), ATK);
         e.takeAttack(ATK);
         return ATK;
+    }
+
+    @Override
+    public void visit(Market market, MarketController marketController) {
+        boolean exit = false;
+        while (!exit) {
+            exit = !marketController.displayMarket(market, this);
+        }
     }
 
     public int takeAttack(int damage){
