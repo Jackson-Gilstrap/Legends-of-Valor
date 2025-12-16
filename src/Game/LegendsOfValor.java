@@ -369,7 +369,14 @@ public class LegendsOfValor extends GameController {
         System.out.printf("%s moves down...%n", m.getName());
         GameUI.sleep(600);
 
-        handler.handleCommand("S");
+        boolean success = handler.handleCommand("S");
+        if (!success) {
+            success = handler.handleCommand("A");
+            if (!success) {
+                success = handler.handleCommand("D");
+            }
+        }
+        
         System.out.println(arena.render());
 
         GameUI.sleep(400);
