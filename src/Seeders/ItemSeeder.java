@@ -15,7 +15,8 @@ import Utility.Stats;
 
 import java.util.ArrayList;
 import java.util.List;
-
+// ItemSeeder.java
+// Provdes the methods to seed all items in the game for the markets
 public class ItemSeeder {
     private final WeaponFactory weaponFactory;
     private final ArmorFactory armorFactory;

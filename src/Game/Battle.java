@@ -2,36 +2,26 @@ package Game;
 
 import Entities.Hero;
 import Entities.Monster;
+import Entities.MonsterPool;
 import Enums.PotionType;
 import Items.Potion;
 import Items.Spell;
 import Parties.MonsterParty;
 import Parties.Party;
-import Seeders.EntitySeeder;
-import Factories.*;
 
 import java.util.*;
 
-
+// provides the battle implementation for MVH
 public class Battle {
-    private Party player_party;
-    private MonsterParty monster_party;
-    private EntitySeeder entity_seeder;
-    private GameUI ui = new GameUI();
-    private Set<Monster> rewarded_monsters = new HashSet<>();
-    private Random rand = new Random();
+    private final Party player_party;
+    private final MonsterParty monster_party;
+    private final GameUI ui = new GameUI();
+    private final Set<Monster> rewarded_monsters = new HashSet<>();
+    private final Random rand = new Random();
 
     public Battle(Party player_party) {
         this.player_party = player_party;
         this.monster_party = new MonsterParty();
-        this.entity_seeder = new EntitySeeder(
-                new DragonFactory(),
-                new ExoskeletonFactory(),
-                new SpiritFactory()
-
-        );
-
-
     }
 
     public boolean battle() {
@@ -40,8 +30,8 @@ public class Battle {
         System.out.println("Battle started!");
         System.out.println("Your party walks up to the monsters");
         //apply all the buffs from the player's equipment before the first moves are made
-        for(int i = 0; i < player_party.getPartySize(); i++) {
-            player_party.getHeroFromParty(i).getJacket().updateBuffStats();
+        for(int i = 0; i < player_party.size(); i++) {
+            player_party.get(i).getJacket().updateBuffStats();
         }
 
         while(true) {
@@ -109,37 +99,22 @@ public class Battle {
     }
 
 
-
-    private List<Monster> generateMonsters() {
-        List<Monster> monsters = new ArrayList<>();
-        List<Monster> dragons = generateDragons();
-        List<Monster> exoskeletons = generateExoskeletons();
-        List<Monster> spirits = generateSpirits();
-        monsters.addAll(dragons);
-        monsters.addAll(exoskeletons);
-        monsters.addAll(spirits);
-
-        Collections.shuffle(monsters);
-        return monsters;
-    }
-
     private void spawnMonsters() {
-        int num_of_monsters = player_party.getPartySize();
+        // modify
+        MonsterPool monsterPool = new MonsterPool();
+        int num_of_monsters = player_party.size();
         int level_cap = player_party.getPartyLevel();
-
-        List<Monster> all_monsters = generateMonsters();
 
         for (int i = 0; i < num_of_monsters; i++) {
 
-            Monster template = all_monsters.get(generateRandomInt(all_monsters.size()));
-
+            Monster template = monsterPool.getRandomMonster();
             Monster monster = template.copy();
             monster.getLevelObj().setCurrentLevel(level_cap);
             monster.rescaleStatsForLevel();
             monster.setGoldDrop();
             monster.setExperienceDrop();
 
-            monster_party.addMonster(monster);
+            monster_party.add(monster);
         }
 
     }
@@ -302,7 +277,6 @@ public class Battle {
 
         int mon_attack = attacking_monster.getStats().getAttack();
         double total_hero_dr = target_hero.getStats().getDamage_reduction() + target_hero.getJacket().getBuffStats().getDamage_reduction();
-                ;
         int total_attack = mon_attack - (int)(mon_attack * total_hero_dr);
 
         // Hitting calc
@@ -385,7 +359,7 @@ public class Battle {
                 default:
                     System.out.println("Invalid choice! Pick again");
                     break;
-            };
+            }
         } while (!use_turn);
     }
 
@@ -395,22 +369,7 @@ public class Battle {
         return attack_roll <= hitting_chance;
     }
 
-    private List<Monster> generateDragons() {
-        return  entity_seeder.seedDragons("src/TextFiles/Dragons.txt");
-    }
-
-    private List<Monster> generateExoskeletons() {
-        return entity_seeder.seedExoSkeletons("src/TextFiles/Exoskeletons.txt");
-    }
-
-    private List<Monster> generateSpirits() {
-        return entity_seeder.seedSpirits("src/TextFiles/Spirits.txt");
-    }
-
-    private int generateRandomInt(int max) {
-        return rand.nextInt(max);
-
-    }
+    
 
     private void rewardNewlyDeadMonsters() {
         ArrayList<Monster> dead_monsters = monster_party.getDeadMonsters();

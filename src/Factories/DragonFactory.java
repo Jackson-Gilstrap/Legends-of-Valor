@@ -1,3 +1,6 @@
+/**
+ * Factory that instantiates Dragon monsters with configured attributes.
+ */
 package Factories;
 
 import Entities.Entity;

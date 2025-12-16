@@ -4,6 +4,8 @@ import Items.Item;
 
 import java.util.ArrayList;
 
+// Inventory.java
+// represents an inventory can hold anything and provides a view method
 public class Inventory {
 
     private final ArrayList<Item> inventory;//

@@ -1,3 +1,6 @@
+/**
+ * Factory that creates armor pieces based on provided identifiers.
+ */
 package Factories;
 
 import Builders.ChestplateBuilder;

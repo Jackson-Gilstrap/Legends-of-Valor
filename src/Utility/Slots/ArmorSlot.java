@@ -2,6 +2,8 @@ package Utility.Slots;
 
 import Items.Armor;
 
+//  ArmorSlot.java
+// A slot that can only hold an armor piece (Helmet, ChestPiece, Leggings)
 public class ArmorSlot extends ItemSlot<Armor>{
 
     public ArmorSlot() {

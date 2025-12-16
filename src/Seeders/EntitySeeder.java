@@ -10,7 +10,8 @@ import Interfaces.HeroFactory;
 import Interfaces.MonsterFactory;
 import Utility.Stats;
 
-
+// EntitySeeder.java
+// Class to provide the methods to seed all non-item entities in the game engine
 public class EntitySeeder {
 
     private final WarriorFactory warriorFactory;

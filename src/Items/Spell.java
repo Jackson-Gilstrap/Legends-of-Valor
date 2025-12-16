@@ -1,5 +1,7 @@
 package Items;
 
+import Entities.Hero;
+
 /*
 Spells are multi use items that can be equipped before battle by any hero
 Base spells are fire, ice and lighting these all have some sort of debuff that takes in an attribute and decreases it
@@ -8,10 +10,12 @@ Fire deals with Defense, Ice is for damage and lighting is dodge chance
 
  */
 
+import Enums.ItemType;
 import Enums.SpellType;
 import Interfaces.Consumable;
 import Utility.Level;
-
+//Spell.java
+// represent a spell in the game
 public class Spell extends Item implements Consumable {
 
     private final int damage;
@@ -23,7 +27,7 @@ public class Spell extends Item implements Consumable {
 
 
     public Spell(String name, int price, int level, int damage, int mana_cost, SpellType type) {
-        super(name,price,level);
+        super(name,price,level, ItemType.SPELL);
         this.damage = damage;
         this.mana_cost = mana_cost;
         this.consumed = false;
@@ -64,6 +68,11 @@ public class Spell extends Item implements Consumable {
         System.out.println("Spell used all durability and cannot be used");
         }
 
+    }
+
+    @Override
+    public boolean getEquipped(Hero h) {
+        return h.getJacket().equipSpell(this);
     }
 
 

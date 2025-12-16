@@ -1,3 +1,6 @@
+/**
+ * Builder for producing Weapon items with attack, level, and hand requirements.
+ */
 package Builders;
 
 import Items.Weapon;

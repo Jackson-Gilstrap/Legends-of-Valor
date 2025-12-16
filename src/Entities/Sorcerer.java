@@ -1,3 +1,6 @@
+/**
+ * Sorcerer hero class emphasizing spellcasting-oriented attributes.
+ */
 package Entities;
 
 import Utility.Stats;

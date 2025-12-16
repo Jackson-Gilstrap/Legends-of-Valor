@@ -3,7 +3,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-
+//Reads from a file
 public class FileReaderUtility {
 
     public static List<String[]> readFile(String file_path, String delimiter) {

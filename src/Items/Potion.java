@@ -1,11 +1,16 @@
 package Items;
 
+import Enums.ItemType;
 import Enums.PotionType;
 import Interfaces.Consumable;
 import Utility.Level;
 
 import java.sql.SQLOutput;
 
+import Entities.Hero;
+
+//Potion.java
+// represent a Potion in the game
 public class Potion extends Item implements Consumable {
 
     private double effect_amount;
@@ -13,7 +18,7 @@ public class Potion extends Item implements Consumable {
     private boolean consumed;
 
     public Potion(String name, int price, int level, PotionType type) {
-        super(name, price, level);
+        super(name, price, level, ItemType.POTION);
         this.effect_amount = 0;
         this.type = type;
         this.consumed = false;
@@ -66,6 +71,11 @@ public class Potion extends Item implements Consumable {
         System.out.println("Spell used durability - 100 points");
         super.setDurability(super.getDurability() - 100); // 100 for now for one time use
 
+    }
+
+    @Override
+    public boolean getEquipped(Hero h) {
+        return h.getJacket().equipPotion(this);
     }
 
 

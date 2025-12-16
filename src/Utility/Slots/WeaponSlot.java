@@ -2,7 +2,8 @@ package Utility.Slots;
 
 
 import Items.Weapon;
-
+// Weapon slot
+// A slot that can only hold a weapon
 public class WeaponSlot extends ItemSlot<Weapon> {
     private boolean disabled = false;
 

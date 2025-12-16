@@ -1,76 +1,148 @@
 package Parties;
 
+import Market.MarketController;
 import Entities.Hero;
+import Market.Market;
+import Market.MarketVisitor;
+
 import java.util.ArrayList;
+import java.util.Iterator;
 
+/**
+ * The Party class represents a team (party) of heroes.
+ * It provides methods for managing, querying, and displaying
+ * information about the heroes in the party.
+ */
+public class Party implements Iterable<Hero>, MarketVisitor {
 
-public class Party {
-
+    /** List of heroes currently in the party */
     private final ArrayList<Hero> hero_party;
 
+    /** 
+     * Creates an empty hero party.
+     */
     public Party() {
         hero_party = new ArrayList<>();
     }
 
-    public void addHeroToParty(Hero entity) {
-        hero_party.add(entity);
+    /* =========================================================
+       Basic party management methods
+       ========================================================= */
+
+    /**
+     * Add a hero to the party.
+     * @param hero the hero to be added
+     */
+    public void add(Hero hero) {
+        hero_party.add(hero);
     }
 
-    public void removeHeroFromParty(Hero hero){
+    /**
+     * Remove a hero from the party.
+     * @param hero the hero to be removed
+     */
+    public void remove(Hero hero) {
         hero_party.remove(hero);
     }
 
-    public Hero getHeroFromParty(int slot){
+    /**
+     * Get the hero in a specific party slot.
+     * @param slot the index of the hero (0-based)
+     * @return the hero in that slot
+     */
+    public Hero get(int slot) {
         return hero_party.get(slot);
     }
 
-    public int getPartySize() {
+    /**
+     * @return the number of heroes currently in the party
+     */
+    public int size() {
         return hero_party.size();
     }
 
+    /* =========================================================
+       Query methods
+       ========================================================= */
+
+    /**
+     * Calculate the average level of the party.
+     * @return the average level of all heroes (integer division)
+     */
     public int getPartyLevel() {
-        int  level = 0;
+        int totalLevel = 0;
         for (Hero hero : hero_party) {
-           level += hero.getLevelObj().getCurrentLevel();
+            totalLevel += hero.getLevelObj().getCurrentLevel();
         }
-        return level / hero_party.size();
+        return totalLevel / hero_party.size();
     }
 
-    public ArrayList<Hero> getAliveHeroes(){
-        ArrayList<Hero> alive_heroes = new ArrayList<>();
-        for(Hero hero : hero_party){
-            if(hero.getStats().getHealth() > 0 ){
-                alive_heroes.add(hero);
+    /**
+     * Get all heroes that are still alive (health > 0).
+     * @return list of alive heroes
+     */
+    public ArrayList<Hero> getAliveHeroes() {
+        ArrayList<Hero> aliveHeroes = new ArrayList<>();
+        for (Hero hero : hero_party) {
+            if (hero.getStats().getHealth() > 0) {
+                aliveHeroes.add(hero);
             }
         }
-        return alive_heroes;
+        return aliveHeroes;
     }
 
-    public ArrayList<Hero> getDeadHeroes(){
-        ArrayList<Hero> dead_heroes = new ArrayList<>();
-        for(Hero hero : hero_party){
-            if(hero.getStats().getHealth() >= 0){
+    /**
+     * Get all heroes that are dead (health <= 0).
+     * Dead heroes’ health is reset to 0 for consistency.
+     * @return list of dead heroes
+     */
+    public ArrayList<Hero> getDeadHeroes() {
+        ArrayList<Hero> deadHeroes = new ArrayList<>();
+        for (Hero hero : hero_party) {
+            if (hero.getStats().getHealth() <= 0) {
                 hero.getStats().setHealth(0);
+                deadHeroes.add(hero);
             }
-            dead_heroes.add(hero);
         }
-        return dead_heroes;
+        return deadHeroes;
     }
 
+    /* =========================================================
+       Display methods
+       ========================================================= */
 
+    /**
+     * Print detailed information about all heroes in the party.
+     */
     public void getPartyInfo() {
         System.out.println("===== PARTY INFORMATION =====");
 
         int index = 1;
-        for (Hero character : hero_party) {
+        for (Hero hero : hero_party) {
             System.out.printf("Party Slot %d:%n", index);
-            System.out.println(character); // relies on Hero/Warrior’s toString()
+            System.out.println(hero); // relies on Hero’s toString()
             System.out.println("-----------------------------");
             index++;
         }
 
-        System.out.println("===== END OF PARTY =====");
-        System.out.println("\n");
+        System.out.println("===== END OF PARTY =====\n");
     }
 
+    /* =========================================================
+       Interface implementations
+       ========================================================= */
+
+    @Override
+    public Iterator<Hero> iterator() {
+        return hero_party.iterator();
+    }
+
+    @Override
+    public void visit(Market market, MarketController marketController) {
+        boolean exit = false;
+        while (!exit) {
+            Hero hero = marketController.pickHero(this);
+            exit = !marketController.displayMarket(market, hero);
+        }
+    }
 }

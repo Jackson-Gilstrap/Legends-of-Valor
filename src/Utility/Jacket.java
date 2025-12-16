@@ -6,20 +6,21 @@ import Items.Armors.Helmet;
 import Items.Armors.Leggings;
 import Utility.Slots.*;
 
-
+//Jacket.Java
+// This is where the hero can equip items to their body to provide them a stat buff from the equiped items, also provides rhe check for using items such as spells and potions
 public class Jacket {
 
     private Stats buffStats;
 
-    private ArmorSlot helmet;
-    private ArmorSlot chestplate;
-    private ArmorSlot leggings;
+    private final ArmorSlot helmet;
+    private final ArmorSlot chestplate;
+    private final ArmorSlot leggings;
 
-    private WeaponSlot main;
-    private WeaponSlot offhand;
+    private final WeaponSlot main;
+    private final WeaponSlot offhand;
 
-    private SpellSlot spells;
-    private PotionSlot potions;
+    private final SpellSlot spells;
+    private final PotionSlot potions;
 
 
     public Jacket() {
