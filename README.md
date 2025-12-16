@@ -4361,7 +4361,7 @@ Play another game? (y/n):
 n
 Thanks for visiting the Legends Center!
 
-Process finished with exit code 0```
+Process finished with exit code 0
 
 ### Final Project & Presentation
 
@@ -4652,4 +4652,4 @@ Second, **Strategies** isolate all combat calculations. Damage and hit logic are
 
 Third, **Services** handle cross-cutting battle responsibilities that do not belong to individual actions. Components such as `RewardDistributor` and `RegenerationService` manage experience gain, gold rewards, and post-turn regeneration. This prevents controllers from mixing orchestration logic with bookkeeping and side effects.
 
-These layers are wired together through `Battle`, `BattleActionPresenter`, and a `BattleView` (CLI). The controller manages turn flow, the presenter gathers player input, the view handles output, actions execute independently, strategies compute outcomes, and services apply side effects. Each concern is isolated and replaceable, illustrating a clean combination of **Command, Strategy, and service-based layering** for scalable and maintainable battle systems.
+These layers are wired together through `Battle`, `BattleActionPresenter`, and a `BattleView` (CLI). The controller manages turn flow, the presenter gathers player input, the view handles output, actions execute independently, strategies compute outcomes, and services apply side effects. Each concern is isolated and replaceable, illustrating a clean combination of **Command, Strategy, and service-based layering** for scalable and maintainable battle systems.```
