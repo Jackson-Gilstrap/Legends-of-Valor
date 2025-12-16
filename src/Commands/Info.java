@@ -1,3 +1,6 @@
+/**
+ * Command to display hero information and inventory details.
+ */
 package Commands;
 
 import Controllers.MovementController;

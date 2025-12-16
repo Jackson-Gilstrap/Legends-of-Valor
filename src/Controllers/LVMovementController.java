@@ -1,3 +1,6 @@
+/**
+ * Movement controller for Legends of Valor arena navigation and combat interactions.
+ */
 package Controllers;
 
 import Enums.Direction;

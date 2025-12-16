@@ -1,3 +1,6 @@
+/**
+ * Spirit monster type defined by agile, evasive traits.
+ */
 package Entities;
 
 public class Spirit extends Monster{

@@ -1,3 +1,6 @@
+/**
+ * Input handler that maps user commands to their executable implementations.
+ */
 package Controllers;
 
 import Game.GameUI;

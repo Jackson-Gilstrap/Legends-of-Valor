@@ -1,3 +1,6 @@
+/**
+ * Abstract entity base providing shared attributes for heroes and monsters.
+ */
 package Entities;
 
 import Interfaces.Positionable;

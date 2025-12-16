@@ -1,3 +1,6 @@
+/**
+ * Factory for generating Spirit monsters with predefined stats.
+ */
 package Factories;
 
 import Entities.Entity;

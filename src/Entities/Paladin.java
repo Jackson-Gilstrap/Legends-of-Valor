@@ -1,3 +1,6 @@
+/**
+ * Paladin hero class balancing offense and defense attributes.
+ */
 package Entities;
 
 import Utility.Stats;

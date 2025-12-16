@@ -1,3 +1,6 @@
+/**
+ * Factory for assembling spells based on provided identifiers.
+ */
 package Factories;
 
 import Builders.SpellBuilder;

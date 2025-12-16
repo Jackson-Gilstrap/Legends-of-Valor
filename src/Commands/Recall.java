@@ -1,3 +1,6 @@
+/**
+ * Command that recalls a hero to their nexus.
+ */
 package Commands;
 
 import Controllers.LVMovementController;

@@ -1,3 +1,6 @@
+/**
+ * Factory for constructing Warrior heroes with predefined stats.
+ */
 package Factories;
 
 import Entities.Entity;

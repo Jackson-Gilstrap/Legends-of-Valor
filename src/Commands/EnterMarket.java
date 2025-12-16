@@ -1,3 +1,6 @@
+/**
+ * Command to enter a market and trigger market interactions.
+ */
 package Commands;
 
 import Game.GameContext;

@@ -1,3 +1,6 @@
+/**
+ * Factory that produces potion items from string identifiers.
+ */
 package Factories;
 
 import Builders.PotionBuilder;

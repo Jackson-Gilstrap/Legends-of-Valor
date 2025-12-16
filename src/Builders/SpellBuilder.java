@@ -1,3 +1,6 @@
+/**
+ * Builder for assembling Spell items with level, cost, and type settings.
+ */
 package Builders;
 
 import Enums.SpellType;

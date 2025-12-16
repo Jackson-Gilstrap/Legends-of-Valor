@@ -1,3 +1,6 @@
+/**
+ * Command that delegates directional movement to a movement controller.
+ */
 package Commands;
 
 import Controllers.MovementController;
@@ -22,4 +25,3 @@ public class Move implements Command {
         return "MOVE "+ direction.toString().toUpperCase();
     }
 }
-

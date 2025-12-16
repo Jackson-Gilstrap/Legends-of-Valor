@@ -1,3 +1,6 @@
+/**
+ * Builder for creating Leggings armor items with configured stats.
+ */
 package Builders;
 
 import Items.Armors.Leggings;

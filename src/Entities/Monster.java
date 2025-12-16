@@ -1,3 +1,6 @@
+/**
+ * Base class representing enemy monsters and their combat behavior.
+ */
 package Entities;
 
 import java.util.Random;

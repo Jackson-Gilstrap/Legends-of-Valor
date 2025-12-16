@@ -1,3 +1,6 @@
+/**
+ * Command to clear obstacles blocking a hero's movement path.
+ */
 package Commands;
 
 import Controllers.LVMovementController;
