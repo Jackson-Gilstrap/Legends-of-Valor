@@ -4,7 +4,8 @@ import Entities.Hero;
 import Game.GameUI;
 import Items.Item;
 import Utility.Inventory;
-
+//SimpleMarketDisplay.java
+// Provides the display, handle buy and sell for the MvH instance
 public class SimpleMarketDisplay implements MarketDisplayStrategy {
 
     @Override

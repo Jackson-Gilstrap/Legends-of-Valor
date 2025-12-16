@@ -1,5 +1,8 @@
 package Utility;
 
+// Wallet.java
+// Represents the wallet for a hero in LoV and MvH
+
 public class Wallet {
     private int current_gold;
 

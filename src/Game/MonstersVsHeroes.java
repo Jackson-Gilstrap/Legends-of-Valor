@@ -30,17 +30,17 @@ public class MonstersVsHeroes extends GameController {
     private final MarketController marketController;
     private final MarketInteractionController mIController;
     private final GameContext gameContext;
-    private PartyPositionAdapter partyPositionAdapter;
     private final List<Hero> warriors = new ArrayList<>();
     private final List<Hero> paladins = new ArrayList<>();
     private final List<Hero> sorcerers = new ArrayList<>();
-    // constants
-    private final int MAX_HEROES = 3;
+
+
+
     public MonstersVsHeroes() {
         this.ui = new GameUI();
         this.party = new Party();
         this.world = new World(8,8, party);
-        this.actionController =  new MVHMovementController(world, new PartyPositionAdapter(world), ui);
+        this.actionController =  new MVHMovementController(world, new PartyPositionAdapter(world));
         this.inputHandler = new InputHandler(ui);
         this.gameContext = new MVHGameContext(party, new PartyPositionAdapter(world));
         this.heroSelectionController = new HeroSelectionController(ui, party, warriors, paladins, sorcerers);
@@ -76,7 +76,7 @@ public class MonstersVsHeroes extends GameController {
 
 
     protected void gameLoop() {
-        while (true && !isQuit()) {
+        while (!isQuit()) {
             System.out.println(world.render());
             inputHandler.printValidCommands();
             String command = inputHandler.getInput();
@@ -132,6 +132,7 @@ public class MonstersVsHeroes extends GameController {
     }
 
     public void partySelection() {
+        int MAX_HEROES = 3;
         while(party.size()<MAX_HEROES){
             Hero h = heroSelectionController.select();
             if(h == null && party.size()<1){

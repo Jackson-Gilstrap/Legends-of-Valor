@@ -1,5 +1,8 @@
 package Utility;
 
+
+// Level.java
+// Represents a level of an entity
 public class Level {
 
     private int currentLevel;

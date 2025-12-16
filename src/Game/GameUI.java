@@ -1,7 +1,7 @@
 package Game;
 
 import java.util.Scanner;
-
+// provides methods to handle terminal input and output
 public class GameUI {
 
     private final Scanner in = new Scanner(System.in);

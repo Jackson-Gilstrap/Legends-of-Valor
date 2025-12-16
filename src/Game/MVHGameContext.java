@@ -4,7 +4,7 @@ import Adapters.PartyPositionAdapter;
 import Interfaces.Positionable;
 import Market.MarketVisitor;
 import Parties.Party;
-
+// providdes the respresentation for how who visits a market and the position
 public class MVHGameContext implements GameContext {
 
     private final Party party;

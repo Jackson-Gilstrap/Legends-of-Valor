@@ -5,11 +5,8 @@ import Game.GameUI;
 import Utility.Color;
 import WorldSets.Space;
 
-/**
- * BushSpace:
- * A terrain that boosts a hero's Dexterity by 10% when entered,
- * and removes the buff when left.
- */
+// BushSpace.Java
+// represents a special space in the arena that enhances the Dexterity of any hero on the space
 public class BushSpace extends Space {
 
     private int buffAmount = 0;

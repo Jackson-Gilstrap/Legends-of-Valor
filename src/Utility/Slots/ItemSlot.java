@@ -1,7 +1,8 @@
 package Utility.Slots;
 
 import Items.Item;
-
+// itemSlot.java
+// abstract contract for what a slot in a jacket can do
 public abstract class ItemSlot<T extends Item> {
     protected T item;
     private boolean isLocked;

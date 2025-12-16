@@ -7,7 +7,9 @@ import Utility.Color;
 import java.util.ArrayList;
 import java.util.List;
 
-
+// Space.java
+// Abstract contract describing what and how a space operates in an rpg game
+// Used for both games
 public abstract class Space {
     private final String name;
     private final char symbol;

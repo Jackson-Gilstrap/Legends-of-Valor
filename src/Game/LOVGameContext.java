@@ -3,7 +3,7 @@ package Game;
 import Entities.Hero;
 import Interfaces.Positionable;
 import Market.MarketVisitor;
-
+// provides the representation of who can enter the market and their position
 public class LOVGameContext implements GameContext {
 
     private Hero activeHero;

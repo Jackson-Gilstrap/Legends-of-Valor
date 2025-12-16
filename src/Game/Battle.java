@@ -11,7 +11,7 @@ import Parties.Party;
 
 import java.util.*;
 
-
+// provides the battle implementation for MVH
 public class Battle {
     private final Party player_party;
     private final MonsterParty monster_party;

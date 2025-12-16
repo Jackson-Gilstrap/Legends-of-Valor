@@ -1,7 +1,8 @@
 package Utility.Slots;
 
 import Items.Spell;
-
+// SpellSlot.java
+// A slot that can only hold a spell
 public class SpellSlot extends ItemSlot<Spell> {
 
     public SpellSlot() {

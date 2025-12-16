@@ -1,6 +1,8 @@
 package Utility;
 import java.util.Random;
 
+// RollDie.java
+// Utility function for creating a random event
 public class RollDie {
     public static boolean rollDie(int sides) {
         Random random = new Random();

@@ -3,19 +3,20 @@ package Items;
 
 import Entities.Hero;
 import Enums.ItemType;
-import Interfaces.Equipable;
-import Utility.Level;
 
-public class Armor extends Item implements Equipable {
+import Utility.Level;
+//Armor.java
+// represents a piece of armor in the game
+public class Armor extends Item{
     private final String type;
     private final double damage_reduction;
-    private boolean equipped;
+
 
     public Armor(String type,String name, int level, int price, double damage_reduction ) {
         super(name, price, level, ItemType.ARMOR);
         this.type= type;
         this.damage_reduction = damage_reduction;
-        this.equipped = false;
+
     }
 
     public String getName() {
@@ -34,31 +35,18 @@ public class Armor extends Item implements Equipable {
         return damage_reduction;
     }
 
-    @Override
-    public boolean isEquiped() {
-        return equipped;
-    }
 
-    @Override
-    public void equip() {
-        equipped = true;
-    }
-
-    @Override
-    public void unequip() {
-        equipped = false;
-    }
 
     @Override
     public String toString() {
         return String.format(
-                "Armor{type='%s', name='%s', level=%d, price=%d, reduction=%.2f, equipped=%s}",
+                "Armor{type='%s', name='%s', level=%d, price=%d, reduction=%.2f}",
                 type,
                 getName(),
                 getLevel().getCurrentLevel(),
                 getPrice(),
-                damage_reduction,
-                equipped
+                damage_reduction
+
         );
     }
 

@@ -3,7 +3,8 @@ package Market;
 import Entities.Hero;
 import Game.GameUI;
 import Parties.Party;
-
+// MarketController.java
+// provides methods to choose the hero and display strategy for how a market displays itself on a map
 public class MarketController {
     private final GameUI gameUI;
     private  MarketDisplayStrategy marketDisplayStrategy;
@@ -20,10 +21,10 @@ public class MarketController {
         return marketDisplayStrategy.display(market, hero,  gameUI);
     }
 
-    public void enterMarket(Market market, MarketVisitor marketVisitor) {
-        System.out.println("Entering Market");
-        marketVisitor.visit(market, this);
-    }
+//    public void enterMarket(Market market, MarketVisitor marketVisitor) {
+//        System.out.println("Entering Market");
+//        marketVisitor.visit(market, this);
+//    }
 
     public Hero pickHero(Party party) {
 

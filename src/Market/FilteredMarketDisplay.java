@@ -5,7 +5,8 @@ import Enums.ItemType;
 import Game.GameUI;
 import Items.Item;
 import Utility.Inventory;
-
+// FilteredMarketDisplay.java
+// provides different display method for LoV markets
 public class FilteredMarketDisplay implements MarketDisplayStrategy {
 
     @Override

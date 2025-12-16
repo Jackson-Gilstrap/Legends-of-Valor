@@ -13,8 +13,9 @@
 
 package WorldSets;
 
-import Parties.Party;
 
+// Mapset.java
+// abstractly describes a playing field (map) for a rpg game
 public abstract class MapSet {
 
     // Basic map dimensions

@@ -4,7 +4,8 @@ import Entities.Hero;
 import Game.GameUI;
 import Utility.Color;
 import WorldSets.Space;
-
+// CaveSpace.java
+// Represents a special space in the arena that enhances the agility of any hero on the space
 public class CaveSpace extends Space {
     private double buffAmount = 0;
     public CaveSpace(String name, int row, int col){

@@ -3,7 +3,8 @@ package WorldSets.Spaces;
 import Entities.Hero;
 import Utility.Color;
 import WorldSets.Space;
-
+// WallSpace.java
+// Represents a wall space on a map no entity can pass through it
 public class WallSpace extends Space {
     /**
      *

@@ -3,7 +3,8 @@ package Items;
 import Entities.Hero;
 import Enums.ItemType;
 import Utility.Level;
-
+//Item.java
+// represent an abstract item
 public abstract class Item {
     private int durability;
     private final String name;

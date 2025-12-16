@@ -1,5 +1,6 @@
 package Utility;
-
+// Stats.Java
+// represents an object that all entities have allows for modular makeups where not all objects need to have every single stat
 public class Stats {
     private int health, mana, attack, dexterity, max_health, max_mana;
     private double damage_reduction, agility;

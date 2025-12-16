@@ -9,6 +9,8 @@ import java.sql.SQLOutput;
 
 import Entities.Hero;
 
+//Potion.java
+// represent a Potion in the game
 public class Potion extends Item implements Consumable {
 
     private double effect_amount;

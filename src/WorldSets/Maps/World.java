@@ -22,6 +22,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
+// World.java
+// represents the map in MvH
 public class World extends MapSet {
     private final Space[][] world_map;
     private final Party player_party;
@@ -74,8 +76,7 @@ public class World extends MapSet {
         while (true) {
             int r = rand.nextInt(super.getRows());
             int c = rand.nextInt(super.getCols());
-
-            // Must be a CommonSpace
+            // only on a plain space
             if (world_map[r][c] instanceof PlainSpace) {
                 this.party_row = r;
                 this.party_col = c;

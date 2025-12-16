@@ -1,7 +1,8 @@
 package Utility.Slots;
 
 import Items.Potion;
-
+//Potion.java
+// A slot that only a potion item can hold
 public class PotionSlot extends ItemSlot<Potion>{
     public PotionSlot() {
         super();

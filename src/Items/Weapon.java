@@ -2,21 +2,17 @@ package Items;
 
 import Entities.Hero;
 import Enums.ItemType;
-import Interfaces.Equipable;
 import Utility.Level;
-/*
-Need to think about base values of starting equipment
- */
-public class Weapon extends Item implements Equipable {
+// Weapon.java
+// represent a weapon in the game
+public class Weapon extends Item {
     private final int attack;
     private final int number_of_hands;
-    private boolean equipped;
 
     public Weapon(String name, int price, int attack, int level, int number_of_hands) {
         super(name, price, level, ItemType.WEAPON);
         this.attack = attack;
         this.number_of_hands = number_of_hands;
-        this.equipped = false;
 
     }
 
@@ -37,30 +33,19 @@ public class Weapon extends Item implements Equipable {
         return this.number_of_hands;
     }
 
-    @Override
-    public boolean isEquiped() {
-        return this.equipped;
-    }
-    @Override
-    public void equip() {
-        this.equipped = true;
-    }
-    @Override
-    public void unequip() {
-        this.equipped = false;
-    }
+
 
 
     @Override
     public String toString() {
         return String.format(
-                "Weapon{name='%s', price=%d, attack=%d, level=%d, hands=%d, equipped=%s}",
+                "Weapon{name='%s', price=%d, attack=%d, level=%d, hands=%d}",
                 getName(),
                 getPrice(),
                 attack,
                 getLevel().getCurrentLevel(),
-                number_of_hands,
-                equipped
+                number_of_hands
+
         );
     }
 

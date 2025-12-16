@@ -17,7 +17,7 @@ import WorldSets.Spaces.PlainSpace;
 
 public class MVHMovementController extends MovementController<World, PartyPositionAdapter> {
 
-    public MVHMovementController(World world_map, PartyPositionAdapter movable, GameUI ui) {
+    public MVHMovementController(World world_map, PartyPositionAdapter movable) {
         super(world_map, movable);
     }
 
@@ -68,7 +68,6 @@ public class MVHMovementController extends MovementController<World, PartyPositi
             Scanner scanner = new Scanner(System.in);
             int row = scanner.nextInt();
             int col = scanner.nextInt();
-//            scanner.close();
 
             System.out.println("fast traveling to next location");
             mapSet.fastTravel(row, col);

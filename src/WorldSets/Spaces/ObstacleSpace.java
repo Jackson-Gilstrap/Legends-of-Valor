@@ -1,7 +1,8 @@
 package WorldSets.Spaces;
 
 import Utility.Color;
-
+// ObstacleSpace.java
+// Represents an obstacle in LOV and removed by using a turn on hero's turn
 public class ObstacleSpace extends PlainSpace{
 
     public ObstacleSpace(String name, int row, int col) {

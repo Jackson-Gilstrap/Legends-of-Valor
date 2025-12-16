@@ -2,10 +2,10 @@ package WorldSets.Spaces;
 
 import Utility.Color;
 import Market.Market;
-
+//NexusSpace.java
+// Represents the spawn location in LoV of heroes and monsters extends the market space
+// Type of hero allows interaction with the market
 public class NexusSpace extends MarketSpace {
-    // needs to hold state of either a Monster or Hero
-    // need to hold state of a global market
 
     public enum NexusType {
         HERO,

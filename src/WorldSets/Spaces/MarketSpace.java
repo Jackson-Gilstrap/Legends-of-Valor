@@ -4,7 +4,9 @@ import Entities.Hero;
 import Utility.Color;
 import Market.Market;
 import WorldSets.Space;
-
+// MarketSpace.java
+// Represents a market in MVH and the base for the nexus space in LoV
+// Contains a market
 public class MarketSpace extends Space {
 
     private final Market market;

@@ -4,7 +4,8 @@ import Entities.Hero;
 import Game.GameUI;
 import Utility.Color;
 import WorldSets.Space;
-
+// Koulou.java
+// represents a special space in the arena that enhances the attack of any hero on the space
 public class KoulouSpace extends Space {
     private int buffAmount = 0;
     public KoulouSpace(String name, int row, int col){

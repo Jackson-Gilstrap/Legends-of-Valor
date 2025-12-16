@@ -1,6 +1,7 @@
 package Game;
 
-
+// GameController.java
+// provides an abstract contract for what a game controller can do
 public abstract class GameController {
     private boolean quit = false;
 

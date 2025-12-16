@@ -14,7 +14,8 @@ import Enums.ItemType;
 import Enums.SpellType;
 import Interfaces.Consumable;
 import Utility.Level;
-
+//Spell.java
+// represent a spell in the game
 public class Spell extends Item implements Consumable {
 
     private final int damage;
