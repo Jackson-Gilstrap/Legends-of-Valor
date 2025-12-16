@@ -1,3 +1,6 @@
+/**
+ * Builder for constructing different hero subclasses using shared attributes.
+ */
 package Builders;
 
 import Entities.Paladin;

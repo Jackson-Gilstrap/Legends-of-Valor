@@ -1,3 +1,6 @@
+/**
+ * Warrior hero class focused on melee combat attributes.
+ */
 package Entities;
 
 import Utility.Stats;

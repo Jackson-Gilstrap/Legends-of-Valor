@@ -1,3 +1,6 @@
+/**
+ * Pool responsible for spawning and tracking monsters on the map.
+ */
 package Entities;
 
 import java.util.ArrayList;

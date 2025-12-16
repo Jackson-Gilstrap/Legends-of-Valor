@@ -1,3 +1,6 @@
+/**
+ * Exoskeleton monster type characterized by defensive strengths.
+ */
 package Entities;
 
 public class Exoskeleton extends Monster{

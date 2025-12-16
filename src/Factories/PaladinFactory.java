@@ -1,3 +1,6 @@
+/**
+ * Factory for creating Paladin heroes with preset characteristics.
+ */
 package Factories;
 
 import Entities.Entity;

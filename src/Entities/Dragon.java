@@ -1,3 +1,6 @@
+/**
+ * Dragon monster variant featuring high damage output.
+ */
 package Entities;
 
 public class Dragon extends Monster{

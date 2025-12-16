@@ -1,3 +1,6 @@
+/**
+ * Factory for instantiating Sorcerer heroes with preset attributes.
+ */
 package Factories;
 
 import Entities.Entity;

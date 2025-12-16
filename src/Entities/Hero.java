@@ -1,3 +1,6 @@
+/**
+ * Abstract hero base encapsulating stats, inventory, and progression.
+ */
 package Entities;
 
 import Market.MarketController;

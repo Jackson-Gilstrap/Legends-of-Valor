@@ -1,3 +1,6 @@
+/**
+ * Factory that creates weapon items from catalog identifiers.
+ */
 package Factories;
 
 import Builders.WeaponBuilder;

@@ -1,3 +1,6 @@
+/**
+ * Builder for creating Helmet armor pieces with configured attributes.
+ */
 package Builders;
 
 

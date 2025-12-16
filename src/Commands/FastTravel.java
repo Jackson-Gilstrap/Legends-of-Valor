@@ -1,3 +1,6 @@
+/**
+ * Command enabling fast travel via the movement controller.
+ */
 package Commands;
 
 import Controllers.MVHMovementController;

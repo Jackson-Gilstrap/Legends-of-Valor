@@ -1,3 +1,6 @@
+/**
+ * Adapter exposing the party's position through the Positionable interface.
+ */
 package Adapters;
 
 import Interfaces.Positionable;
@@ -26,4 +29,3 @@ public class PartyPositionAdapter implements Positionable {
         world_map.setPartyPosition(row, col);
     }
 }
-

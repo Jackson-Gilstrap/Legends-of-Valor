@@ -1,3 +1,6 @@
+/**
+ * Command that teleports a hero using the movement controller rules.
+ */
 package Commands;
 
 import Controllers.LVMovementController;

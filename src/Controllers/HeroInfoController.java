@@ -1,3 +1,6 @@
+/**
+ * Controller responsible for presenting hero information and equipment options.
+ */
 package Controllers;
 
 import Entities.Hero;

@@ -1,3 +1,6 @@
+/**
+ * Factory responsible for creating Exoskeleton monsters.
+ */
 package Factories;
 
 import Entities.Entity;

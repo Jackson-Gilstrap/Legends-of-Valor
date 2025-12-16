@@ -1,3 +1,6 @@
+/**
+ * Builder for crafting Potion items with pricing, level, and effect data.
+ */
 package Builders;
 
 import Enums.PotionType;

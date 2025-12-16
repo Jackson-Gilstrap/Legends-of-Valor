@@ -1,3 +1,6 @@
+/**
+ * Command that ends the current game session.
+ */
 package Commands;
 
 import Game.GameController;

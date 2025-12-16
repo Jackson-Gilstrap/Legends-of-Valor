@@ -1,3 +1,6 @@
+/**
+ * Builder for creating chest armor pieces with defensive values.
+ */
 package Builders;
 
 import Items.Armors.ChestPiece;

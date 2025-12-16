@@ -1,3 +1,6 @@
+/**
+ * Builder for configuring monster subclasses with shared combat attributes.
+ */
 package Builders;
 
 import Entities.Dragon;

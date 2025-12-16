@@ -1,3 +1,6 @@
+/**
+ * Base movement controller that coordinates map navigation for positionable targets.
+ */
 package Controllers;
 
 import Enums.Direction;

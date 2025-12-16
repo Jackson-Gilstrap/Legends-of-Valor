@@ -1,3 +1,6 @@
+/**
+ * Controller that manages hero selection and party composition.
+ */
 package Controllers;
 
 import Entities.Hero;

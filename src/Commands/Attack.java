@@ -1,3 +1,6 @@
+/**
+ * Command for initiating an attack against nearby monsters.
+ */
 package Commands;
 
 import Controllers.LVMovementController;

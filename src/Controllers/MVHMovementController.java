@@ -1,3 +1,6 @@
+/**
+ * Movement controller for managing party traversal and encounters on the world map.
+ */
 package Controllers;
 
 
