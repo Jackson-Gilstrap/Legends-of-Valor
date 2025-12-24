@@ -14,6 +14,7 @@ import Market.SimpleMarketDisplay;
 import Parties.Party;
 import Seeders.EntitySeeder;
 import WorldSets.Maps.World;
+import Views.CliWorldView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +35,7 @@ public class MonstersVsHeroes extends GameController {
     private final List<Hero> warriors = new ArrayList<>();
     private final List<Hero> paladins = new ArrayList<>();
     private final List<Hero> sorcerers = new ArrayList<>();
+    private final CliWorldView view = new CliWorldView();
     // constants
     private final int MAX_HEROES = 3;
     public MonstersVsHeroes() {
@@ -77,8 +79,8 @@ public class MonstersVsHeroes extends GameController {
 
     protected void gameLoop() {
         while (true && !isQuit()) {
-            System.out.println(world.render());
-            inputHandler.printValidCommands();
+            view.render(world);
+            view.showCommands(inputHandler);
             String command = inputHandler.getInput();
             inputHandler.handleCommand(command);
         }

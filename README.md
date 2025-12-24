@@ -16,3 +16,12 @@ Begin by choosing your selection of heroes, each party will consist of three her
 #### Sorcerers - Higher Dexterity and Agility
 
 **Once heroes are selected choose where each individual hero will spawn in the "Hero Nexus"**
+
+## Play Instructions
+- Prerequisite: Java + on your PATH.
+- Build: `javac -d bin $(find src -name "*.java")`
+- Run: `java -cp bin Main` (opens the launcher to pick between Monsters vs Heroes and Legends of Valor).
+- Legends of Valor basics:
+  - Goal: get any hero to the Monsters’ Nexus before a monster reaches yours.
+  - Controls (per hero turn): `W/A/S/D` move, `ATK` attack adjacent monster, `TP` teleport to ally lane, `R` recall to your Nexus, `C` clear obstacle, `M` enter market (only on Nexus/market tiles), `I` show info, `Q` quit.
+  - Economy/combat: defeating monsters grants gold/XP; spend gold in markets for gear/spells; heroes respawn at the Nexus after a delay.

@@ -25,6 +25,7 @@ import Utility.Color;
 import Utility.Stats;
 import WorldSets.Maps.Arena;
 import WorldSets.Maps.Lane;
+import Views.CliArenaView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,6 +67,7 @@ public class LegendsOfValor extends GameController {
 
     //context
     private LOVGameContext lovContext;
+    private final CliArenaView arenaView = new CliArenaView();
 
     public LegendsOfValor(){
         ui = new GameUI();
@@ -169,8 +171,7 @@ public class LegendsOfValor extends GameController {
                 spawnMonsters();
             }
 
-            System.out.println(arena.render());
-            System.out.printf("---- Round %d ----%n", rounds);
+            arenaView.render(arena, rounds);
 
             List<Hero> aliveHeros = party.getAliveHeroes();
             for(Hero h: aliveHeros){
